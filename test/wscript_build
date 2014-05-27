@@ -1,0 +1,7 @@
+# encoding: utf-8
+
+bld.program(
+    features='cxx test',
+    source=['stub_tests.cpp'] + bld.path.ant_glob('src/*.cpp'),
+    target='stub_tests',
+    use=['stub', 'gtest'])
