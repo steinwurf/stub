@@ -61,4 +61,7 @@ def build(bld):
         # in a recurse call
         bld.recurse('test')
 
-    bld.recurse('src/stub')
+    # Export own includes
+    bld(name='stub_includes',
+        includes='./src',
+        export_includes='./src')
