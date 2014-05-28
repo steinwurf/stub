@@ -55,11 +55,14 @@ namespace stub
     /// return_handler.hpp
     ///
     template<typename R, typename... Args>
-    struct call<R (Args...)>
+    class call<R (Args...)>
     {
+
+    public:
         /// A tuple is used to store the arguments passed
         typedef std::tuple<Args...> arguments;
 
+    public:
         /// The call operator to "simulate" performing a function call.
         ///
         /// @param args The arguments that should be stored
@@ -231,7 +234,7 @@ namespace stub
             return m_calls.size();
         }
 
-    public:
+    private:
 
         /// The return_handler manages the return values generated
         return_handler<R> m_return_handler;
