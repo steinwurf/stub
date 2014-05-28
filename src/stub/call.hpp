@@ -57,8 +57,8 @@ namespace stub
     template<typename R, typename... Args>
     class call<R (Args...)>
     {
-
     public:
+
         /// A tuple is used to store the arguments passed
         typedef std::tuple<Args...> arguments;
 

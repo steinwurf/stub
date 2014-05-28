@@ -37,34 +37,28 @@ TEST(return_handler, api)
         EXPECT_EQ(r(), 5U);
     }
 
-    // Try with repeat_off
+    // Try with no_repeat
     {
         stub::return_handler<uint32_t> r;
-        r.set_return(5U).repeat_off();
+        r.set_return(5U).no_repeat();
 
         EXPECT_EQ(r(), 5U);
 
-        r.set_return({3U,4U}).repeat_off();
+        r.set_return({3U,4U}).no_repeat();
 
         EXPECT_EQ(r(), 3U);
         EXPECT_EQ(r(), 4U);
-
-        r.repeat_on();
-
-        EXPECT_EQ(r(), 3U);
-        EXPECT_EQ(r(), 4U);
-
     }
 
     // Death tests
     {
         stub::return_handler<uint32_t> r;
-        r.set_return({3U,4U}).repeat_off();
+        r.set_return({3U,4U}).no_repeat();
 
         EXPECT_EQ(r(), 3U);
         EXPECT_EQ(r(), 4U);
 
         // death
-        //EXPECT_EQ(r(), 4U);
+        // EXPECT_EQ(r(), 4U);
     }
 }
