@@ -14,6 +14,7 @@ set of arguments.
 Example:
 
 ::
+   
    #include<stub/call.hpp>
 
    stub::call<void(uint32_t)> some_function;
@@ -21,13 +22,15 @@ Example:
 The above call takes an uint32_t and returns nothing, lets
 invoke it:
 
-::
+:: 
+    
     some_function(3);
     some_function(4);
 
 Now we may check how the function was called:
 
 ::
+
     bool called_once = some_function.called_once_with(3U);
     assert(called_once == false);
 
@@ -37,11 +40,13 @@ Now we may check how the function was called:
 We can also define a call which returns a value:
 
 ::
+
     stub::call<bool(uint32_t)> another_function;
 
 Here we have to specify what return value we expect:
 
 ::
+
     another_function.set_return(true);
 
     bool a = another_function(23);
