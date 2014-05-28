@@ -16,7 +16,7 @@ namespace stub
     /// inspection.
     ///
     /// The typical use-case for the call object is when testing that
-    /// some codes invokes a specfic set of functions with a specific
+    /// some code invokes a specific set of functions with a specific
     /// set of arguments.
     ///
     /// Example:
@@ -87,15 +87,11 @@ namespace stub
         }
 
         /// Checks if only one function call has been performed with
-        /// the specified tuple of arguments. Providing a BinaryPredicate
-        /// allows us to customize the comparison function.
+        /// the specified tuple of arguments. Will compare the two argument
+        /// tuples with bool operator==(const arguments&, const arguments&)
         ///
         /// @param args List of arguments to check with most recent
         /// invocation of the call
-        ///
-        /// @param predicate Function object that provides bool
-        /// operator()(const arguments&, const arguments&) to compare
-        /// two argument tuples
         ///
         /// @return True if the args matches the most recent call
         /// otherwise false.
@@ -108,8 +104,8 @@ namespace stub
         }
 
         /// Checks if only one function call has been performed with
-        /// the specified tuple of arguments. Providing a BinaryPredicate
-        /// allows us to customize the comparison function.
+        /// the specified tuple of arguments. The provided BinaryPredicate
+        /// allows a custom comparison function.
         ///
         /// @param args List of arguments to check with most recent
         /// invocation of the call
@@ -150,8 +146,8 @@ namespace stub
         }
 
         /// Checks is the most recent function call was performed with
-        /// the specified arguments. Providing a BinaryPredicate
-        /// allows us to customize the comparison function.
+        /// the specified arguments. The provided BinaryPredicate
+        /// allows a custom comparison function.
         ///
         /// @param args List of arguments to check with most recent
         /// invocation of the call
@@ -179,7 +175,8 @@ namespace stub
         /// of function calls. It will only return true if the number
         /// of calls plus the call arguments match. Also arguments
         /// should be given in the same order as they were received by
-        /// the call operator()
+        /// the call operator(). Will compare the argument
+        /// tuples with bool operator==(const arguments&, const arguments&)
         ///
         /// @param calls Vector of arguments to check with the
         /// invocations of the call
@@ -198,7 +195,8 @@ namespace stub
         /// of function calls. It will only return true if the number
         /// of calls plus the call arguments match. Also arguments
         /// should be given in the same order as they were received by
-        /// the call operator()
+        /// the call operator(). The provided BinaryPredicate
+        /// allows a custom comparison function.
         ///
         /// @param calls Vector of arguments to check with the
         /// invocations of the call
