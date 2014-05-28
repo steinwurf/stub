@@ -25,7 +25,12 @@ TEST(call, api)
     {
         stub::call<uint32_t(uint32_t)> function;
         function.set_return(5U);
+
+        EXPECT_TRUE(function.no_calls());
+
         auto a = function(2U);
+
+        EXPECT_FALSE(function.no_calls());
 
         EXPECT_EQ(a, 5U);
         EXPECT_TRUE(function.called_once_with(2U));

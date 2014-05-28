@@ -234,6 +234,12 @@ namespace stub
             return m_calls.size();
         }
 
+        /// @return True if no calls have been made otherwise false
+        bool no_calls() const
+        {
+            return m_calls.size() == 0;
+        }
+
     private:
 
         /// The return_handler manages the return values generated

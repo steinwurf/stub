@@ -1,3 +1,8 @@
+// Copyright (c) 2014 Steinwurf ApS
+// All Rights Reserved
+//
+// Distributed under the "BSD License". See the accompanying LICENSE.rst file.
+
 #include <cstdint>
 #include <ctime>
 
