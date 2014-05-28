@@ -46,16 +46,32 @@ namespace stub
             : m_position(0)
         {}
 
-        /// Add
-        void set_return(const R& value)
+        /// Specify the return value to use
+        return_handler& set_return(const R& value)
         {
+            m_position = 0;
+            m_returns.clear();
+
             m_returns.push_back(value);
         }
 
-        void set_returns(const std::initializer_list<R>& values)
+        return_handler& set_returns(const std::initializer_list<R>& values)
         {
+            m_position = 0;
+            m_returns.clear();
+
             m_returns.insert(m_returns.end(),
                              values.begin(), values.end());
+        }
+
+        return_handler& repeat_on()
+        {
+            return *this;
+        }
+
+        return_handler& repeat_off()
+        {
+            return *this;
         }
 
         R operator()() const
