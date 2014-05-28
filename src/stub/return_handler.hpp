@@ -17,13 +17,16 @@ namespace stub
     ///
     ///    return_handler<uint32_t> v;
     ///    v.set_return(4U);
-    ///    v.set_return(3U);
     ///
     ///    uint32_t a = v();
     ///    assert(a == 4U);
     ///
     ///    uint32_t b = v();
-    ///    assert(b == 3U);
+    ///    assert(b == 4U);
+    ///
+    ///    uint32_t c = v();
+    ///    assert(c != 3U);
+    ///    assert(c == 4U);
     ///
     /// Or alternatively using the set_returns() function:
     ///
@@ -36,6 +39,13 @@ namespace stub
     ///    uint32_t b = v();
     ///    assert(b == 3U);
     ///
+    ///    uint32_t c = v();
+    ///    assert(c == 4U);
+    ///
+    ///    uint32_t d = v();
+    ///    assert(d != 4U);
+    ///    assert(d == 3U);
+    ///
     /// The default behavior is to repeat the specified return values i.e.:
     ///
     ///    return_handler<uint32_t> v;
@@ -45,20 +55,20 @@ namespace stub
     ///    uint32_t b = v();
     ///    uint32_t c = v();
     ///
-    /// This behavior can be change by calling repeat_off() in which
+    ///    assert(a == 3U && b == 3U && c == 3U);
+    ///
+    /// This behavior can be change by calling no_repeat() in which
     /// case the return_handler can only be invoked once per return
     /// value specified:
     ///
     ///    return_handler<uint32_t> v;
-    ///    v.set_return(1U);
-    ///    v.repeat_off();
+    ///    v.set_return(1U).no_repeat();
     ///
     ///    uint32_t a = v();
     ///    uint32_t b = v(); // <---- Crash
     ///
     ///    return_handler<uint32_t> v;
-    ///    v.set_return({1U,2U,3U});
-    ///    v.repeat_off();
+    ///    v.set_return({1U,2U,3U}).no_repeat();
     ///
     ///    uint32_t a = v();
     ///    uint32_t b = v();
@@ -66,8 +76,10 @@ namespace stub
     ///    uint32_t d = v(); // <---- Crash
     ///
     template<class R>
-    struct return_handler
+    class return_handler
     {
+    public:
+
         /// Initializes the return_handler with one specific return
         /// value. Calling this function will also reset the
         /// return_handler state. So any previously specified returns
@@ -110,18 +122,10 @@ namespace stub
             return *this;
         }
 
-        /// Set repeat on (this is the default behavior). Repeat on
-        /// means that the return_handler will repeat the return
-        /// values specified once it reaches the end of the list.
-        void repeat_on()
-        {
-            m_repeat = true;
-        }
-
         /// Set repeat off. This means that no values will be repeated
         /// the user has to specify exactly the number of values that
         /// should be return otherwise an assert will be triggered.
-        void repeat_off()
+        void no_repeat()
         {
             m_repeat = false;
         }
@@ -143,9 +147,11 @@ namespace stub
             return value;
         }
 
+    private:
+
         /// Boolean value controlling whether we should repeat return
         /// values when reaching the end of the return value vector or
-        /// assert. True means we repeat false means we should assert.
+        /// assert. True means we repeat, false means we should assert.
         bool m_repeat = false;
 
         /// The position of the return values vector that we will
@@ -166,6 +172,8 @@ namespace stub
     class return_handler<void>
     {
     public:
+
+        /// Empty call operator
         void operator()() const
         { }
     };
