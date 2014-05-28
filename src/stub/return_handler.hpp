@@ -5,16 +5,48 @@
 
 namespace stub
 {
-
+    /// @brief The return_handler is a helper object that is used
+    /// e.g. in the call object to control which return values should
+    /// be generated when called.
+    ///
+    /// The return_handler provides the call operator() and when
+    /// invoked it will return the specified return value. The type R
+    /// will be the return value.
+    ///
+    /// Example:
+    ///
+    ///    return_handler<uint32_t> v;
+    ///    v.set_return(4U);
+    ///    v.set_return(3U);
+    ///
+    ///    uint32_t a = v();
+    ///    assert(a == 4U);
+    ///
+    ///    uint32_t b = v();
+    ///    assert(b == 3U);
+    ///
+    /// Or alternatively using the set_returns() function:
+    ///
+    ///    return_handler<uint32_t> v;
+    ///    v.set_returns({4U,3U});
+    ///
+    ///    uint32_t a = v();
+    ///    assert(a == 4U);
+    ///
+    ///    uint32_t b = v();
+    ///    assert(b == 3U);
+    ///
     template<class R>
     class return_handler
     {
     public:
 
+        /// Constructor
         return_handler()
             : m_position(0)
         {}
 
+        /// Add
         void set_return(const R& value)
         {
             m_returns.push_back(value);
@@ -40,6 +72,7 @@ namespace stub
         std::vector<R> m_returns;
     };
 
+    /// Specialization for
     template<>
     class return_handler<void>
     {

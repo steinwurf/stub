@@ -5,55 +5,40 @@
 
 namespace stub
 {
-
-    template<class R>
-    class return_handler
-    {
-    public:
-
-        return_handler()
-            : m_position(0)
-        {}
-
-        void set_return(const R& value)
-        {
-            m_returns.push_back(value);
-        }
-
-        void set_returns(const std::initializer_list<R>& values)
-        {
-            m_returns.insert(m_returns.end(),
-                             values.begin(), values.end());
-        }
-
-        R operator()() const
-        {
-            assert(m_position < m_returns.size());
-
-            R value = m_returns[m_position];
-            ++m_position;
-
-            return value;
-        }
-
-        mutable uint32_t m_position;
-        std::vector<R> m_returns;
-    };
-
-    template<>
-    class return_handler<void>
-    {
-    public:
-
-        void operator()() const
-        {
-        }
-    };
-
     /// Default call
     template<typename T> class call;
 
-    /// Specialization accepting a function signature
+    /// @brief The call object act like a "sink" for function calls
+    /// i.e. we can define a call object to accept any type of
+    /// function call and it will simply store the arguments for later
+    /// inspection.
+    ///
+    /// The typical use-case for the call object is when testing that
+    /// some codes invokes a specfic set of functions with a specific
+    /// set of arguments.
+    ///
+    /// Example:
+    ///
+    ///    call<void(uint32_t)> some_function;
+    ///
+    /// The above call takes a uint32_t and returns nothing, lets
+    /// invoke it:
+    ///
+    /// some_function(3);
+    /// some_function(4);
+    ///
+    /// Now we may check how the function was called:
+    ///
+    /// bool called_once = some_function.called_once_with(3U);
+    /// assert(called_once == false);
+    ///
+    /// bool called_with = some_function.called_with(4U);
+    /// assert(called_with == true);
+    ///
+    /// We can also define a call which returns a value:
+    ///
+    ///     call<bool(uint32_t)> another_function;
+    ///
     template<typename R, typename... Args> class call<R (Args...)>
     {
     public:
