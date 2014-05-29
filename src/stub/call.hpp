@@ -3,6 +3,8 @@
 //
 // Distributed under the "BSD License". See the accompanying LICENSE.rst file.
 
+#include <tuple>
+
 #include "return_handler.hpp"
 
 namespace stub

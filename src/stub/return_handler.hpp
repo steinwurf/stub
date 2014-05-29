@@ -3,6 +3,10 @@
 //
 // Distributed under the "BSD License". See the accompanying LICENSE.rst file.
 
+#include <cstdint>
+#include <cassert>
+#include <vector>
+
 namespace stub
 {
     /// @brief The return_handler is a helper object that is used
@@ -80,6 +84,12 @@ namespace stub
     {
     public:
 
+        /// Constructor
+        return_handler()
+            : m_repeat(true),
+              m_position(0)
+        { }
+
         /// Initializes the return_handler with one specific return
         /// value. Calling this function will also reset the
         /// return_handler state. So any previously specified returns
@@ -152,13 +162,13 @@ namespace stub
         /// Boolean value controlling whether we should repeat return
         /// values when reaching the end of the return value vector or
         /// assert. True means we repeat, false means we should assert.
-        bool m_repeat = false;
+        bool m_repeat;
 
         /// The position of the return values vector that we will
         /// return upon next invocation of the call operator. The
         /// m_positions is mutable since the call operator is a const
         /// function and we need to increment m_positions once called.
-        mutable uint32_t m_position = 0;
+        mutable uint32_t m_position;
 
         /// Vector storing the return values to be used.
         std::vector<R> m_returns;
