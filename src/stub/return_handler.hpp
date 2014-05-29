@@ -3,6 +3,9 @@
 //
 // Distributed under the "BSD License". See the accompanying LICENSE.rst file.
 
+#include <cstdint>
+#include <cassert>
+
 namespace stub
 {
     /// @brief The return_handler is a helper object that is used
