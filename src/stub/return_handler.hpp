@@ -144,6 +144,9 @@ namespace stub
         /// @return The generated return value
         R operator()() const
         {
+            // Did you forget to add a return value?
+            assert(m_returns.size() > 0);
+
             // If we are repeating and we have reached the end of the
             // list of return values
             if (m_repeat && (m_position == m_returns.size()))
