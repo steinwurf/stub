@@ -4,8 +4,8 @@ stub
 stub is a simple C++ library that is meant to provide simple helper
 functions to ease sometimes tedious testing tasks.
 
-.. image:: http://buildbot.steinwurf.dk/svgstatus?project=gauge
-    :target: http://buildbot.steinwurf.dk/stats?projects=gauge
+.. image:: http://buildbot.steinwurf.dk/svgstatus?project=stub
+    :target: http://buildbot.steinwurf.dk/stats?projects=stub
 
 Usage
 -----
