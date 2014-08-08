@@ -122,3 +122,20 @@ TEST(call, predicate)
                         std::make_tuple(8U)}));
     }
 }
+
+
+TEST(call, arguments)
+{
+    stub::call<void(uint32_t,uint32_t)> function;
+
+    function(2,3);
+    function(4,5);
+
+    EXPECT_EQ(function.calls(), 2);
+
+    auto one = std::make_tuple(2,3);
+    auto two = std::make_tuple(4,5);
+
+    EXPECT_TRUE(one == function.call_arguments(0));
+    EXPECT_TRUE(two == function.call_arguments(1));
+}
