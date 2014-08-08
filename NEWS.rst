@@ -4,8 +4,8 @@ News for stub
 This file lists the major changes between versions. For a more detailed list of
 every change, see the Git log.
 
-Latest
-------
+1.1.0
+-----
 * Minor: Added the call_arguments(..) function to access a specific
   call's arguments
 
