@@ -242,6 +242,13 @@ namespace stub
             return m_calls.size() == 0;
         }
 
+        /// @return The arguments passed to the n'th call
+        const arguments& call_arguments(uint32_t index) const
+        {
+            assert(index < m_calls.size());
+            return m_calls[index];
+        }
+
     private:
 
         /// The return_handler manages the return values generated
