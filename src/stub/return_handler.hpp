@@ -32,10 +32,10 @@ namespace stub
     ///    assert(c != 3U);
     ///    assert(c == 4U);
     ///
-    /// Or alternatively using the set_returns() function:
+    /// Or alternatively set multiple return values:
     ///
     ///    return_handler<uint32_t> v;
-    ///    v.set_returns({4U,3U});
+    ///    v.set_return({4U,3U});
     ///
     ///    uint32_t a = v();
     ///    assert(a == 4U);

@@ -14,7 +14,7 @@ set of arguments.
 Example:
 
 ::
-   
+
    #include<stub/call.hpp>
 
    stub::call<void(uint32_t)> some_function;
@@ -22,8 +22,8 @@ Example:
 The above call takes an uint32_t and returns nothing, lets
 invoke it:
 
-:: 
-    
+::
+
     some_function(3);
     some_function(4);
 
@@ -41,19 +41,69 @@ We can also define a call which returns a value:
 
 ::
 
-    stub::call<bool(uint32_t)> another_function;
+    stub::call<bool(uint32_t)> some_function;
 
 Here we have to specify what return value we expect:
 
 ::
 
-    another_function.set_return(true);
+    some_function.set_return(true);
 
-    bool a = another_function(23);
-    bool b = another_function(13);
+    bool a = some_function(23);
+    bool b = some_function(13);
 
     assert(a == true);
     assert(b == true);
+
+Or alternatively set multiple return values:
+
+::
+    stub::call<uint32_t()> some_function;
+
+    some_function.set_return({4U,3U});
+
+    uint32_t a = some_function();
+    assert(a == 4U);
+
+    uint32_t b = some_function();
+    assert(b == 3U);
+
+    uint32_t c = some_function();
+    assert(c == 4U);
+
+    uint32_t d = some_function();
+    assert(d != 4U);
+    assert(d == 3U);
+
+The default behavior is to repeat the specified return values i.e.:
+
+::
+    stub::call<uint32_t()> some_function;
+    some_function.set_return(3U);
+
+    uint32_t a = some_function();
+    uint32_t b = some_function();
+    uint32_t c = some_function();
+
+    assert(a == 3U && b == 3U && c == 3U);
+
+This behavior can be change by calling ``no_repeat()`` in which case
+the return_handler can only be invoked once per return value
+specified:
+
+::
+    stub::call<uint32_t()> some_function;
+    some_function.set_return(1U).no_repeat();
+
+    uint32_t a = some_function();
+    uint32_t b = some_function(); // <---- Crash
+
+    some_function.set_return({1U,2U,3U}).no_repeat();
+
+    uint32_t a = some_function();
+    uint32_t b = some_function();
+    uint32_t c = some_function();
+    uint32_t d = some_function(); // <---- Crash
 
 In addition to the functionality shown in this example the
 ``stub::call`` object provides a couple of extra functions for
