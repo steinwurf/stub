@@ -14,6 +14,12 @@ set of arguments.
 Function Calls
 --------------
 
+One of the useful features of the call stub is the possibility to
+check the parameters of the "simulated" function calls:
+
+Check A Single Function Call
+............................
+
 Example:
 
 ::
@@ -58,6 +64,26 @@ made.
 
     // Return true if no calls were made
     assert(some_function.no_calls() == false);
+
+Check The Exact Calls
+.....................
+
+In some cases we might want to check whether a specific set of
+function calls was made:
+
+::
+
+    stub::call<void(uint32_t)> some_function;
+
+    some_function(3);
+    some_function(4);
+
+    // Return how many calls where made
+    assert(some_function.calls() == 2);
+
+    // Return true if no calls were made
+    assert(some_function.no_calls() == false);
+
 
 
 Function Return Values
