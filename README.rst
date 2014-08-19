@@ -11,6 +11,9 @@ The typical use-case for the call object is when testing that
 some code invokes a specific set of functions with a specific
 set of arguments.
 
+Function Parameters
+-------------------
+
 Example:
 
 ::
@@ -36,6 +39,9 @@ Now we may check how the function was called:
 
     bool called_with = some_function.called_with(4U);
     assert(called_with == true);
+
+Function Return Values
+----------------------
 
 We can also define a call which returns a value:
 
@@ -115,3 +121,7 @@ information.
 
 For more information on the options for return values see the
 src/stub/return_handler.hpp
+
+License
+-------
+The stub library is released under the BSD license see the LICENSE.rst file
