@@ -11,8 +11,8 @@ The typical use-case for the call object is when testing that
 some code invokes a specific set of functions with a specific
 set of arguments.
 
-Function Parameters
--------------------
+Function Calls
+--------------
 
 Example:
 
@@ -39,6 +39,26 @@ Now we may check how the function was called:
 
     bool called_with = some_function.called_with(4U);
     assert(called_with == true);
+
+Check The Number Of Calls
+.........................
+
+We have two functions to directly check the number of function calls
+made.
+
+::
+
+    stub::call<void(uint32_t)> some_function;
+
+    some_function(3);
+    some_function(4);
+
+    // Return how many calls where made
+    assert(some_function.calls() == 2);
+
+    // Return true if no calls were made
+    assert(some_function.no_calls() == false);
+
 
 Function Return Values
 ----------------------
