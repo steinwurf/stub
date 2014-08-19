@@ -58,6 +58,7 @@ Here we have to specify what return value we expect:
 Or alternatively set multiple return values:
 
 ::
+
     stub::call<uint32_t()> some_function;
 
     some_function.set_return({4U,3U});
@@ -78,6 +79,7 @@ Or alternatively set multiple return values:
 The default behavior is to repeat the specified return values i.e.:
 
 ::
+
     stub::call<uint32_t()> some_function;
     some_function.set_return(3U);
 
@@ -92,6 +94,7 @@ the return_handler can only be invoked once per return value
 specified:
 
 ::
+
     stub::call<uint32_t()> some_function;
     some_function.set_return(1U).no_repeat();
 
