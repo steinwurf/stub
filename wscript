@@ -2,7 +2,7 @@
 # encoding: utf-8
 
 APPNAME = 'stub'
-VERSION = '1.0.1'
+VERSION = '1.1.0'
 
 def recurse_helper(ctx, name):
     if not ctx.has_dependency_path(name):

@@ -2,9 +2,15 @@ stub
 ====
 
 stub is a simple C++ library that is meant to provide simple helper
-functions to ease sometimes tedious testing tasks. An example of this
-is ``stub::call``. The call object act like a "sink" for function
-calls i.e. we can define a call object to accept any type of function
+functions to ease sometimes tedious testing tasks.
+
+.. image:: http://buildbot.steinwurf.dk/svgstatus?project=stub
+    :target: http://buildbot.steinwurf.dk/stats?projects=stub
+
+Usage
+-----
+The ``stub::call`` object act like a "sink" for function calls
+i.e. we can define a call object to accept any type of function
 call and it will simply store the arguments for later inspection.
 
 The typical use-case for the call object is when testing that

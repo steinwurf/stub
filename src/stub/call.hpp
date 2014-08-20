@@ -3,6 +3,8 @@
 //
 // Distributed under the "BSD License". See the accompanying LICENSE.rst file.
 
+#pragma once
+
 #include <tuple>
 
 #include "return_handler.hpp"
@@ -240,6 +242,13 @@ namespace stub
         bool no_calls() const
         {
             return m_calls.size() == 0;
+        }
+
+        /// @return The arguments passed to the n'th call
+        const arguments& call_arguments(uint32_t index) const
+        {
+            assert(index < m_calls.size());
+            return m_calls[index];
         }
 
     private:
