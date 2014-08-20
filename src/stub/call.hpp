@@ -251,6 +251,52 @@ namespace stub
             return m_calls[index];
         }
 
+
+
+        struct expectation
+        {
+            expectation(call& the_call)
+                : m_call(the_call)
+            { }
+
+            expectation& repeat(uint32_t times)
+            {
+                assert(times >= 1);
+                assert(m_calls.size() > 0);
+
+                for(uint32_t i = 1; i < times; ++i)
+                    m_calls.push_back(m_calls.back());
+
+                return *this;
+            }
+
+            expectation& with(Args... args)
+            {
+                m_calls.emplace_back(args...);
+                return *this;
+            }
+
+            explicit operator bool() const
+            {
+                return std::equal(std::begin(m_call.m_calls),
+                                  std::end(m_call.m_calls),
+                                  std::begin(m_calls));
+            }
+
+            call& m_call;
+
+            std::vector<arguments> m_calls;
+        };
+
+
+        expectation expect_calls()
+        {
+            return expectation(*this);
+        }
+
+
+
+
     private:
 
         /// The return_handler manages the return values generated

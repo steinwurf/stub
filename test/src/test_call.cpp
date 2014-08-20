@@ -139,3 +139,43 @@ TEST(call, arguments)
     EXPECT_TRUE(one == function.call_arguments(0));
     EXPECT_TRUE(two == function.call_arguments(1));
 }
+
+TEST(call, expect)
+{
+    stub::call<void(uint32_t,uint32_t)> function;
+
+    function(2,3);
+    function(4,5);
+
+    EXPECT_TRUE((bool)function.expect_calls()
+                    .with(2,3)
+                    .with(4,5));
+}
+
+
+TEST(call, expect_repeatedly)
+{
+    stub::call<void(uint32_t,uint32_t)> function;
+
+    function(2,3);
+    function(4,5);
+    function(4,5);
+    function(4,5);
+    function(2,3);
+
+    EXPECT_TRUE((bool)function.expect_calls()
+                    .with(2,3)
+                    .with(4,5).repeat(3)
+                    .with(2,3));
+
+    EXPECT_TRUE((bool)function.expect_calls()
+                    .with(2,3).repeat(1)
+                    .with(4,5).repeat(3)
+                    .with(2,3));
+
+    EXPECT_FALSE((bool)function.expect_calls()
+                    .with(2,2).repeat(1)
+                    .with(4,5).repeat(3)
+                    .with(2,3));
+
+}
