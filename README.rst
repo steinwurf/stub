@@ -28,7 +28,7 @@ Example:
 
    stub::call<void(uint32_t)> some_function;
 
-The above call takes an uint32_t and returns nothing, lets
+The above call takes an ``uint32_t`` and returns nothing, lets see how to
 invoke it:
 
 ::
@@ -49,7 +49,7 @@ Now we may check how the function was called:
 Check The Number Of Calls
 .........................
 
-We have two functions to directly check the number of function calls
+It is also possible to directly check the number of function calls
 made.
 
 ::
@@ -65,11 +65,31 @@ made.
     // Return true if no calls were made
     assert(some_function.no_calls() == false);
 
+Check The Most Recent Call
+..........................
+
+We can also check the parameters of the most recent function call.
+
+::
+
+    stub::call<void(uint32_t,uint32_t)> some_function;
+
+    some_function(3,4);
+    some_function(4,3);
+
+    // Not the most recent call
+    assert(some_function.called_with(3,4) == false);
+
+    // Now it works
+    assert(some_function.called_with(4, 3) == true);
+
+
+
 Check The Exact Calls
 .....................
 
 In some cases we might want to check whether a specific set of
-function calls was made:
+function calls were made:
 
 ::
 
