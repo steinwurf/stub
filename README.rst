@@ -23,8 +23,8 @@ Function Calls
 One of the useful features of the call stub is the possibility to
 check the parameters of the "simulated" function calls:
 
-Check A Single Function Call
-............................
+Check a set of function calls
+.............................
 
 Example:
 
@@ -42,18 +42,95 @@ invoke it:
     some_function(3);
     some_function(4);
 
-Now we may check how the function was called:
+Now we may check how the function was invoked. Using the
+``expect_calls()`` function we can create an expectation with can will
+be checked against the actual call and convert to either ``true`` if
+the expectation matches or ``false`` if not.
 
 ::
 
-    bool called_once = some_function.called_once_with(3U);
-    assert(called_once == false);
+    // Expectation matches how we called the function
+    bool works = some_function.expect_calls()
+        .with(3U)
+        .with(4U);
 
-    bool called_with = some_function.called_with(4U);
-    assert(called_with == true);
+    assert(works == true);
 
-Check The Number Of Calls
-.........................
+    // Not the right call order
+    works = some_function.expect_calls()
+        .with(4U)
+        .with(3U);
+
+    assert(works == false);
+
+
+Functions taking no arguments
+............................
+
+The ``with(...)`` function takes exactly the same number and type of
+arguments as the ``stub::call`` function.
+
+::
+    stub::call<void()> function;
+    function();
+    function();
+
+    // Is matched by:
+    bool works = function.expect_calls()
+        .with()
+        .with();
+
+    assert(works);
+
+
+Check a number of similar function calls
+........................................
+
+If we have a bunch of similar function calls it can be tedious to
+setup an expectation to match it. To make this easier we can call
+``repeat(...)`` on the expectation object. This will copy the
+arguments of the last ``with(...)`` a number of times.
+
+::
+
+    stub::call<void()> function;
+
+    function();
+    function();
+    function();
+    function();
+    function();
+    function();
+
+    bool works = function.expect_calls()
+        .with().repeat(5);
+
+    assert(works == true);
+
+Is the same as:
+
+::
+
+    stub::call<void()> function;
+    function();
+    function();
+    function();
+    function();
+    function();
+    function();
+
+    bool works = function.expect_calls()
+        .with()
+        .with()
+        .with()
+        .with()
+        .with()
+        .with();
+
+    assert(works == true);
+
+Check the number of function calls
+..................................
 
 It is also possible to directly check the number of function calls
 made.
@@ -71,46 +148,59 @@ made.
     // Return true if no calls were made
     assert(some_function.no_calls() == false);
 
-Check The Most Recent Call
-..........................
+Check only some function calls
+..............................
 
-We can also check the parameters of the most recent function call.
-
-::
-
-    stub::call<void(uint32_t,uint32_t)> some_function;
-
-    some_function(3,4);
-    some_function(4,3);
-
-    // Not the most recent call
-    assert(some_function.called_with(3,4) == false);
-
-    // Now it works
-    assert(some_function.called_with(4, 3) == true);
-
-
-
-Check The Exact Calls
-.....................
-
-In some cases we might want to check whether a specific set of
-function calls were made:
+Sometimes we might not care about the arguments to all function
+calls. If that is the case we can use the ``ignore(...)`` function to
+ignore some of the calls.
 
 ::
 
-    stub::call<void(uint32_t)> some_function;
+    stub::call<void(uint32_t,uint32_t)> function;
+    function(3,1);
+    function(4,2);
+    function(5,0);
 
-    some_function(3);
-    some_function(4);
+    assert(function.expect_calls()
+        .ignore(2)
+        .with(5,0));
 
-    // Return how many calls where made
-    assert(some_function.calls() == 2);
+Here we ignore the first two calls and only check the last one. The
+ignore function can be used in between ``with(...)`` calls if wanted.
 
-    // Return true if no calls were made
-    assert(some_function.no_calls() == false);
+::
+
+     stub::call<void(uint32_t,uint32_t)> function;
+     function(3,1);
+     function(4,2);
+     function(5,0);
+
+     assert(function.expect_calls()
+         .with(3,1)
+         .ignore(1)
+         .with(5,0));
+
+Here we ignore the arguments to the second call and check only the
+first and last calls.
 
 
+Check the most recent function call
+...................................
+
+We can also check the arguments of the most recent function call.
+
+::
+
+    stub::call<void(uint32_t,uint32_t)> function;
+
+    function(3,4);
+    function(4,3);
+    function(2,6);
+
+    assert(function.expect_calls()
+        .ignore(function.calls() - 1)
+        .with(2,6));
 
 Function Return Values
 ----------------------
@@ -193,6 +283,29 @@ information.
 
 For more information on the options for return values see the
 src/stub/return_handler.hpp
+
+Unit testing
+------------
+
+The unit tests for the stub library are located in the ``test/src`` folder.
+
+We use the Google Unit Testing Framework (gtest) to drive drive the
+unit tests. To build the tests run:
+
+::
+    python waf configure
+    python waf
+
+Depending on the platform your should see a test binary called
+``stub_tests`` in:
+
+::
+
+    build/platform/test/
+
+Where ``platform`` is typically is either linux, win32 or darwin
+depeding on your operating system.
+
 
 License
 -------

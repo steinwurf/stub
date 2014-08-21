@@ -17,9 +17,9 @@ namespace stub
     template<typename T> class call;
 
     /// @brief The call object act like a "sink" for function calls
-    /// i.e. we can define a call object to accept any type of
-    /// function call and it will simply store the arguments for later
-    /// inspection.
+    ///        i.e. we can define a call object to accept any type of
+    ///        function call and it will simply store the arguments
+    ///        for later inspection.
     ///
     /// The typical use-case for the call object is when testing that
     /// some code invokes a specific set of functions with a specific
@@ -27,7 +27,7 @@ namespace stub
     ///
     /// Example:
     ///
-    ///    call<void(uint32_t)> some_function;
+    ///    stub::call<void(uint32_t)> some_function;
     ///
     /// The above call takes an uint32_t and returns nothing, lets
     /// invoke it:
@@ -37,15 +37,15 @@ namespace stub
     ///
     /// Now we may check how the function was called:
     ///
-    ///     bool called_once = some_function.called_once_with(3U);
+    ///     bool called_once = some_function.expect_calls().with(3U);
     ///     assert(called_once == false);
     ///
-    ///     bool called_with = some_function.called_with(4U);
+    ///     bool called_with = some_function.expect_calls().with(4U);
     ///     assert(called_with == true);
     ///
     /// We can also define a call which returns a value:
     ///
-    ///     call<bool(uint32_t)> another_function;
+    ///     stub::call<bool(uint32_t)> another_function;
     ///
     /// Here we have to specify what return value we expect:
     ///
@@ -74,11 +74,11 @@ namespace stub
         ///     function(3);
         ///
         /// In this case we will store an int of value 3 instead of a
-        /// const reference to the temporary value which will no long
-        /// exist when we want to compare.
+        /// const& to the temporary value which will no longer exist
+        /// when we want to compare.
         ///
         /// A tuple is used to store the arguments passed
-        typedef std::tuple<typename unqualified_type<Args>::type...> arguments;
+        using arguments = std::tuple<typename unqualified_type<Args>::type...>;
 
         /// The default binary predicate type use when comparing
         /// function calls
@@ -89,13 +89,14 @@ namespace stub
 
         /// Represent a expectation of how the call object has been
         /// invoked. Using the API it is possible to setup how we
-        /// expect the call object to look like. The expectation
-        /// convert to bool allowing the user to detect whether the
-        /// expecatation was correct.
+        /// expect the call object looks like. The expectation
+        /// converts to bool allowing the user to detect whether the
+        /// expectation was correct.
         template<class BinaryPredicate>
         struct expectation
         {
             /// @param the_call The call we configuring an expectation for
+            ///
             /// @param predicate The function object used to compare the
             ///        call arguments
             expectation(const call& the_call, const BinaryPredicate& predicate)
