@@ -9,11 +9,13 @@
 #include <cassert>
 #include <vector>
 
+#include "unqualified_type.hpp"
+
 namespace stub
 {
     /// @brief The return_handler is a helper object that is used
-    /// e.g. in the call object to control which return values should
-    /// be generated when called.
+    ///        e.g. in the call object to control which return values
+    ///        should be generated when called.
     ///
     /// The return_handler provides the call operator() and when
     /// invoked it will return the specified return value. The type R
@@ -86,6 +88,9 @@ namespace stub
     {
     public:
 
+        /// Get the unqualified version of return type.
+        using return_type = unqualified_type<R>;
+
         /// Constructor
         return_handler()
             : m_repeat(true),
@@ -102,7 +107,8 @@ namespace stub
         /// @return Reference to the return handler, this allows the
         /// caller to perform additional customization to the return
         /// handler such as turn on or off repeat.
-        return_handler& set_return(const R& value)
+        // return_handler& set_return(const R& value)
+        return_handler& set_return(const return_type& value)
         {
             m_repeat = true;
             m_position = 0;
@@ -123,7 +129,9 @@ namespace stub
         /// @return Reference to the return handler, this allows the
         /// caller to perform additional customization to the return
         /// handler such as turn on or off repeat.
-        return_handler& set_return(const std::initializer_list<R>& values)
+        // return_handler& set_return(const std::initializer_list<R>& values)
+        return_handler&
+        set_return(const std::initializer_list<return_type>& values)
         {
             m_repeat = true;
             m_position = 0;
@@ -176,7 +184,7 @@ namespace stub
         mutable uint32_t m_position;
 
         /// Vector storing the return values to be used.
-        std::vector<R> m_returns;
+        std::vector<return_type> m_returns;
     };
 
     /// Specialization for the case of a void function i.e. no return
