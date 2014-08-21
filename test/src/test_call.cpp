@@ -141,6 +141,37 @@ TEST(call, expect_calls_with)
                     .with(4,5));
 }
 
+// Test that the basic expect_calls() function works when we have more
+// with statements than actual function calls and the other way
+// around.
+TEST(call, expect_calls_with_out_of_bounds)
+{
+    {
+        stub::call<void(uint32_t,uint32_t)> function;
+
+        EXPECT_FALSE((bool)function.expect_calls()
+                        .with(2,3)
+                        .with(4,5));
+    }
+
+    {
+        stub::call<void(uint32_t,uint32_t)> function;
+
+        EXPECT_FALSE((bool)function.expect_calls()
+                         .with(2,3).repeat(10));
+    }
+
+    {
+        stub::call<void(uint32_t,uint32_t)> function;
+
+        function(2,3);
+        function(4,5);
+
+        EXPECT_FALSE((bool)function.expect_calls()
+                         .with(2,3));
+    }
+}
+
 // Test that we can "inject" the same expected calls with the repeat
 // function
 TEST(call, expect_calls_with_repeat)

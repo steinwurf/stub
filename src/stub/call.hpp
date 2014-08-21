@@ -165,7 +165,7 @@ namespace stub
             ///         function calls
             expectation& repeat(uint32_t times)
             {
-                assert(times >= 1);
+                assert(times > 0);
                 assert(m_calls.size() > 0);
 
                 for (uint32_t i = 0; i < times; ++i)
@@ -224,6 +224,8 @@ namespace stub
                 for (uint32_t i = 0; i < calls; ++i)
                 {
                     uint32_t index = skip + i;
+
+                    assert(index < m_call.m_calls.size());
                     m_calls.push_back(m_call.m_calls[index]);
                 }
 
@@ -238,6 +240,9 @@ namespace stub
             ///         otherwise false
             explicit operator bool() const
             {
+                if (m_call.m_calls.size() != m_calls.size())
+                    return false;
+
                 return std::equal(std::begin(m_call.m_calls),
                                   std::end(m_call.m_calls),
                                   std::begin(m_calls),
