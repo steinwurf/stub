@@ -17,6 +17,6 @@ namespace stub
 
     template<typename T>
     using unqualified_type =
-        typename std::remove_cv<
-        typename std::remove_reference<T>::type>::type;
+        std::remove_cv<
+        typename std::remove_reference<T>::type>;
 }

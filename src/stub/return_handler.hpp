@@ -89,7 +89,7 @@ namespace stub
     public:
 
         /// Get the unqualified version of return type.
-        using return_type = unqualified_type<R>;
+        using return_type = typename unqualified_type<R>::type;
 
         /// Constructor
         return_handler()

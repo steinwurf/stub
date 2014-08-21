@@ -78,7 +78,7 @@ namespace stub
         /// exist when we want to compare.
         ///
         /// A tuple is used to store the arguments passed
-        typedef std::tuple<unqualified_type<Args>...> arguments;
+        typedef std::tuple<typename unqualified_type<Args>::type...> arguments;
 
         /// The default binary predicate type use when comparing
         /// function calls
