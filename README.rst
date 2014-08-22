@@ -213,6 +213,32 @@ We can also check the arguments of the most recent function call.
         .ignore(function.calls() - 1)
         .with(2,6));
 
+Get the arguments of a specific function call
+.............................................
+
+If you are interested in manually inspect the arguments passed to a
+function call this can be done using the ``call_arguements(uint32_t)``
+function.
+
+::
+
+    stub::call<void(uint32_t,uint32_t)> function;
+
+    function(3,4);
+    function(4,3);
+    function(2,6);
+
+Internally the arguments are stored in a ``std::tuple`` so in this
+case it would be ``std::tuple<uint32_t,uint32_t>``. Lets compare the
+arguments of the second call:
+
+::
+
+   auto a = function.call_arguments(2);
+   auto b = std::make_tuple(4,3);
+
+   assert(a == b);
+
 Function return values
 ----------------------
 
