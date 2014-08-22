@@ -239,7 +239,7 @@ arguments of the second call:
 
    assert(a == b);
 
-**note:** You should use the "unqualified types" of the function
+**Note:** You should use the "unqualified types" of the function
 arguments. This means that if you have a function
 ``stub::call<void(const uint32_t&>`` then the stub library will store
 the argument passed in an ``uint32_t`` instead of a ``const
