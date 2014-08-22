@@ -414,6 +414,7 @@ We use the Google Unit Testing Framework (gtest) to drive the unit
 tests. To build the tests run:
 
 ::
+
     python waf configure
     python waf
 
