@@ -17,6 +17,16 @@ The typical use-case for the call object is when testing that
 some code invokes a specific set of functions with a specific
 set of arguments.
 
+Header-only
+...........
+
+The library itself is header-only so essentially to use it you just
+have to clone the repository and setup the right include paths in the
+project where you would like to use it.
+
+The library uses c++11 features such as variadic templates, so you
+need a relatively recent compiler to use it.
+
 Function Calls
 --------------
 
@@ -71,6 +81,7 @@ The ``with(...)`` function takes exactly the same number and type of
 arguments as the ``stub::call`` function.
 
 ::
+
     stub::call<void()> function;
     function();
     function();
@@ -202,10 +213,10 @@ We can also check the arguments of the most recent function call.
         .ignore(function.calls() - 1)
         .with(2,6));
 
-Function Return Values
+Function return values
 ----------------------
 
-We can also define a call which returns a value:
+We can also define a ``stub::call`` which returns a value:
 
 ::
 
@@ -223,7 +234,7 @@ Here we have to specify what return value we expect:
     assert(a == true);
     assert(b == true);
 
-Or alternatively set multiple return values:
+Or alternatively we can set multiple return values:
 
 ::
 
@@ -289,15 +300,16 @@ Unit testing
 
 The unit tests for the stub library are located in the ``test/src`` folder.
 
-We use the Google Unit Testing Framework (gtest) to drive drive the
-unit tests. To build the tests run:
+We use the Google Unit Testing Framework (gtest) to drive the unit
+tests. To build the tests run:
 
 ::
     python waf configure
     python waf
 
-Depending on the platform your should see a test binary called
-``stub_tests`` in:
+Depending on the platform you should see a test binary called
+``stub_tests`` in (extension also depends on operating system
+e.g. ``.exe`` for windows):
 
 ::
 
