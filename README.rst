@@ -287,7 +287,8 @@ And a function with takes those objects as arguments:
 
 In this case we are using a c++11 lambda function as comparison
 function. Notice that we get the arguments wrapped in ``std::tuple``
-objects.
+objects (as unqualified types see above if you don't know what that
+means).
 
 As another example use a custom comparison for objects that do have
 ``operator==(...)`` but where we have a custom equality criteria.
