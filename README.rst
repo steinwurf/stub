@@ -293,6 +293,10 @@ means).
 As another example use a custom comparison for objects that do have
 ``operator==(...)`` but where we have a custom equality criteria.
 
+In this case we consider two ``std::pair<uint32_t,uint32_t>`` objects
+equal if their second element is equal. To do this with the stub
+library we need to provide a custom comparison function.
+
 ::
 
     using element = std::pair<uint32_t, uint32_t>;
