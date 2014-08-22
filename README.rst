@@ -239,6 +239,17 @@ arguments of the second call:
 
    assert(a == b);
 
+..note:: You should use the "unqualified type" of the function
+         arguments. This means that if you have a function
+         ``stub::call<void(const uint32_t&>`` then the stub library
+         will store the argument passed in an ``uint32_t`` instead of
+         a ``const uint32_t&``. So our comparison should use
+         ``std::tuple<uint32_t>``
+
+         You can find more information about unqualified types `here
+         <http://stackoverflow.com/questions/17295169>`_ and
+         `here<http://bit.ly/1mtJhyb>`_.
+
 Function return values
 ----------------------
 
