@@ -248,7 +248,7 @@ arguments of the second call:
 
          You can find more information about unqualified types `here
          <http://stackoverflow.com/questions/17295169>`_ and
-         `here<http://bit.ly/1mtJhyb>`_.
+         `here <http://bit.ly/1mtJhyb>`_.
 
 Function return values
 ----------------------
