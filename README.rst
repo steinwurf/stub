@@ -239,16 +239,84 @@ arguments of the second call:
 
    assert(a == b);
 
-..note:: You should use the "unqualified type" of the function
-         arguments. This means that if you have a function
-         ``stub::call<void(const uint32_t&>`` then the stub library
-         will store the argument passed in an ``uint32_t`` instead of
-         a ``const uint32_t&``. So our comparison should use
-         ``std::tuple<uint32_t>``
+**note:** You should use the "unqualified types" of the function
+arguments. This means that if you have a function
+``stub::call<void(const uint32_t&>`` then the stub library will store
+the argument passed in an ``uint32_t`` instead of a ``const
+uint32_t&``. So our comparison should use ``std::tuple<uint32_t>``
 
-         You can find more information about unqualified types `here
-         <http://stackoverflow.com/questions/17295169>`_ and
-         `here <http://bit.ly/1mtJhyb>`_.
+You can find more information about unqualified types `here
+<http://stackoverflow.com/questions/17295169>`_ and `here
+<http://bit.ly/1Markab>`_.
+
+Comparing custom arguments
+..........................
+
+The default behavior for the ``expect_calls(...)`` function is to
+compare arguments passed though the ``with(...)`` function to the
+actual arguments using the ``operator==(...)`` function. However,
+sometimes we want to make custom comparisons or to compare objects
+that do not provide ``operator==(...)``. In those cases we can provide
+a custom comparison function.
+
+Lets say we have a custom object:
+
+::
+
+    struct cup
+    {
+        double m_volume;
+    };
+
+And a function with takes those objects as arguments:
+
+::
+
+    stub::call<void(const cup&)> function;
+
+    function(cup{2.3});
+    function(cup{4.5});
+
+    auto p = [](const std::tuple<cup>& a,
+                const std::tuple<cup>& b) -> bool
+        { return std::get<0>(a).m_volume == std::get<0>(b).m_volume; };
+
+    assert(function.expect_calls(p)
+        .with(cup{2.3})
+        .with(cup{4.5}));
+
+In this case we are using a c++11 lambda function as comparison
+function. Notice that we get the arguments wrapped in ``std::tuple``
+objects.
+
+As another example use a custom comparison for objects that do have
+``operator==(...)`` but where we have a custom equality criteria.
+
+::
+
+    using element = std::pair<uint32_t, uint32_t>;
+
+    auto p = [](const std::tuple<element>& a,
+                const std::tuple<element>& b) -> bool
+        { return std::get<0>(a).second == std::get<0>(b).second; };
+
+    stub::call<void(const element&)> function;
+    function(element(2,3));
+    function(element(20,3));
+
+    // We have called the function more than once
+    assert(false == function.expect_calls(p)
+        .with(element(10,3)));
+
+    // Works since we only match the second value of the pair
+    assert(function.expect_calls(p)
+        .with(element(1,3))
+        .with(element(2,3)));
+
+    // Without the custom comparison it fails
+    assert(false == function.expect_calls()
+        .with(element(1,3))
+        .with(element(2,3)));
 
 Function return values
 ----------------------
