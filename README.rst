@@ -427,7 +427,7 @@ e.g. ``.exe`` for windows):
     build/platform/test/
 
 Where ``platform`` is typically is either linux, win32 or darwin
-depeding on your operating system.
+depending on your operating system.
 
 
 License
