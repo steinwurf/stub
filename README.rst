@@ -53,9 +53,9 @@ invoke it:
     some_function(4);
 
 Now we may check how the function was invoked. Using the
-``expect_calls()`` function we can create an expectation with can will
-be checked against the actual call and convert to either ``true`` if
-the expectation matches or ``false`` if not.
+``expect_calls()`` function we can create an expectation with will be
+checked against the actual call and convert to either ``true`` if the
+expectation matches or ``false`` if not.
 
 ::
 
@@ -216,7 +216,7 @@ We can also check the arguments of the most recent function call.
 Get the arguments of a specific function call
 .............................................
 
-If you are interested in manually inspect the arguments passed to a
+If you are interested in manually inspecting the arguments passed to a
 function call this can be done using the ``call_arguements(uint32_t)``
 function.
 
@@ -291,7 +291,7 @@ objects (as unqualified types see above if you don't know what that
 means).
 
 As another example use a custom comparison for objects that do have
-``operator==(...)`` but where we have a custom equality criteria.
+``operator==(...)`` but where we have custom equality criteria.
 
 In this case we consider two ``std::pair<uint32_t,uint32_t>`` objects
 equal if their second element is equal. To do this with the stub
