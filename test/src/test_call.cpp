@@ -131,7 +131,7 @@ TEST(call, arguments)
     function(2,3);
     function(4,5);
 
-    EXPECT_EQ(function.calls(), 2);
+    EXPECT_EQ(function.calls(), 2U);
 
     auto one = std::make_tuple(2,3);
     auto two = std::make_tuple(4,5);
