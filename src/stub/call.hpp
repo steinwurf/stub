@@ -6,8 +6,10 @@
 #pragma once
 
 #include <tuple>
+#include <functional>
 
 #include "return_handler.hpp"
+#include "unqualified_type.hpp"
 
 namespace stub
 {
@@ -15,9 +17,9 @@ namespace stub
     template<typename T> class call;
 
     /// @brief The call object act like a "sink" for function calls
-    /// i.e. we can define a call object to accept any type of
-    /// function call and it will simply store the arguments for later
-    /// inspection.
+    ///        i.e. we can define a call object to accept any type of
+    ///        function call and it will simply store the arguments
+    ///        for later inspection.
     ///
     /// The typical use-case for the call object is when testing that
     /// some code invokes a specific set of functions with a specific
@@ -25,7 +27,7 @@ namespace stub
     ///
     /// Example:
     ///
-    ///    call<void(uint32_t)> some_function;
+    ///    stub::call<void(uint32_t)> some_function;
     ///
     /// The above call takes an uint32_t and returns nothing, lets
     /// invoke it:
@@ -35,15 +37,15 @@ namespace stub
     ///
     /// Now we may check how the function was called:
     ///
-    ///     bool called_once = some_function.called_once_with(3U);
+    ///     bool called_once = some_function.expect_calls().with(3U);
     ///     assert(called_once == false);
     ///
-    ///     bool called_with = some_function.called_with(4U);
+    ///     bool called_with = some_function.expect_calls().with(4U);
     ///     assert(called_with == true);
     ///
     /// We can also define a call which returns a value:
     ///
-    ///     call<bool(uint32_t)> another_function;
+    ///     stub::call<bool(uint32_t)> another_function;
     ///
     /// Here we have to specify what return value we expect:
     ///
@@ -63,8 +65,203 @@ namespace stub
     {
     public:
 
+        /// Get the unqualified type, i.e. if the function takes a
+        /// reference to some type we make sure we store the actual type.
+        ///
+        /// Example:
+        ///
+        ///     stub::call<void(const int&)> function;
+        ///     function(3);
+        ///
+        /// In this case we will store an int of value 3 instead of a
+        /// const& to the temporary value which will no longer exist
+        /// when we want to compare.
+        ///
         /// A tuple is used to store the arguments passed
-        typedef std::tuple<Args...> arguments;
+        using arguments = std::tuple<typename unqualified_type<Args>::type...>;
+
+        /// The default binary predicate type use when comparing
+        /// function calls
+        using default_predicate =
+            std::function<bool(const arguments&,const arguments&)>;
+
+    public:
+
+        /// Represent a expectation of how the call object has been
+        /// invoked. Using the API it is possible to setup how we
+        /// expect the call object looks like. The expectation
+        /// converts to bool allowing the user to detect whether the
+        /// expectation was correct.
+        template<class BinaryPredicate>
+        struct expectation
+        {
+            /// @param the_call The call we configuring an expectation for
+            ///
+            /// @param predicate The function object used to compare the
+            ///        call arguments
+            expectation(const call& the_call, const BinaryPredicate& predicate)
+                : m_call(the_call),
+                  m_predicate(predicate)
+            { }
+
+            /// Calling with(...) will add a set of arguments we
+            /// expect to see. with(...) can be called multiple times
+            /// in a row if we expect multiple function calls to the
+            /// call object.
+            ///
+            /// As an example:
+            ///
+            ///     stub::call<void(uint32_t,uint32_t)> function;
+            ///     function(3,1);
+            ///     function(4,2);
+            ///
+            ///     assert(function.expect_calls()
+            ///                .with(3,1).with(4,2));
+            ///
+            ///
+            /// @param args The arguments for a function call
+            ///
+            /// @return The expectation itself, which allows chaining
+            ///         function calls
+            expectation& with(Args... args)
+            {
+                m_calls.emplace_back(args...);
+                return *this;
+            }
+
+            /// Calling repeat(...) will copy the arguments of the
+            /// last with(...) a number of times. The idea is that if
+            /// you expect to see a number of identical function calls
+            /// you can avoid adding them one-by-one using with.
+            ///
+            /// As an example:
+            ///
+            ///     stub::call<void()> function;
+            ///     function();
+            ///     function();
+            ///     function();
+            ///     function();
+            ///
+            ///     assert(function.expect_calls()
+            ///                .with().repeat(3));
+            ///
+            /// Is the same as:
+            ///
+            ///     stub::call<void()> function;
+            ///     function();
+            ///     function();
+            ///     function();
+            ///     function();
+            ///
+            ///     assert(function.expect_calls()
+            ///                .with()
+            ///                .with()
+            ///                .with()
+            ///                .with());
+            ///
+            /// @param times The number of times we repeat the last
+            ///        with(...) call
+            ///
+            /// @return The expectation itself, which allows chaining
+            ///         function calls
+            expectation& repeat(uint32_t times)
+            {
+                assert(times > 0);
+                assert(m_calls.size() > 0);
+
+                for (uint32_t i = 0; i < times; ++i)
+                {
+                    m_calls.push_back(m_calls.back());
+                }
+
+                return *this;
+            }
+
+            /// Calling ignore(...) will make us disregard a number of
+            /// actual function calls. This means that when we evaluate
+            /// or expectation we will ignore the values passed in the
+            /// ignored calls.
+            ///
+            /// As an example:
+            ///
+            ///     stub::call<void(uint32_t,uint32_t)> function;
+            ///     function(3,1);
+            ///     function(4,2);
+            ///     function(5,0);
+            ///
+            ///     assert(function.expect_calls()
+            ///                .ignore(2).with(5,0));
+            ///
+            /// Here we ignore the first two calls and only check the
+            /// last one. The ignore can be used in between with(...)
+            /// calls if wanted.
+            ///
+            /// As an example:
+            ///
+            ///     stub::call<void(uint32_t,uint32_t)> function;
+            ///     function(3,1);
+            ///     function(4,2);
+            ///     function(5,0);
+            ///
+            ///     assert(function.expect_calls()
+            ///                with(3,1).ignore(1).with(5,0));
+            ///
+            /// Here we ignore the arguments to the second call and
+            /// check only the first and last calls.
+            ///
+            /// @param times The number of calls to ignore
+            ///
+            /// @return The expectation itself, which allows chaining
+            ///         function calls
+            expectation& ignore(uint32_t calls)
+            {
+                assert(calls > 0);
+
+                // We skip the arguments already added
+                uint32_t skip = m_calls.size();
+
+                // Now simply copy the ignored calls from the "real" call
+                // which means they will always match
+                for (uint32_t i = 0; i < calls; ++i)
+                {
+                    uint32_t index = skip + i;
+
+                    assert(index < m_call.m_calls.size());
+                    m_calls.push_back(m_call.m_calls[index]);
+                }
+
+                return *this;
+            }
+
+            /// Convert the expectation to a boolean value either true
+            /// of false depending on whether the expectations match
+            /// the actual call.
+            ///
+            /// @return True if the expectation matches the call,
+            ///         otherwise false
+            explicit operator bool() const
+            {
+                if (m_call.m_calls.size() != m_calls.size())
+                    return false;
+
+                return std::equal(std::begin(m_call.m_calls),
+                                  std::end(m_call.m_calls),
+                                  std::begin(m_calls),
+                                  m_predicate);
+            }
+
+        private:
+
+            /// The call we will check the expectation against
+            const call& m_call;
+
+            /// The comparison function used when comparing whether
+            /// the function call arguments match
+            BinaryPredicate m_predicate;
+
+            /// The expected calls
+            std::vector<arguments> m_calls;
+        };
 
     public:
         /// The call operator to "simulate" performing a function call.
@@ -93,145 +290,6 @@ namespace stub
             return m_return_handler.set_return(returns);
         }
 
-        /// Checks if only one function call has been performed with
-        /// the specified tuple of arguments. Will compare the two argument
-        /// tuples with bool operator==(const arguments&, const arguments&)
-        ///
-        /// @param args List of arguments to check with most recent
-        /// invocation of the call
-        ///
-        /// @return True if the args matches the most recent call
-        /// otherwise false.
-        bool called_once_with(Args... args) const
-        {
-            auto p = [](const arguments& a, const arguments& b) -> bool
-                { return a == b; };
-
-            return called_once_with(args..., p);
-        }
-
-        /// Checks if only one function call has been performed with
-        /// the specified tuple of arguments. The provided BinaryPredicate
-        /// allows a custom comparison function.
-        ///
-        /// @param args List of arguments to check with most recent
-        /// invocation of the call
-        ///
-        /// @param predicate Function object that provides bool
-        /// operator()(const arguments&, const arguments&) to compare
-        /// two argument tuples
-        ///
-        /// @return True if the args matches the most recent call
-        /// otherwise false.
-        template<class BinaryPredicate>
-        bool called_once_with(
-            Args... args, const BinaryPredicate& predicate) const
-        {
-            if (m_calls.size() != 1U)
-            {
-                return false;
-            }
-
-            return called_with(args..., predicate);
-        }
-
-        /// Checks is the most recent function call was performed with
-        /// the specified arguments. Will compare the two argument
-        /// tuples with bool operator==(const arguments&, const arguments&)
-        ///
-        /// @param args List of arguments to check with most recent
-        /// invocation of the call
-        ///
-        /// @return True if the args matches the most recent call
-        /// otherwise false.
-        bool called_with(Args... args) const
-        {
-            auto p = [](const arguments& a, const arguments& b) -> bool
-                { return a == b; };
-
-            return called_with(args..., p);
-        }
-
-        /// Checks is the most recent function call was performed with
-        /// the specified arguments. The provided BinaryPredicate
-        /// allows a custom comparison function.
-        ///
-        /// @param args List of arguments to check with most recent
-        /// invocation of the call
-        ///
-        /// @param predicate Function object that provides bool
-        /// operator()(const arguments&, const arguments&) to compare
-        /// two argument tuples
-        ///
-        /// @return True if the args matches the most recent call
-        /// otherwise false.
-        template<class BinaryPredicate>
-        bool called_with(Args... args, const BinaryPredicate& predicate) const
-        {
-            assert(m_calls.size() > 0);
-
-            // We know there is one element in the list
-            const auto& stored_args = m_calls.back();
-            const auto& reference_args = std::make_tuple(args...);
-
-            // Apply the binary predicate to the last stored call
-            return predicate(stored_args, reference_args);
-        }
-
-        /// The has_calls function is used to check for a specify set
-        /// of function calls. It will only return true if the number
-        /// of calls plus the call arguments match. Also arguments
-        /// should be given in the same order as they were received by
-        /// the call operator(). Will compare the argument
-        /// tuples with bool operator==(const arguments&, const arguments&)
-        ///
-        /// @param calls Vector of arguments to check with the
-        /// invocations of the call
-        ///
-        /// @return True if the calls matches all recorded calls
-        /// otherwise false.
-        bool has_calls(const std::vector<arguments> &calls)
-        {
-            auto p = [](const arguments& a, const arguments& b) -> bool
-                { return a == b; };
-
-            return has_calls(calls, p);
-        }
-
-        /// The has_calls function is used to check for a specify set
-        /// of function calls. It will only return true if the number
-        /// of calls plus the call arguments match. Also arguments
-        /// should be given in the same order as they were received by
-        /// the call operator(). The provided BinaryPredicate
-        /// allows a custom comparison function.
-        ///
-        /// @param calls Vector of arguments to check with the
-        /// invocations of the call
-        ///
-        /// @param predicate Function object that provides bool
-        /// operator()(const arguments&, const arguments&) to compare
-        /// two argument tuples
-        ///
-        /// @return True if the calls matches all recorded calls
-        /// otherwise false.
-        template<class BinaryPredicate>
-        bool has_calls(const std::vector<arguments> &calls,
-                       const BinaryPredicate& predicate)
-        {
-            if (m_calls.size() != calls.size())
-                return false;
-
-            for(uint32_t i = 0; i < m_calls.size(); ++i)
-            {
-                if (!predicate(m_calls[i], calls[i]))
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
         /// @return The number of times the call operator has been invoked
         uint32_t calls() const
         {
@@ -249,6 +307,34 @@ namespace stub
         {
             assert(index < m_calls.size());
             return m_calls[index];
+        }
+
+        /// Used when we want to check whether the call object is in a
+        /// certain state. See examples usage in the expectation
+        /// struct member functions.
+        ///
+        /// Two version of this function exists one which takes a
+        /// binary predicate comparison function an one which does
+        /// not. The version taking a predicate allows the user to
+        /// provide a custom comparison function whereas the other
+        /// version will rely on operator==(...).
+        ///
+        /// @return An expectation object
+        expectation<default_predicate> expect_calls()
+        {
+            default_predicate predicate =
+                [](const arguments& a, const arguments& b) -> bool
+                   { return a == b; };
+
+            return expectation<default_predicate>(*this, predicate);
+        }
+
+        /// @copydoc expect_calls()
+        template<class BinaryPredicate>
+        expectation<BinaryPredicate> expect_calls(
+            const BinaryPredicate& predicate)
+        {
+            return expectation<BinaryPredicate>(*this, predicate);
         }
 
     private:
