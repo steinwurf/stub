@@ -4,8 +4,8 @@ News for stub
 This file lists the major changes between versions. For a more detailed list of
 every change, see the Git log.
 
-Latest
-------
+2.0.0
+-----
 * Major: Replaced the called_once_with(...), called_with(...) and
   has_calls(...) functions with the expect_calls(...) functions. The
   expect_calls(...) functions provide the same functionality as the
