@@ -328,7 +328,7 @@ namespace stub
         /// expected as the second.
         ///
         /// @return An expectation object
-        expectation<default_predicate> expect_calls()
+        expectation<default_predicate> expect_calls() const
         {
             default_predicate predicate =
                 [](const arguments& a, const arguments& b) -> bool
@@ -340,7 +340,7 @@ namespace stub
         /// @copydoc expect_calls()
         template<class BinaryPredicate>
         expectation<BinaryPredicate> expect_calls(
-            const BinaryPredicate& predicate)
+            const BinaryPredicate& predicate) const
         {
             return expectation<BinaryPredicate>(*this, predicate);
         }
