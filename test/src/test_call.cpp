@@ -295,3 +295,31 @@ TEST(call, expect_predicate_pair)
                     .with(element(2,3))
                     .with(element(20,3)));
 }
+
+// Test that with a custom predicate the first argument is the actual
+// call value and the second argument is the expected. Because this is
+// how we document it.
+TEST(call, predicate_argument_order)
+{
+    auto p = [](const std::tuple<uint32_t>& actual,
+                const std::tuple<uint32_t>& expected) -> bool
+        {
+
+            if (std::get<0>(actual) != 5U)
+                return false;
+
+            if (std::get<0>(expected) != 10U)
+                return false;
+
+            return true;
+        };
+
+    // Invoke the function with value 5 and expect value 10 should
+    // work with our custom predicate function
+
+    stub::call<void(uint32_t)> function;
+    function(5);
+
+    EXPECT_TRUE((bool)function.expect_calls(p)
+                    .with(10U));
+}
