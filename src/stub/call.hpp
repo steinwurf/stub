@@ -237,6 +237,10 @@ namespace stub
             /// of false depending on whether the expectations match
             /// the actual call.
             ///
+            /// The first argument passed to the predicate function is
+            /// the actual call arguments and the second is the
+            /// expectation.
+            ///
             /// @return True if the expectation matches the call,
             ///         otherwise false
             explicit operator bool() const
@@ -318,6 +322,10 @@ namespace stub
         /// not. The version taking a predicate allows the user to
         /// provide a custom comparison function whereas the other
         /// version will rely on operator==(...).
+        ///
+        /// When you pass your own predicate function it will get the
+        /// actual call arguments as the first parameter and the
+        /// expected as the second.
         ///
         /// @return An expectation object
         expectation<default_predicate> expect_calls()

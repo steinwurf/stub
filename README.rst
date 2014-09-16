@@ -277,9 +277,13 @@ And a function with takes those objects as arguments:
     function(cup{2.3});
     function(cup{4.5});
 
-    auto p = [](const std::tuple<cup>& a,
-                const std::tuple<cup>& b) -> bool
-        { return std::get<0>(a).m_volume == std::get<0>(b).m_volume; };
+    auto p = [](const std::tuple<cup>& actual,
+                const std::tuple<cup>& expected) -> bool
+        {
+            auto a = std::get<0>(actual).m_volume;
+            auto b = std::get<0>(expected).m_volume;
+            return a == b;
+        };
 
     assert(function.expect_calls(p)
         .with(cup{2.3})
@@ -301,9 +305,13 @@ library we need to provide a custom comparison function.
 
     using element = std::pair<uint32_t, uint32_t>;
 
-    auto p = [](const std::tuple<element>& a,
-                const std::tuple<element>& b) -> bool
-        { return std::get<0>(a).second == std::get<0>(b).second; };
+    auto p = [](const std::tuple<element>& actual,
+                const std::tuple<element>& expected) -> bool
+        {
+            auto a = std::get<0>(actual).second;
+            auto b = std::get<0>(expected).second;
+            return a == b;
+        };
 
     stub::call<void(const element&)> function;
     function(element(2,3));

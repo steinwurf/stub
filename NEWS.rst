@@ -4,6 +4,11 @@ News for stub
 This file lists the major changes between versions. For a more detailed list of
 every change, see the Git log.
 
+Latest
+------
+* Bug: Updated documentation to specify in which order arguments are
+  passed to a custom predicate function.
+
 2.0.0
 -----
 * Major: Replaced the called_once_with(...), called_with(...) and
