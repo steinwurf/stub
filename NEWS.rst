@@ -4,8 +4,8 @@ News for stub
 This file lists the major changes between versions. For a more detailed list of
 every change, see the Git log.
 
-Latest
-------
+2.0.1
+-----
 * Bug: Added const modifier to the stub::call::expect_calls()
   functions. They do not modify the object so they should be const.
 * Bug: Updated documentation to specify in which order arguments are
