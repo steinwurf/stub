@@ -6,6 +6,8 @@ every change, see the Git log.
 
 Latest
 ------
+* Bug: Added const modifier to the stub::call::expect_calls()
+  functions. They do not modify the object so they should be const.
 * Bug: Updated documentation to specify in which order arguments are
   passed to a custom predicate function.
 
