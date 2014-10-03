@@ -6,6 +6,9 @@ functions to ease sometimes tedious testing tasks.
 
 .. image:: http://buildbot.steinwurf.dk/svgstatus?project=stub
     :target: http://buildbot.steinwurf.dk/stats?projects=stub
+    
+.. contents:: Table of Contents:
+   :local:
 
 Usage
 -----
