@@ -6,7 +6,7 @@ functions to ease sometimes tedious testing tasks.
 
 .. image:: http://buildbot.steinwurf.dk/svgstatus?project=stub
     :target: http://buildbot.steinwurf.dk/stats?projects=stub
-    
+
 .. contents:: Table of Contents:
    :local:
 
@@ -43,7 +43,7 @@ Example:
 
 ::
 
-   #include<stub/call.hpp>
+   #include <stub/call.hpp>
 
    stub::call<void(uint32_t)> some_function;
 
