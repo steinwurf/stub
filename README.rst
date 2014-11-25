@@ -237,7 +237,7 @@ arguments of the second call:
 
 ::
 
-   auto a = function.call_arguments(2);
+   auto a = function.call_arguments(1);
    auto b = std::make_tuple(4,3);
 
    assert(a == b);
