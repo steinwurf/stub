@@ -20,9 +20,9 @@ TEST(return_handler, api)
         stub::return_handler<uint32_t> r;
         r.set_return(5U);
 
-        EXPECT_EQ(r(), 5U);
-        EXPECT_EQ(r(), 5U);
-        EXPECT_EQ(r(), 5U);
+        EXPECT_EQ(5U, r());
+        EXPECT_EQ(5U, r());
+        EXPECT_EQ(5U, r());
     }
 
     // Use the return value of set_return
@@ -30,11 +30,11 @@ TEST(return_handler, api)
         stub::return_handler<uint32_t> r;
         r.set_return({5U, 3U});
 
-        EXPECT_EQ(r(), 5U);
-        EXPECT_EQ(r(), 3U);
-        EXPECT_EQ(r(), 5U);
-        EXPECT_EQ(r(), 3U);
-        EXPECT_EQ(r(), 5U);
+        EXPECT_EQ(5U, r());
+        EXPECT_EQ(3U, r());
+        EXPECT_EQ(5U, r());
+        EXPECT_EQ(3U, r());
+        EXPECT_EQ(5U, r());
     }
 
     // Try with no_repeat
@@ -42,12 +42,12 @@ TEST(return_handler, api)
         stub::return_handler<uint32_t> r;
         r.set_return(5U).no_repeat();
 
-        EXPECT_EQ(r(), 5U);
+        EXPECT_EQ(5U, r());
 
         r.set_return({3U,4U}).no_repeat();
 
-        EXPECT_EQ(r(), 3U);
-        EXPECT_EQ(r(), 4U);
+        EXPECT_EQ(3U, r());
+        EXPECT_EQ(4U, r());
     }
 
     // Death tests
@@ -55,8 +55,8 @@ TEST(return_handler, api)
         stub::return_handler<uint32_t> r;
         r.set_return({3U,4U}).no_repeat();
 
-        EXPECT_EQ(r(), 3U);
-        EXPECT_EQ(r(), 4U);
+        EXPECT_EQ(3U, r());
+        EXPECT_EQ(4U, r());
 
         // death
         // EXPECT_EQ(r(), 4U);
