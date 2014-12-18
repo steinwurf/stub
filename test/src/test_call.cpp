@@ -3,8 +3,9 @@
 //
 // Distributed under the "BSD License". See the accompanying LICENSE.rst file.
 
-#include <gtest/gtest.h>
 #include <stub/call.hpp>
+
+#include <gtest/gtest.h>
 
 /// Test that the call operator works as expected
 TEST(call, call_operator)
