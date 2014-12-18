@@ -12,6 +12,6 @@ namespace gtest
     /// Returns a string representing the version of this library.
     inline std::string version()
     {
-        return "2.2.0";
+        return "2.0.1";
     }
 }
