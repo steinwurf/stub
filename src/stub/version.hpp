@@ -7,7 +7,7 @@
 
 #include <string>
 
-namespace gtest
+namespace stub
 {
     /// Returns a string representing the version of this library.
     inline std::string version()

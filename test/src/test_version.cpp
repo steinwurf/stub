@@ -9,5 +9,5 @@
 
 TEST(TestVersion, not_empty)
 {
-    EXPECT_FALSE(gtest::version().empty());
+    EXPECT_FALSE(stub::version().empty());
 }
