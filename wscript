@@ -4,12 +4,14 @@
 APPNAME = 'stub'
 VERSION = '2.0.1'
 
+
 def recurse_helper(ctx, name):
     if not ctx.has_dependency_path(name):
         ctx.fatal('Load a tool to find %s as system dependency' % name)
     else:
         p = ctx.dependency_path(name)
         ctx.recurse([p])
+
 
 def options(opt):
 
@@ -62,4 +64,6 @@ def build(bld):
     # Export own includes
     bld(name='stub_includes',
         includes='./src',
+        export_defines=[
+            'STEINWURF_{}_VERSION="{}"'.format(APPNAME.upper(), VERSION)],
         export_includes='./src')

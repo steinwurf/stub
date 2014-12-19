@@ -9,9 +9,13 @@
 
 namespace stub
 {
-    /// Returns a string representing the version of this library.
+    /// Returns a string representing the Steinwurf version of this library.
     inline std::string version()
     {
-        return "2.0.1";
+        #ifdef STEINWURF_STUB_VERSION
+        return STEINWURF_STUB_VERSION;
+        #else
+        return "unknown";
+        #endif
     }
 }
