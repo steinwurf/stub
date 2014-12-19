@@ -10,7 +10,7 @@
 namespace stub
 {
     /// Returns a string representing the Steinwurf version of this library.
-    inline std::string version()
+    inline std::string steinwurf_version()
     {
         #ifdef STEINWURF_STUB_VERSION
         return STEINWURF_STUB_VERSION;

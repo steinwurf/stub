@@ -3,11 +3,11 @@
 //
 // Distributed under the "BSD License". See the accompanying LICENSE.rst file.
 
-#include <stub/version.hpp>
+#include <stub/steinwurf_version.hpp>
 
 #include <gtest/gtest.h>
 
 TEST(TestVersion, not_empty)
 {
-    EXPECT_FALSE(stub::version().empty());
+    EXPECT_FALSE(stub::steinwurf_version().empty());
 }
