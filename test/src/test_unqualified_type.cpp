@@ -3,8 +3,9 @@
 //
 // Distributed under the "BSD License". See the accompanying LICENSE.rst file.
 
-#include <gtest/gtest.h>
 #include <stub/unqualified_type.hpp>
+
+#include <gtest/gtest.h>
 
 // Small alias to make testing easier
 

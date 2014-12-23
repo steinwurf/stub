@@ -3,8 +3,9 @@
 //
 // Distributed under the "BSD License". See the accompanying LICENSE.rst file.
 
-#include <gtest/gtest.h>
 #include <stub/return_handler.hpp>
+
+#include <gtest/gtest.h>
 
 TEST(return_handler, void)
 {
