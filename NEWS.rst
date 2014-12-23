@@ -6,7 +6,7 @@ every change, see the Git log.
 
 Latest
 ------
-* Minor: Added ``steinwurf_version.hpp``.
+* Minor: Added version define.
 
 2.0.1
 -----
