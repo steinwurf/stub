@@ -218,7 +218,7 @@ namespace stub
                 assert(calls > 0);
 
                 // We skip the arguments already added
-                uint32_t skip = m_calls.size();
+                uint32_t skip = (uint32_t)m_calls.size();
 
                 // Now simply copy the ignored calls from the "real" call
                 // which means they will always match
@@ -297,7 +297,7 @@ namespace stub
         /// @return The number of times the call operator has been invoked
         uint32_t calls() const
         {
-            return m_calls.size();
+            return (uint32_t)m_calls.size();
         }
 
         /// @return True if no calls have been made otherwise false
