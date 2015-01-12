@@ -8,6 +8,10 @@ Latest
 ------
 * tbd
 
+2.1.2
+-----
+* Patch: Fixed MSVC type conversion warnings.
+
 2.1.1
 -----
 * Patch: Fix version define.
