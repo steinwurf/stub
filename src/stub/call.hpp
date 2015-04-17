@@ -7,9 +7,11 @@
 
 #include <tuple>
 #include <functional>
+#include <ostream>
 
 #include "return_handler.hpp"
 #include "unqualified_type.hpp"
+#include "print_tuple.hpp"
 
 namespace stub
 {
@@ -345,6 +347,20 @@ namespace stub
             return expectation<BinaryPredicate>(*this, predicate);
         }
 
+        void print(std::ostream& out) const
+        {
+            out << "Number of calls: " << m_calls.size() << std::endl;
+
+            if(sizeof...(Args) == 0)
+                return;
+
+            for(uint32_t i = 0; i < m_calls.size(); ++i)
+            {
+                out << "Call " << i << ":\n";
+                print_arguments(out, m_calls[i]);
+            }
+        }
+
     private:
 
         /// The return_handler manages the return values generated
@@ -353,4 +369,12 @@ namespace stub
         /// Stores the arguments every time the operator() is invoked
         mutable std::vector<arguments> m_calls;
     };
+
+    template<class T>
+    inline std::ostream& operator<<(std::ostream& out, const call<T>& call)
+    {
+        call.print(out);
+        return out;
+    }
+
 }

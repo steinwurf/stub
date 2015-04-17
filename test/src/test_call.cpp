@@ -324,3 +324,40 @@ TEST(call, predicate_argument_order)
     EXPECT_TRUE((bool)function.expect_calls(p)
                     .with(10U));
 }
+
+// Test that we can pretty-print the call object, where the function takes
+// no arguments
+TEST(call, pretty_print_without_arguments)
+{
+    stub::call<void()> function;
+
+    function();
+    function();
+
+    std::stringstream stream;
+    stream << function;
+
+    EXPECT_EQ(stream.str(), "Number of calls: 2\n");
+}
+
+// Test that we can pretty-print the call object, where the function takes
+// arguments
+TEST(call, pretty_print_with_arguments)
+{
+    stub::call<void(uint32_t, uint32_t)> function;
+
+    function(2,3);
+    function(4,5);
+
+    std::stringstream stream;
+    stream << function;
+
+    EXPECT_EQ(stream.str(), "Number of calls: 2\n"
+                            "Call 0:\n"
+                            "Arg 0: 2\n"
+                            "Arg 1: 3\n"
+                            "Call 1:\n"
+                            "Arg 0: 4\n"
+                            "Arg 1: 5\n");
+
+}
