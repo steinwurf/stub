@@ -347,6 +347,19 @@ namespace stub
             return expectation<BinaryPredicate>(*this, predicate);
         }
 
+        /// Prints the status of the call object to the std::ostream.
+        ///
+        /// Example (using the output operator):
+        ///
+        ///    stub::call<void(uint32_t)> my_func;
+        ///
+        ///    my_func(4U);
+        ///    my_func(5U);
+        ///
+        ///    // Print the current status of the call object,
+        ///    std::cout << my_func << std::endl;
+        ///
+        /// @param out The ostream where the stub::call status should be
         void print(std::ostream& out) const
         {
             out << "Number of calls: " << m_calls.size() << std::endl;
@@ -370,6 +383,16 @@ namespace stub
         mutable std::vector<arguments> m_calls;
     };
 
+    /// Output operator for printing call objects, see more info in
+    /// stub::call::print(std::ostream&).
+    ///
+    ///
+    /// @param out The output stream where the state of the call object
+    ///        will be printed.
+    ///
+    /// @param call The call object we want to print
+    ///
+    /// @return The ostream operator.
     template<class T>
     inline std::ostream& operator<<(std::ostream& out, const call<T>& call)
     {

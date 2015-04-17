@@ -6,7 +6,8 @@ every change, see the Git log.
 
 Latest
 ------
-* tbd
+* Minor: Added methods allowing a stub::call object to be printed to an
+         std::ostream.
 
 2.1.2
 -----
