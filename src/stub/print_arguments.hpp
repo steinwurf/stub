@@ -10,9 +10,9 @@
 #include <tuple>
 #include <type_traits>
 
+
 namespace stub
 {
-
     inline void print_arguments(std::ostream& out, const std::tuple<>& t)
     {
         (void) out;
@@ -24,9 +24,11 @@ namespace stub
     /// description below.
     template
     <
-        uint32_t Index = 0,
+        class Index = std::integral_constant<uint32_t, 0U>,
         class... Args,
-        typename std::enable_if<Index == sizeof...(Args), uint8_t>::type = 0
+        class LastIndex = std::integral_constant<uint32_t, sizeof...(Args)>,
+        typename std::enable_if<
+            std::is_same<Index,LastIndex>::value, uint8_t>::type = 0
     >
     inline void print_arguments(std::ostream& out, const std::tuple<Args...>& t)
     {
@@ -57,13 +59,18 @@ namespace stub
     /// print_arguments will be called
     template
     <
-        uint32_t Index = 0,
+        class Index = std::integral_constant<uint32_t, 0U>,
         class... Args,
-        typename std::enable_if<Index != sizeof...(Args), uint8_t>::type = 0
+        class LastIndex = std::integral_constant<uint32_t, sizeof...(Args)>,
+        typename std::enable_if<
+            !std::is_same<Index,LastIndex>::value, uint8_t>::type = 0
     >
     inline void print_arguments(std::ostream& out, const std::tuple<Args...>& t)
     {
-        out << "Arg " << Index << ": " << std::get<Index>(t) << "\n";
-        print_arguments<Index + 1>(out, t);
+        out << "Arg " << Index::value << ": "
+            << std::get<Index::value>(t) << "\n";
+
+        print_arguments<
+            std::integral_constant<uint32_t, Index::value + 1>>(out, t);
     }
 }
