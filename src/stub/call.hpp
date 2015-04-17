@@ -11,7 +11,7 @@
 
 #include "return_handler.hpp"
 #include "unqualified_type.hpp"
-#include "print_tuple.hpp"
+#include "print_arguments.hpp"
 
 namespace stub
 {

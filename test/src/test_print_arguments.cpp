@@ -3,11 +3,11 @@
 //
 // Distributed under the "BSD License". See the accompanying LICENSE.rst file.
 
-#include <stub/print_tuple.hpp>
+#include <stub/print_arguments.hpp>
 
 #include <gtest/gtest.h>
 
-TEST(print_tuple, empty_tuple)
+TEST(print_arguments, empty_arguments)
 {
     std::stringstream stream;
 
@@ -18,7 +18,7 @@ TEST(print_tuple, empty_tuple)
 
 }
 
-TEST(print_tuple, non_empty_tuple)
+TEST(print_arguments, non_empty_arguments)
 {
     std::stringstream stream;
 
@@ -45,7 +45,7 @@ namespace stub_testing
     }
 }
 
-TEST(print_tuple, user_defined_types)
+TEST(print_arguments, user_defined_types)
 {
     std::stringstream stream;
 

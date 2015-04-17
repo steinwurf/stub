@@ -15,9 +15,13 @@ namespace stub
     /// Specialization chosen for empty tuples or when Index reaches the
     /// sizeof the tuple (i.e. the number of values in the tuple), see
     /// description below.
-    template<uint32_t Index = 0, class... Args>
-    inline typename std::enable_if<Index == sizeof...(Args)>::type
-    print_arguments(std::ostream& out, const std::tuple<Args...>& t)
+    template
+    <
+        uint32_t Index = 0,
+        class... Args,
+        typename std::enable_if<Index == sizeof...(Args), uint8_t>::type = 0
+    >
+    inline void print_arguments(std::ostream& out, const std::tuple<Args...>& t)
     {
         (void) out;
         (void) t;
@@ -44,9 +48,13 @@ namespace stub
     ///Note that if called with an empty tuple then
     /// Index != sizeof...(Args) will be false and the empty
     /// print_arguments will be called
-    template<uint32_t Index = 0, class... Args>
-    inline typename std::enable_if<Index != sizeof...(Args)>::type
-    print_arguments(std::ostream& out, const std::tuple<Args...>& t)
+    template
+    <
+        uint32_t Index = 0,
+        class... Args,
+        typename std::enable_if<Index != sizeof...(Args), uint8_t>::type = 0
+    >
+    inline void print_arguments(std::ostream& out, const std::tuple<Args...>& t)
     {
         out << "Arg " << Index << ": " << std::get<Index>(t) << "\n";
         print_arguments<Index + 1>(out, t);
