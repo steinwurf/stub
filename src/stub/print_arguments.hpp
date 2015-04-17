@@ -13,6 +13,7 @@
 
 namespace stub
 {
+    /// Empty tuple overload
     inline void print_arguments(std::ostream& out, const std::tuple<>& t)
     {
         (void) out;
@@ -43,20 +44,20 @@ namespace stub
     ///
     /// The overloading works like this:
     ///
-    ///   1. If print_arguments is called with an empty tuple then
-    ///      Index==sizeof...(Args) will be true and the empty overload
-    ///      will be chosen.
+    ///   1. If print_arguments is called with an empty tuple then the
+    ///      empty overload will be chosen.
     ///
     ///   2. If print_argument is called with a non-empty tuple the
-    ///      Index!=sizeof(Args) is true and the overload writing to the
+    ///      Index!=LastIndex is true and the overload writing to the
     ///      std::ostream will be called. This will then recursively call
     ///      print_arguments incrementing the Index. A some point
-    ///      Index==sizeof(Args) and the empty overload gets chosen and we
+    ///      Index==LastIndex and the empty overload gets chosen and we
     ///      are done.
     ///
-    ///Note that if called with an empty tuple then
-    /// Index != sizeof...(Args) will be false and the empty
-    /// print_arguments will be called
+    /// Note that initially this was implemented using a simpler technique
+    /// similar to here: http://stackoverflow.com/a/6894436 but this did
+    /// not work on with Microsoft Visual Studio 2013 so it was implemented
+    /// using the std::integral_constant technique instead.
     template
     <
         class Index = std::integral_constant<uint32_t, 0U>,
