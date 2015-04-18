@@ -4,7 +4,7 @@ News for stub
 This file lists the major changes between versions. For a more detailed list of
 every change, see the Git log.
 
-Latest
+2.2.0
 ------
 * Minor: Added methods allowing a stub::call object to be printed to an
          std::ostream.
