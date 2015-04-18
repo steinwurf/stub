@@ -7,9 +7,11 @@
 
 #include <tuple>
 #include <functional>
+#include <ostream>
 
 #include "return_handler.hpp"
 #include "unqualified_type.hpp"
+#include "print_arguments.hpp"
 
 namespace stub
 {
@@ -345,6 +347,33 @@ namespace stub
             return expectation<BinaryPredicate>(*this, predicate);
         }
 
+        /// Prints the status of the call object to the std::ostream.
+        ///
+        /// Example (using the output operator):
+        ///
+        ///    stub::call<void(uint32_t)> my_func;
+        ///
+        ///    my_func(4U);
+        ///    my_func(5U);
+        ///
+        ///    // Print the current status of the call object,
+        ///    std::cout << my_func << std::endl;
+        ///
+        /// @param out The ostream where the stub::call status should be
+        void print(std::ostream& out) const
+        {
+            out << "Number of calls: " << m_calls.size() << std::endl;
+
+            if(sizeof...(Args) == 0)
+                return;
+
+            for(uint32_t i = 0; i < m_calls.size(); ++i)
+            {
+                out << "Call " << i << ":\n";
+                print_arguments(out, m_calls[i]);
+            }
+        }
+
     private:
 
         /// The return_handler manages the return values generated
@@ -353,4 +382,22 @@ namespace stub
         /// Stores the arguments every time the operator() is invoked
         mutable std::vector<arguments> m_calls;
     };
+
+    /// Output operator for printing call objects, see more info in
+    /// stub::call::print(std::ostream&).
+    ///
+    ///
+    /// @param out The output stream where the state of the call object
+    ///        will be printed.
+    ///
+    /// @param call The call object we want to print
+    ///
+    /// @return The ostream operator.
+    template<class T>
+    inline std::ostream& operator<<(std::ostream& out, const call<T>& call)
+    {
+        call.print(out);
+        return out;
+    }
+
 }
