@@ -6,8 +6,9 @@ every change, see the Git log.
 
 2.2.0
 ------
+* Minor: Added buildbot.py for coverage reports.
 * Minor: Added methods allowing a stub::call object to be printed to an
-         std::ostream.
+  std::ostream.
 
 2.1.2
 -----
