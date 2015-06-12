@@ -247,6 +247,9 @@ namespace stub
             ///         otherwise false
             explicit operator bool() const
             {
+                // An expectation can't be evaluated if it hasn't been setup.
+                assert(!m_calls.empty());
+
                 if (m_call.m_calls.size() != m_calls.size())
                     return false;
 

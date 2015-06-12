@@ -4,8 +4,13 @@ News for stub
 This file lists the major changes between versions. For a more detailed list of
 every change, see the Git log.
 
-2.2.0
+Latest
 ------
+* Patch: Added assert to ensure that expectations has been setup prior to
+  evaluation.
+
+2.2.0
+-----
 * Minor: Added buildbot.py for coverage reports.
 * Minor: Added methods allowing a stub::call object to be printed to an
   std::ostream.

@@ -359,5 +359,4 @@ TEST(call, pretty_print_with_arguments)
                             "Call 1:\n"
                             "Arg 0: 4\n"
                             "Arg 1: 5\n");
-
 }
