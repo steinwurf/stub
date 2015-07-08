@@ -236,6 +236,35 @@ TEST(call, expect_calls_with_ignore)
                     .with(2,6));
 }
 
+namespace
+{
+    void test_most_recent_call(uint32_t calls)
+    {
+        stub::call<void(uint32_t)> function;
+
+        uint32_t argument;
+        for (uint32_t i; i < calls; ++i)
+        {
+            argument = i;
+            function(argument);
+        }
+
+        EXPECT_TRUE((bool)function.expect_calls()
+                    .ignore(function.calls() - 1)
+                    .with(argument));
+    }
+}
+
+// Check that the most recent call can be checked.
+TEST(call, most_recent_call)
+{
+
+    for (uint32_t calls = 1; calls < 100; ++calls)
+    {
+        test_most_recent_call(calls);
+    }
+}
+
 /// Test that we can use a binary predicate to provide custom
 /// comparisons for types that do not support the default operator==
 struct cup
