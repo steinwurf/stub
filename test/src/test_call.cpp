@@ -242,8 +242,8 @@ namespace
     {
         stub::call<void(uint32_t)> function;
 
-        uint32_t argument;
-        for (uint32_t i; i < calls; ++i)
+        uint32_t argument = 0;
+        for (uint32_t i = 0; i < calls; ++i)
         {
             argument = i;
             function(argument);
