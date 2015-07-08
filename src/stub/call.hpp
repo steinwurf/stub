@@ -168,7 +168,6 @@ namespace stub
             ///         function calls
             expectation& repeat(uint32_t times)
             {
-                assert(times > 0);
                 assert(m_calls.size() > 0);
 
                 for (uint32_t i = 0; i < times; ++i)
@@ -217,8 +216,6 @@ namespace stub
             ///         function calls
             expectation& ignore(uint32_t calls)
             {
-                assert(calls > 0);
-
                 // We skip the arguments already added
                 uint32_t skip = (uint32_t)m_calls.size();
 
