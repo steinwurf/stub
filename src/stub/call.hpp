@@ -179,62 +179,6 @@ namespace stub
                 return *this;
             }
 
-            /// Calling ignore(...) will make us disregard a number of
-            /// actual function calls. This means that when we evaluate
-            /// or expectation we will ignore the values passed in the
-            /// ignored calls.
-            ///
-            /// As an example:
-            ///
-            ///     stub::call<void(uint32_t,uint32_t)> function;
-            ///     function(3,1);
-            ///     function(4,2);
-            ///     function(5,0);
-            ///
-            ///     assert(function.expect_calls()
-            ///                .ignore(2).with(5,0));
-            ///
-            /// Here we ignore the first two calls and only check the
-            /// last one. The ignore can be used in between with(...)
-            /// calls if wanted.
-            ///
-            /// As an example:
-            ///
-            ///     stub::call<void(uint32_t,uint32_t)> function;
-            ///     function(3,1);
-            ///     function(4,2);
-            ///     function(5,0);
-            ///
-            ///     assert(function.expect_calls()
-            ///                with(3,1).ignore(1).with(5,0));
-            ///
-            /// Here we ignore the arguments to the second call and
-            /// check only the first and last calls.
-            ///
-            /// @param times The number of calls to ignore
-            ///
-            /// @return The expectation itself, which allows chaining
-            ///         function calls
-            expectation& ignore(uint32_t calls)
-            {
-                assert(calls > 0);
-
-                // We skip the arguments already added
-                uint32_t skip = (uint32_t)m_calls.size();
-
-                // Now simply copy the ignored calls from the "real" call
-                // which means they will always match
-                for (uint32_t i = 0; i < calls; ++i)
-                {
-                    uint32_t index = skip + i;
-
-                    assert(index < m_call.m_calls.size());
-                    m_calls.push_back(m_call.m_calls[index]);
-                }
-
-                return *this;
-            }
-
             /// Convert the expectation to a boolean value either true
             /// of false depending on whether the expectations match
             /// the actual call.

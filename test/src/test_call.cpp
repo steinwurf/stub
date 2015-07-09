@@ -203,39 +203,6 @@ TEST(call, expect_calls_with_repeat)
                     .with(2,3));
 }
 
-/// Test that the ignore function works as expected
-TEST(call, expect_calls_with_ignore)
-{
-    stub::call<void(uint32_t,uint32_t)> function;
-
-    function(2,3);
-    function(4,5);
-    function(4,5);
-    function(4,5);
-    function(2,6);
-
-    EXPECT_TRUE((bool)function.expect_calls()
-                    .with(2,3)
-                    .ignore(3)
-                    .with(2,6));
-
-    // EXPECT_TRUE((bool)function.expect_calls()
-    //                 .any_calls_with(2,3));
-
-    EXPECT_TRUE((bool)function.expect_calls()
-                    .ignore(1)
-                    .with(4,5).repeat(2)
-                    .with(2,6));
-
-    EXPECT_TRUE((bool)function.expect_calls()
-                    .ignore(4)
-                    .with(2,6));
-
-    EXPECT_TRUE((bool)function.expect_calls()
-                    .ignore(function.calls() - 1)
-                    .with(2,6));
-}
-
 /// Test that we can use a binary predicate to provide custom
 /// comparisons for types that do not support the default operator==
 struct cup

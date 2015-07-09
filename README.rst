@@ -162,60 +162,6 @@ made.
     // Return true if no calls were made
     assert(some_function.no_calls() == false);
 
-Check only some function calls
-..............................
-
-Sometimes we might not care about the arguments to all function
-calls. If that is the case we can use the ``ignore(...)`` function to
-ignore some of the calls.
-
-::
-
-    stub::call<void(uint32_t,uint32_t)> function;
-    function(3,1);
-    function(4,2);
-    function(5,0);
-
-    assert(function.expect_calls()
-        .ignore(2)
-        .with(5,0));
-
-Here we ignore the first two calls and only check the last one. The
-ignore function can be used in between ``with(...)`` calls if wanted.
-
-::
-
-     stub::call<void(uint32_t,uint32_t)> function;
-     function(3,1);
-     function(4,2);
-     function(5,0);
-
-     assert(function.expect_calls()
-         .with(3,1)
-         .ignore(1)
-         .with(5,0));
-
-Here we ignore the arguments to the second call and check only the
-first and last calls.
-
-
-Check the most recent function call
-...................................
-
-We can also check the arguments of the most recent function call.
-
-::
-
-    stub::call<void(uint32_t,uint32_t)> function;
-
-    function(3,4);
-    function(4,3);
-    function(2,6);
-
-    assert(function.expect_calls()
-        .ignore(function.calls() - 1)
-        .with(2,6));
-
 Get the arguments of a specific function call
 .............................................
 
