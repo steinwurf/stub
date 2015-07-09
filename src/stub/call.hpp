@@ -235,6 +235,15 @@ namespace stub
                 return *this;
             }
 
+            /// A more verbose version of the operator bool() member function.
+            ///
+            /// @return True if the expectation matches the call,
+            ///         otherwise false
+            bool check() const
+            {
+                return (bool)*this;
+            }
+
             /// Convert the expectation to a boolean value either true
             /// of false depending on whether the expectations match
             /// the actual call.
