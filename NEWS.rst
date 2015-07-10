@@ -6,6 +6,8 @@ every change, see the Git log.
 
 Latest
 ------
+* Major: Removed the ``ignore`` member function as it does not have a proper use
+  case.
 * Patch: Added assert to ensure that expectations has been setup prior to
   evaluation.
 
