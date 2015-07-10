@@ -6,6 +6,10 @@ every change, see the Git log.
 
 Latest
 ------
+* tbd
+
+2.3.0
+-----
 * Minor: Added the ``to_bool`` function - a more verbose version of converting
   the expectation to a boolean value.
 * Patch: Added ``assert`` to ensure that expectations has been setup prior to
