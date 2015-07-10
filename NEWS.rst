@@ -6,14 +6,16 @@ every change, see the Git log.
 
 Latest
 ------
-* Patch: Added assert to ensure that expectations has been setup prior to
+* Minor: Added the ``to_bool`` function - a more verbose version of converting
+  the expectation to a boolean value.
+* Patch: Added ``assert`` to ensure that expectations has been setup prior to
   evaluation.
 
 2.2.0
 -----
-* Minor: Added buildbot.py for coverage reports.
-* Minor: Added methods allowing a stub::call object to be printed to an
-  std::ostream.
+* Minor: Added ``buildbot.py`` for coverage reports.
+* Minor: Added methods allowing a ``stub::call`` object to be printed to an
+  ``std::ostream``.
 
 2.1.2
 -----
@@ -29,26 +31,26 @@ Latest
 
 2.0.1
 -----
-* Bug: Added const modifier to the stub::call::expect_calls()
-  functions. They do not modify the object so they should be const.
+* Bug: Added const modifier to the ``stub::call::expect_calls()``
+  functions. They do not modify the object so they should be ``const``.
 * Bug: Updated documentation to specify in which order arguments are
   passed to a custom predicate function.
 
 2.0.0
 -----
-* Major: Replaced the called_once_with(...), called_with(...) and
-  has_calls(...) functions with the expect_calls(...) functions. The
-  expect_calls(...) functions provide the same functionality as the
+* Major: Replaced the ``called_once_with(...)``, ``called_with(...)`` and
+  ``has_calls(...)`` functions with the ``expect_calls(...)`` functions. The
+  ``expect_calls(...)`` functions provide the same functionality as the
   replaced functions, but are more convenient to use.
 
 1.1.0
 -----
-* Minor: Added the call_arguments(..) function to access a specific
+* Minor: Added the ``call_arguments(..)`` function to access a specific
   call's arguments
 
 1.0.1
 -----
-* Bug: Add missing assert checking that the return_handler has actual
+* Bug: Add missing assert checking that the ``return_handler`` has actual
   values to return
 
 1.0.0

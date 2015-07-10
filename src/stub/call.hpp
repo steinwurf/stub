@@ -245,7 +245,7 @@ namespace stub
             ///
             /// @return True if the expectation matches the call,
             ///         otherwise false
-            explicit operator bool() const
+            bool to_bool() const
             {
                 // An expectation can't be evaluated if it hasn't been setup.
                 assert(!m_calls.empty());
@@ -257,6 +257,16 @@ namespace stub
                                   std::end(m_call.m_calls),
                                   std::begin(m_calls),
                                   m_predicate);
+            }
+
+            /// Use the to_bool member function when casting thís expectation
+            /// to a boolean value.
+            ///
+            /// @return True if the expectation matches the call,
+            ///         otherwise false
+            explicit operator bool() const
+            {
+                return to_bool();
             }
 
         private:

@@ -42,7 +42,7 @@ TEST(call, call_operator)
         EXPECT_EQ(function.calls(), 1U);
 
         uint32_t j = 2U;
-        EXPECT_TRUE((bool)function.expect_calls().with(j));
+        EXPECT_TRUE(function.expect_calls().with(j).to_bool());
     }
 
 }
@@ -137,9 +137,10 @@ TEST(call, expect_calls_with)
     function(2,3);
     function(4,5);
 
-    EXPECT_TRUE((bool)function.expect_calls()
+    EXPECT_TRUE(function.expect_calls()
                     .with(2,3)
-                    .with(4,5));
+                    .with(4,5)
+                    .to_bool());
 }
 
 // Test that the basic expect_calls() function works when we have more
@@ -150,16 +151,13 @@ TEST(call, expect_calls_with_out_of_bounds)
     {
         stub::call<void(uint32_t,uint32_t)> function;
 
-        EXPECT_FALSE((bool)function.expect_calls()
-                        .with(2,3)
-                        .with(4,5));
+        EXPECT_FALSE(function.expect_calls().with(2,3).with(4,5).to_bool());
     }
 
     {
         stub::call<void(uint32_t,uint32_t)> function;
 
-        EXPECT_FALSE((bool)function.expect_calls()
-                         .with(2,3).repeat(10));
+        EXPECT_FALSE(function.expect_calls().with(2,3).repeat(10).to_bool());
     }
 
     {
@@ -168,8 +166,7 @@ TEST(call, expect_calls_with_out_of_bounds)
         function(2,3);
         function(4,5);
 
-        EXPECT_FALSE((bool)function.expect_calls()
-                         .with(2,3));
+        EXPECT_FALSE(function.expect_calls().with(2,3).to_bool());
     }
 }
 
@@ -185,22 +182,22 @@ TEST(call, expect_calls_with_repeat)
     function(4,5);
     function(2,3);
 
-    EXPECT_TRUE((bool)function.expect_calls()
-                    .with(2,3)
-                    .with(4,5).repeat(2)
-                    .with(2,3));
+    EXPECT_TRUE(function.expect_calls()
+        .with(2,3)
+        .with(4,5).repeat(2)
+        .with(2,3).to_bool());
 
-    EXPECT_TRUE((bool)function.expect_calls()
-                    .with(2,3)
-                    .with(4,5).repeat(1).repeat(1)
-                    .with(2,3));
+    EXPECT_TRUE(function.expect_calls()
+        .with(2,3)
+        .with(4,5).repeat(1).repeat(1)
+        .with(2,3).to_bool());
 
-    EXPECT_FALSE((bool)function.expect_calls()
-                    .with(2,2)
-                    .with(4,5)
-                    .with(4,5)
-                    .with(4,5)
-                    .with(2,3));
+    EXPECT_FALSE(function.expect_calls()
+        .with(2,2)
+        .with(4,5)
+        .with(4,5)
+        .with(4,5)
+        .with(2,3).to_bool());
 }
 
 /// Test that the ignore function works as expected
@@ -214,26 +211,34 @@ TEST(call, expect_calls_with_ignore)
     function(4,5);
     function(2,6);
 
-    EXPECT_TRUE((bool)function.expect_calls()
-                    .with(2,3)
-                    .ignore(3)
-                    .with(2,6));
+    EXPECT_TRUE(function.expect_calls()
+        .with(2,3)
+        .ignore(3)
+        .with(2,6).to_bool());
 
-    // EXPECT_TRUE((bool)function.expect_calls()
-    //                 .any_calls_with(2,3));
+    EXPECT_TRUE(function.expect_calls()
+        .ignore(1)
+        .with(4,5).repeat(2)
+        .with(2,6).to_bool());
 
-    EXPECT_TRUE((bool)function.expect_calls()
-                    .ignore(1)
-                    .with(4,5).repeat(2)
-                    .with(2,6));
+    EXPECT_TRUE(function.expect_calls().ignore(4).with(2,6).to_bool());
 
-    EXPECT_TRUE((bool)function.expect_calls()
-                    .ignore(4)
-                    .with(2,6));
+    EXPECT_TRUE(function.expect_calls()
+        .ignore(function.calls() - 1)
+        .with(2,6)
+        .to_bool());
+}
 
-    EXPECT_TRUE((bool)function.expect_calls()
-                    .ignore(function.calls() - 1)
-                    .with(2,6));
+/// Test that the check function works as expected
+TEST(call, use_check)
+{
+    stub::call<void(uint32_t)> function;
+
+    function(1);
+    function(2);
+
+    EXPECT_TRUE(function.expect_calls().with(1).with(2).to_bool());
+    EXPECT_FALSE(function.expect_calls().with(1).to_bool());
 }
 
 /// Test that we can use a binary predicate to provide custom
@@ -254,9 +259,7 @@ TEST(call, expect_predicate_custom_type)
                 const std::tuple<cup>& b) -> bool
         { return std::get<0>(a).m_volume == std::get<0>(b).m_volume; };
 
-    EXPECT_TRUE((bool)function.expect_calls(p)
-                .with(cup{2.3})
-                .with(cup{4.5}));
+    EXPECT_TRUE(function.expect_calls(p).with(cup{2.3}).with(cup{4.5}).to_bool());
 }
 
 // Test that a custom predicate that only checks for the second
@@ -273,28 +276,29 @@ TEST(call, expect_predicate_pair)
     function(element(2,3));
 
     // We only check for the second parameter so this should work
-    EXPECT_TRUE((bool)function.expect_calls(p)
-                    .with(element(10,3)));
+    EXPECT_TRUE(function.expect_calls(p).with(element(10,3)).to_bool());
 
     function(element(20,3));
 
     // We have called more than once
-    EXPECT_FALSE((bool)function.expect_calls(p)
-                    .with(element(10,3)));
+    EXPECT_FALSE(function.expect_calls(p).with(element(10,3)).to_bool());
 
-    EXPECT_TRUE((bool)function.expect_calls(p)
-                    .with(element(1,3))
-                    .with(element(2,3)));
+    EXPECT_TRUE(function.expect_calls(p)
+        .with(element(1,3))
+        .with(element(2,3))
+        .to_bool());
 
     // Try without the predicate
-    EXPECT_FALSE((bool)function.expect_calls()
-                    .with(element(1,3))
-                    .with(element(2,3)));
+    EXPECT_FALSE(function.expect_calls()
+        .with(element(1,3))
+        .with(element(2,3))
+        .to_bool());
 
     // The actual calls that were made
-    EXPECT_TRUE((bool)function.expect_calls(p)
-                    .with(element(2,3))
-                    .with(element(20,3)));
+    EXPECT_TRUE(function.expect_calls(p)
+        .with(element(2,3))
+        .with(element(20,3))
+        .to_bool());
 }
 
 // Test that with a custom predicate the first argument is the actual
@@ -321,8 +325,7 @@ TEST(call, predicate_argument_order)
     stub::call<void(uint32_t)> function;
     function(5);
 
-    EXPECT_TRUE((bool)function.expect_calls(p)
-                    .with(10U));
+    EXPECT_TRUE(function.expect_calls(p).with(10U).to_bool());
 }
 
 // Test that we can pretty-print the call object, where the function takes
