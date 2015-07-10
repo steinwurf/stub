@@ -235,15 +235,6 @@ namespace stub
                 return *this;
             }
 
-            /// A more verbose version of the operator bool() member function.
-            ///
-            /// @return True if the expectation matches the call,
-            ///         otherwise false
-            bool check() const
-            {
-                return (bool)*this;
-            }
-
             /// Convert the expectation to a boolean value either true
             /// of false depending on whether the expectations match
             /// the actual call.
@@ -254,7 +245,7 @@ namespace stub
             ///
             /// @return True if the expectation matches the call,
             ///         otherwise false
-            explicit operator bool() const
+            bool to_bool() const
             {
                 // An expectation can't be evaluated if it hasn't been setup.
                 assert(!m_calls.empty());
@@ -266,6 +257,16 @@ namespace stub
                                   std::end(m_call.m_calls),
                                   std::begin(m_calls),
                                   m_predicate);
+            }
+
+            /// Use the to_bool member function when casting thís expectation
+            /// to a boolean value.
+            ///
+            /// @return True if the expectation matches the call,
+            ///         otherwise false
+            explicit operator bool() const
+            {
+                return to_bool();
             }
 
         private:
