@@ -97,52 +97,6 @@ arguments as the ``stub::call`` function.
     assert(works);
 
 
-Check a number of similar function calls
-........................................
-
-If we have a bunch of similar function calls it can be tedious to
-setup an expectation to match it. To make this easier we can call
-``repeat(...)`` on the expectation object. This will copy the
-arguments of the last ``with(...)`` a number of times.
-
-::
-
-    stub::call<void()> function;
-
-    function();
-    function();
-    function();
-    function();
-    function();
-    function();
-
-    bool works = function.expect_calls()
-        .with().repeat(5);
-
-    assert(works == true);
-
-Is the same as:
-
-::
-
-    stub::call<void()> function;
-    function();
-    function();
-    function();
-    function();
-    function();
-    function();
-
-    bool works = function.expect_calls()
-        .with()
-        .with()
-        .with()
-        .with()
-        .with()
-        .with();
-
-    assert(works == true);
-
 Check the number of function calls
 ..................................
 

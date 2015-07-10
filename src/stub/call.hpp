@@ -131,54 +131,6 @@ namespace stub
                 return *this;
             }
 
-            /// Calling repeat(...) will copy the arguments of the
-            /// last with(...) a number of times. The idea is that if
-            /// you expect to see a number of identical function calls
-            /// you can avoid adding them one-by-one using with.
-            ///
-            /// As an example:
-            ///
-            ///     stub::call<void()> function;
-            ///     function();
-            ///     function();
-            ///     function();
-            ///     function();
-            ///
-            ///     assert(function.expect_calls()
-            ///                .with().repeat(3));
-            ///
-            /// Is the same as:
-            ///
-            ///     stub::call<void()> function;
-            ///     function();
-            ///     function();
-            ///     function();
-            ///     function();
-            ///
-            ///     assert(function.expect_calls()
-            ///                .with()
-            ///                .with()
-            ///                .with()
-            ///                .with());
-            ///
-            /// @param times The number of times we repeat the last
-            ///        with(...) call
-            ///
-            /// @return The expectation itself, which allows chaining
-            ///         function calls
-            expectation& repeat(uint32_t times)
-            {
-                assert(times > 0);
-                assert(m_calls.size() > 0);
-
-                for (uint32_t i = 0; i < times; ++i)
-                {
-                    m_calls.push_back(m_calls.back());
-                }
-
-                return *this;
-            }
-
             /// Convert the expectation to a boolean value either true
             /// of false depending on whether the expectations match
             /// the actual call.
@@ -189,7 +141,7 @@ namespace stub
             ///
             /// @return True if the expectation matches the call,
             ///         otherwise false
-            explicit operator bool() const
+            bool to_bool() const
             {
                 // An expectation can't be evaluated if it hasn't been setup.
                 assert(!m_calls.empty());
@@ -201,6 +153,16 @@ namespace stub
                                   std::end(m_call.m_calls),
                                   std::begin(m_calls),
                                   m_predicate);
+            }
+
+            /// Use the to_bool member function when casting thís expectation
+            /// to a boolean value.
+            ///
+            /// @return True if the expectation matches the call,
+            ///         otherwise false
+            explicit operator bool() const
+            {
+                return to_bool();
             }
 
         private:
