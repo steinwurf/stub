@@ -240,6 +240,7 @@ If we have many function calls it can be tedious to setup an expectation
 inline:
 
 ::
+
     stub::call<void(uint32_t)> some_function;
 
     // Call the function
@@ -265,6 +266,7 @@ Instead an expectation can be built by storing it as a variable and calling the
 ``with`` member function:
 
 ::
+
     stub::call<void(uint32_t)> some_function;
 
     auto some_function_expectation = some_function.expect_calls();
