@@ -234,6 +234,51 @@ library we need to provide a custom comparison function.
         .with(element(1,3))
         .with(element(2,3)));
 
+Building an Expectation
+.......................
+If we have many function calls it can be tedious to setup an expectation
+inline:
+
+::
+    stub::call<void(uint32_t)> some_function;
+
+    // Call the function
+    for (uint32_t i = 0; i < 10; i++)
+    {
+        some_function(i);
+    }
+
+    // Check the expectation.
+    assert(some_function.expect_calls()
+        .with(0)
+        .with(1)
+        .with(2)
+        .with(3)
+        .with(4)
+        .with(5)
+        .with(6)
+        .with(7)
+        .with(8)
+        .with(9));
+
+Instead an expectation can be built by storing it as a variable and calling the
+``with`` member function:
+
+::
+    stub::call<void(uint32_t)> some_function;
+
+    auto some_function_expectation = some_function.expect_calls();
+
+    // Call the function and setup expectation
+    for (uint32_t i = 0; i < 10; i++)
+    {
+        some_function(i);
+        some_function_expectation.with(i);
+    }
+
+    // Check the expectation.
+    assert(some_function_expectation);
+
 Function return values
 ----------------------
 
