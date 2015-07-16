@@ -157,12 +157,6 @@ TEST(call, expect_calls_with_out_of_bounds)
     {
         stub::call<void(uint32_t,uint32_t)> function;
 
-        EXPECT_FALSE(function.expect_calls().with(2,3).repeat(10).to_bool());
-    }
-
-    {
-        stub::call<void(uint32_t,uint32_t)> function;
-
         function(2,3);
         function(4,5);
 
@@ -170,67 +164,8 @@ TEST(call, expect_calls_with_out_of_bounds)
     }
 }
 
-// Test that we can "inject" the same expected calls with the repeat
-// function
-TEST(call, expect_calls_with_repeat)
-{
-    stub::call<void(uint32_t,uint32_t)> function;
-
-    function(2,3);
-    function(4,5);
-    function(4,5);
-    function(4,5);
-    function(2,3);
-
-    EXPECT_TRUE(function.expect_calls()
-        .with(2,3)
-        .with(4,5).repeat(2)
-        .with(2,3).to_bool());
-
-    EXPECT_TRUE(function.expect_calls()
-        .with(2,3)
-        .with(4,5).repeat(1).repeat(1)
-        .with(2,3).to_bool());
-
-    EXPECT_FALSE(function.expect_calls()
-        .with(2,2)
-        .with(4,5)
-        .with(4,5)
-        .with(4,5)
-        .with(2,3).to_bool());
-}
-
-/// Test that the ignore function works as expected
-TEST(call, expect_calls_with_ignore)
-{
-    stub::call<void(uint32_t,uint32_t)> function;
-
-    function(2,3);
-    function(4,5);
-    function(4,5);
-    function(4,5);
-    function(2,6);
-
-    EXPECT_TRUE(function.expect_calls()
-        .with(2,3)
-        .ignore(3)
-        .with(2,6).to_bool());
-
-    EXPECT_TRUE(function.expect_calls()
-        .ignore(1)
-        .with(4,5).repeat(2)
-        .with(2,6).to_bool());
-
-    EXPECT_TRUE(function.expect_calls().ignore(4).with(2,6).to_bool());
-
-    EXPECT_TRUE(function.expect_calls()
-        .ignore(function.calls() - 1)
-        .with(2,6)
-        .to_bool());
-}
-
 /// Test that the check function works as expected
-TEST(call, use_check)
+TEST(call, use_to_bool)
 {
     stub::call<void(uint32_t)> function;
 

@@ -6,13 +6,18 @@ every change, see the Git log.
 
 Latest
 ------
-* tbd
+* Major: Removed the ``repeat`` member function as it does not have a proper use
+  case.
+* Major: Removed the ``ignore`` member function as it does not have a proper use
+  case.
 
 2.3.0
 -----
 * Minor: Added the ``to_bool`` function - a more verbose version of converting
+* Patch: Added assert to ensure that expectations has been setup prior to
   the expectation to a boolean value.
 * Patch: Added ``assert`` to ensure that expectations has been setup prior to
+>>>>>>> master
   evaluation.
 
 2.2.0
