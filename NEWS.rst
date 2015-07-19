@@ -6,6 +6,10 @@ every change, see the Git log.
 
 Latest
 ------
+* tbd
+
+3.0.0
+-----
 * Major: Removed the ``repeat`` member function as it does not have a proper use
   case.
 * Major: Removed the ``ignore`` member function as it does not have a proper use
