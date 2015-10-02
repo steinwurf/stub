@@ -97,52 +97,6 @@ arguments as the ``stub::call`` function.
     assert(works);
 
 
-Check a number of similar function calls
-........................................
-
-If we have a bunch of similar function calls it can be tedious to
-setup an expectation to match it. To make this easier we can call
-``repeat(...)`` on the expectation object. This will copy the
-arguments of the last ``with(...)`` a number of times.
-
-::
-
-    stub::call<void()> function;
-
-    function();
-    function();
-    function();
-    function();
-    function();
-    function();
-
-    bool works = function.expect_calls()
-        .with().repeat(5);
-
-    assert(works == true);
-
-Is the same as:
-
-::
-
-    stub::call<void()> function;
-    function();
-    function();
-    function();
-    function();
-    function();
-    function();
-
-    bool works = function.expect_calls()
-        .with()
-        .with()
-        .with()
-        .with()
-        .with()
-        .with();
-
-    assert(works == true);
-
 Check the number of function calls
 ..................................
 
@@ -161,60 +115,6 @@ made.
 
     // Return true if no calls were made
     assert(some_function.no_calls() == false);
-
-Check only some function calls
-..............................
-
-Sometimes we might not care about the arguments to all function
-calls. If that is the case we can use the ``ignore(...)`` function to
-ignore some of the calls.
-
-::
-
-    stub::call<void(uint32_t,uint32_t)> function;
-    function(3,1);
-    function(4,2);
-    function(5,0);
-
-    assert(function.expect_calls()
-        .ignore(2)
-        .with(5,0));
-
-Here we ignore the first two calls and only check the last one. The
-ignore function can be used in between ``with(...)`` calls if wanted.
-
-::
-
-     stub::call<void(uint32_t,uint32_t)> function;
-     function(3,1);
-     function(4,2);
-     function(5,0);
-
-     assert(function.expect_calls()
-         .with(3,1)
-         .ignore(1)
-         .with(5,0));
-
-Here we ignore the arguments to the second call and check only the
-first and last calls.
-
-
-Check the most recent function call
-...................................
-
-We can also check the arguments of the most recent function call.
-
-::
-
-    stub::call<void(uint32_t,uint32_t)> function;
-
-    function(3,4);
-    function(4,3);
-    function(2,6);
-
-    assert(function.expect_calls()
-        .ignore(function.calls() - 1)
-        .with(2,6));
 
 Get the arguments of a specific function call
 .............................................
@@ -333,6 +233,53 @@ library we need to provide a custom comparison function.
     assert(false == function.expect_calls()
         .with(element(1,3))
         .with(element(2,3)));
+
+Building an Expectation
+.......................
+If we have many function calls it can be tedious to setup an expectation
+inline:
+
+::
+
+    stub::call<void(uint32_t)> some_function;
+
+    // Call the function
+    for (uint32_t i = 0; i < 10; i++)
+    {
+        some_function(i);
+    }
+
+    // Check the expectation.
+    assert(some_function.expect_calls()
+        .with(0)
+        .with(1)
+        .with(2)
+        .with(3)
+        .with(4)
+        .with(5)
+        .with(6)
+        .with(7)
+        .with(8)
+        .with(9));
+
+Instead an expectation can be built by storing it as a variable and calling the
+``with`` member function:
+
+::
+
+    stub::call<void(uint32_t)> some_function;
+
+    auto some_function_expectation = some_function.expect_calls();
+
+    // Call the function and setup expectation
+    for (uint32_t i = 0; i < 10; i++)
+    {
+        some_function(i);
+        some_function_expectation.with(i);
+    }
+
+    // Check the expectation.
+    assert(some_function_expectation);
 
 Function return values
 ----------------------
