@@ -8,6 +8,11 @@ Latest
 ------
 * tbd
 
+4.0.0
+-----
+* Major: Upgrade to waf-tools 3
+* Minor: Upgrade to gtest 3
+
 3.0.0
 -----
 * Major: Removed the ``repeat`` member function as it does not have a proper use
