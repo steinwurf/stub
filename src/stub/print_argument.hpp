@@ -6,6 +6,7 @@
 #pragma once
 
 #include <ostream>
+#include <iomanip>
 #include <cstdint>
 
 namespace stub
@@ -32,6 +33,7 @@ namespace stub
     template<class T>
     inline void print_argument(std::ostream& out, uint32_t index, T* value)
     {
-        out << "Arg " << index << ": " << (uintptr_t)value << "\n";
+        out << "Arg " << std::dec << std::noshowbase << index << ": "
+            << std::hex << std::showbase << (uintptr_t)value << "\n";
     }
 }
