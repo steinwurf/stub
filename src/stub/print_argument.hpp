@@ -32,6 +32,6 @@ namespace stub
     template<class T>
     inline void print_argument(std::ostream& out, uint32_t index, T* value)
     {
-        out << "Arg " << index << ": " << static_cast<void*>(value) << "\n";
+        out << "Arg " << index << ": " << (uintptr_t)value << "\n";
     }
 }
