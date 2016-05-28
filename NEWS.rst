@@ -30,7 +30,6 @@ Latest
 * Patch: Added assert to ensure that expectations has been setup prior to
   the expectation to a boolean value.
 * Patch: Added ``assert`` to ensure that expectations has been setup prior to
->>>>>>> master
   evaluation.
 
 2.2.0
