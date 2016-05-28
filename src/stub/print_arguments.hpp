@@ -5,11 +5,10 @@
 
 #pragma once
 
-#include <ostream>
-#include <cstdint>
+#include "print_argument.hpp"
+
 #include <tuple>
 #include <type_traits>
-
 
 namespace stub
 {
@@ -68,8 +67,7 @@ namespace stub
     >
     inline void print_arguments(std::ostream& out, const std::tuple<Args...>& t)
     {
-        out << "Arg " << Index::value << ": "
-            << std::get<Index::value>(t) << "\n";
+        print_argument(out, Index::value, std::get<Index::value>(t));
 
         print_arguments<
             std::integral_constant<uint32_t, Index::value + 1>>(out, t);
