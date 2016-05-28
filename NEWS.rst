@@ -6,7 +6,11 @@ every change, see the Git log.
 
 Latest
 ------
-* tbd
+* Patch: Fix printing of pointers. We rely on ``std::ostream::operator<<``
+  for printing pointer values. This caused problems with raw binary data
+  (char* or uint8_t*) since ``std::ostream::operator<<`` tries to print
+  those as zero-terminated c-style strings. Instead we now always print the
+  address pointed to rather than trying to print the actual data.
 
 4.0.0
 -----
@@ -26,7 +30,6 @@ Latest
 * Patch: Added assert to ensure that expectations has been setup prior to
   the expectation to a boolean value.
 * Patch: Added ``assert`` to ensure that expectations has been setup prior to
->>>>>>> master
   evaluation.
 
 2.2.0
