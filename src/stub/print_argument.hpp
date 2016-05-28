@@ -33,6 +33,12 @@ namespace stub
     template<class T>
     inline void print_argument(std::ostream& out, uint32_t index, T* value)
     {
+        // The easy approach i.e. just using the std::ostream overload for
+        // void* works, but the string representation is not the same on
+        // Linux, OSX and Windows so unit-tests will fail. Instead we have
+        // to work a bit more to print the value of the pointer as hex but
+        // using the code below we get the same string representation on
+        // all tested platforms.
         out << "Arg " << std::dec << std::noshowbase << index << ": "
             << std::hex << std::showbase << (uintptr_t)value << "\n";
     }
