@@ -6,6 +6,10 @@ every change, see the Git log.
 
 Latest
 ------
+* tbd
+
+4.0.1
+-----
 * Patch: Fix printing of pointers. We rely on ``std::ostream::operator<<``
   for printing pointer values. This caused problems with raw binary data
   (char* or uint8_t*) since ``std::ostream::operator<<`` tries to print
