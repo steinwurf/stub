@@ -9,6 +9,9 @@
 #include <functional>
 #include <ostream>
 
+/// @todo remove
+#include <iostream>
+
 #include "return_handler.hpp"
 #include "unqualified_type.hpp"
 #include "print_arguments.hpp"
@@ -89,6 +92,13 @@ namespace stub
 
     public:
 
+        struct argument
+        {
+
+
+
+        };
+
         /// Represent a expectation of how the call object has been
         /// invoked. Using the API it is possible to setup how we
         /// expect the call object looks like. The expectation
@@ -148,6 +158,8 @@ namespace stub
 
                 if (m_call.m_calls.size() != m_calls.size())
                     return false;
+
+                std::cout << "sizeof = " << sizeof...(Args) <<  std::endl;
 
                 return std::equal(std::begin(m_call.m_calls),
                                   std::end(m_call.m_calls),
