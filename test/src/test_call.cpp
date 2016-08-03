@@ -185,7 +185,8 @@ struct cup
 
 TEST(call, expect_predicate_custom_type)
 {
-    stub::call<void(const cup&)> function;
+    assert(0); // Implement
+/*    stub::call<void(const cup&)> function;
 
     function(cup{2.3});
     function(cup{4.5});
@@ -194,7 +195,7 @@ TEST(call, expect_predicate_custom_type)
                 const std::tuple<cup>& b) -> bool
         { return std::get<0>(a).m_volume == std::get<0>(b).m_volume; };
 
-    EXPECT_TRUE(function.expect_calls(p).with(cup{2.3}).with(cup{4.5}).to_bool());
+    EXPECT_TRUE(function.expect_calls(p).with(cup{2.3}).with(cup{4.5}).to_bool());*/
 }
 
 // Test that a custom predicate that only checks for the second

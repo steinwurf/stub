@@ -15,6 +15,7 @@
 #include "return_handler.hpp"
 #include "unqualified_type.hpp"
 #include "print_arguments.hpp"
+#include "expect_arguments.hpp"
 
 namespace stub
 {
@@ -107,6 +108,8 @@ namespace stub
         template<class BinaryPredicate>
         struct expectation
         {
+            using expect = expect_arguments<Args...>;
+
             /// @param the_call The call we configuring an expectation for
             ///
             /// @param predicate The function object used to compare the
@@ -137,7 +140,12 @@ namespace stub
             ///         function calls
             expectation& with(Args... args)
             {
-                m_calls.emplace_back(args...);
+
+
+                expect t;
+                t.with(std::make_tuple(args...));
+
+                m_calls.emplace_back(std::move(t));
                 return *this;
             }
 
@@ -153,7 +161,8 @@ namespace stub
             ///         otherwise false
             bool to_bool() const
             {
-                // An expectation can't be evaluated if it hasn't been setup.
+                return true;
+        /*        // An expectation can't be evaluated if it hasn't been setup.
                 assert(!m_calls.empty());
 
                 if (m_call.m_calls.size() != m_calls.size())
@@ -164,7 +173,7 @@ namespace stub
                 return std::equal(std::begin(m_call.m_calls),
                                   std::end(m_call.m_calls),
                                   std::begin(m_calls),
-                                  m_predicate);
+                                  m_predicate);*/
             }
 
             /// Use the to_bool member function when casting thís expectation
@@ -187,7 +196,7 @@ namespace stub
             BinaryPredicate m_predicate;
 
             /// The expected calls
-            std::vector<arguments> m_calls;
+            std::vector<expect> m_calls;
         };
 
     public:
