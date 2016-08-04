@@ -39,7 +39,7 @@ Latest
 2.2.0
 -----
 * Minor: Added ``buildbot.py`` for coverage reports.
-* Minor: Added methods allowing a ``stub::call`` object to be printed to an
+* Minor: Added methods allowing a ``stub::function`` object to be printed to an
   ``std::ostream``.
 
 2.1.2
@@ -56,7 +56,7 @@ Latest
 
 2.0.1
 -----
-* Bug: Added const modifier to the ``stub::call::expect_calls()``
+* Bug: Added const modifier to the ``stub::function::expect_calls()``
   functions. They do not modify the object so they should be ``const``.
 * Bug: Updated documentation to specify in which order arguments are
   passed to a custom predicate function.
@@ -71,7 +71,7 @@ Latest
 1.1.0
 -----
 * Minor: Added the ``call_arguments(..)`` function to access a specific
-  call's arguments
+  function's arguments
 
 1.0.1
 -----

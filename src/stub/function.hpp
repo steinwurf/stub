@@ -19,23 +19,23 @@
 
 namespace stub
 {
-    /// Default call
-    template<typename T> class call;
+    /// Default function
+    template<typename T> class function;
 
-    /// @brief The call object act like a "sink" for function calls
-    ///        i.e. we can define a call object to accept any type of
+    /// @brief The function object act like a "sink" for function calls
+    ///        i.e. we can define a function object to accept any type of
     ///        function call and it will simply store the arguments
     ///        for later inspection.
     ///
-    /// The typical use-case for the call object is when testing that
+    /// The typical use-case for the function object is when testing that
     /// some code invokes a specific set of functions with a specific
     /// set of arguments.
     ///
     /// Example:
     ///
-    ///    stub::call<void(uint32_t)> some_function;
+    ///    stub::function<void(uint32_t)> some_function;
     ///
-    /// The above call takes an uint32_t and returns nothing, lets
+    /// The above function takes an uint32_t and returns nothing, lets
     /// invoke it:
     ///
     ///     some_function(3);
@@ -49,9 +49,9 @@ namespace stub
     ///     bool called_with = some_function.expect_calls().with(4U);
     ///     assert(called_with == true);
     ///
-    /// We can also define a call which returns a value:
+    /// We can also define a function which returns a value:
     ///
-    ///     stub::call<bool(uint32_t)> another_function;
+    ///     stub::function<bool(uint32_t)> another_function;
     ///
     /// Here we have to specify what return value we expect:
     ///
@@ -67,7 +67,7 @@ namespace stub
     /// return_handler.hpp
     ///
     template<typename R, typename... Args>
-    class call<R (Args...)>
+    class function<R (Args...)>
     {
     public:
 
@@ -76,7 +76,7 @@ namespace stub
         ///
         /// Example:
         ///
-        ///     stub::call<void(const int&)> function;
+        ///     stub::function<void(const int&)> function;
         ///     function(3);
         ///
         /// In this case we will store an int of value 3 instead of a
@@ -86,47 +86,34 @@ namespace stub
         /// A tuple is used to store the arguments passed
         using arguments = std::tuple<typename unqualified_type<Args>::type...>;
 
-        /// The default binary predicate type use when comparing
-        /// function calls
-        using default_predicate =
-            std::function<bool(const arguments&,const arguments&)>;
-
     public:
 
-        struct argument
-        {
-
-
-
-        };
-
-        /// Represent a expectation of how the call object has been
+        /// Represent a expectation of how the function object has been
         /// invoked. Using the API it is possible to setup how we
-        /// expect the call object looks like. The expectation
+        /// expect the function object looks like. The expectation
         /// converts to bool allowing the user to detect whether the
         /// expectation was correct.
-        template<class BinaryPredicate>
         struct expectation
         {
-            using expect = expect_arguments<Args...>;
+            using expect = expect_arguments<
+                typename unqualified_type<Args>::type...>;
 
-            /// @param the_call The call we configuring an expectation for
+            /// @param the_function The function we configuring an expectation for
             ///
             /// @param predicate The function object used to compare the
             ///        call arguments
-            expectation(const call& the_call, const BinaryPredicate& predicate)
-                : m_call(the_call),
-                  m_predicate(predicate)
+            expectation(const function& the_function)
+                : m_function(the_function)
             { }
 
             /// Calling with(...) will add a set of arguments we
             /// expect to see. with(...) can be called multiple times
             /// in a row if we expect multiple function calls to the
-            /// call object.
+            /// function object.
             ///
             /// As an example:
             ///
-            ///     stub::call<void(uint32_t,uint32_t)> function;
+            ///     stub::function<void(uint32_t,uint32_t)> function;
             ///     function(3,1);
             ///     function(4,2);
             ///
@@ -140,12 +127,7 @@ namespace stub
             ///         function calls
             expectation& with(Args... args)
             {
-
-
-                expect t;
-                t.with(std::make_tuple(args...));
-
-                m_calls.emplace_back(std::move(t));
+                m_calls.emplace_back(std::make_tuple(args...));
                 return *this;
             }
 
@@ -161,25 +143,28 @@ namespace stub
             ///         otherwise false
             bool to_bool() const
             {
-                return true;
-        /*        // An expectation can't be evaluated if it hasn't been setup.
+                // An expectation can't be evaluated if it hasn't been setup.
                 assert(!m_calls.empty());
 
-                if (m_call.m_calls.size() != m_calls.size())
+                if (m_function.m_calls.size() != m_calls.size())
                     return false;
 
-                std::cout << "sizeof = " << sizeof...(Args) <<  std::endl;
+                for (uint32_t i = 0; i < m_calls.size(); ++i)
+                {
+                    auto& actual = m_function.m_calls[i];
+                    if (m_calls[i].compare(actual) == false)
+                    {
+                        return false;
+                    }
+                }
 
-                return std::equal(std::begin(m_call.m_calls),
-                                  std::end(m_call.m_calls),
-                                  std::begin(m_calls),
-                                  m_predicate);*/
+                return true;
             }
 
             /// Use the to_bool member function when casting thís expectation
             /// to a boolean value.
             ///
-            /// @return True if the expectation matches the call,
+            /// @return True if the expectation matches the function,
             ///         otherwise false
             explicit operator bool() const
             {
@@ -188,12 +173,8 @@ namespace stub
 
         private:
 
-            /// The call we will check the expectation against
-            const call& m_call;
-
-            /// The comparison function used when comparing whether
-            /// the function call arguments match
-            BinaryPredicate m_predicate;
+            /// The function we will check the expectation against
+            const function& m_function;
 
             /// The expected calls
             std::vector<expect> m_calls;
@@ -205,9 +186,9 @@ namespace stub
         /// @param args The arguments that should be stored
         ///
         /// @return The return value generated by the return_handler
-        R operator()(Args... args) const
+        R operator()(Args&&... args) const
         {
-            m_calls.emplace_back(args...);
+            m_calls.emplace_back(std::forward<Args>(args)...);
             return m_return_handler();
         }
 
@@ -221,7 +202,7 @@ namespace stub
         /// @copydoc return_handler::set_return(
         ///              const std::initializer_list<T>&)
         template<class T>
-        return_handler<R> set_return(const std::initializer_list<T> &returns)
+        return_handler<R>& set_return(const std::initializer_list<T> &returns)
         {
             return m_return_handler.set_return(returns);
         }
@@ -245,7 +226,7 @@ namespace stub
             return m_calls[index];
         }
 
-        /// Used when we want to check whether the call object is in a
+        /// Used when we want to check whether the function object is in a
         /// certain state. See examples usage in the expectation
         /// struct member functions.
         ///
@@ -260,36 +241,24 @@ namespace stub
         /// expected as the second.
         ///
         /// @return An expectation object
-        expectation<default_predicate> expect_calls() const
+        expectation expect_calls() const
         {
-            default_predicate predicate =
-                [](const arguments& a, const arguments& b) -> bool
-                   { return a == b; };
-
-            return expectation<default_predicate>(*this, predicate);
+            return expectation(*this);
         }
 
-        /// @copydoc expect_calls()
-        template<class BinaryPredicate>
-        expectation<BinaryPredicate> expect_calls(
-            const BinaryPredicate& predicate) const
-        {
-            return expectation<BinaryPredicate>(*this, predicate);
-        }
-
-        /// Prints the status of the call object to the std::ostream.
+        /// Prints the status of the function object to the std::ostream.
         ///
         /// Example (using the output operator):
         ///
-        ///    stub::call<void(uint32_t)> my_func;
+        ///    stub::function<void(uint32_t)> my_func;
         ///
         ///    my_func(4U);
         ///    my_func(5U);
         ///
-        ///    // Print the current status of the call object,
+        ///    // Print the current status of the function object,
         ///    std::cout << my_func << std::endl;
         ///
-        /// @param out The ostream where the stub::call status should be
+        /// @param out The ostream where the stub::function status should be
         void print(std::ostream& out) const
         {
             out << "Number of calls: " << m_calls.size() << std::endl;
@@ -313,20 +282,20 @@ namespace stub
         mutable std::vector<arguments> m_calls;
     };
 
-    /// Output operator for printing call objects, see more info in
-    /// stub::call::print(std::ostream&).
+    /// Output operator for printing function objects, see more info in
+    /// stub::function::print(std::ostream&).
     ///
     ///
-    /// @param out The output stream where the state of the call object
+    /// @param out The output stream where the state of the function object
     ///        will be printed.
     ///
-    /// @param call The call object we want to print
+    /// @param function The function object we want to print
     ///
     /// @return The ostream operator.
     template<class T>
-    inline std::ostream& operator<<(std::ostream& out, const call<T>& call)
+    inline std::ostream& operator<<(std::ostream& out, const function<T>& function)
     {
-        call.print(out);
+        function.print(out);
         return out;
     }
 

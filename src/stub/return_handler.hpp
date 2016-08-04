@@ -14,7 +14,7 @@
 namespace stub
 {
     /// @brief The return_handler is a helper object that is used
-    ///        e.g. in the call object to control which return values
+    ///        e.g. in the function object to control which return values
     ///        should be generated when called.
     ///
     /// The return_handler provides the call operator() and when
@@ -96,6 +96,10 @@ namespace stub
             : m_repeat(true),
               m_position(0)
         { }
+
+        /// Make the return_handler non-copyable
+        return_handler(const return_handler&) = delete;
+        return_handler& operator=(const return_handler&) = delete;
 
         /// Initializes the return_handler with one specific return
         /// value. Calling this function will also reset the
@@ -190,7 +194,7 @@ namespace stub
     /// Specialization for the case of a void function i.e. no return
     /// value. We expect no calls to this return_handler the call
     /// operator is only there to allow the code to compile when
-    /// e.g. the call class instantiates a return handler.
+    /// e.g. the function class instantiates a return handler.
     template<>
     class return_handler<void>
     {

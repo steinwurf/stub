@@ -12,11 +12,11 @@ functions to ease sometimes tedious testing tasks.
 
 Usage
 -----
-The ``stub::call`` object act like a "sink" for function calls
-i.e. we can define a call object to accept any type of function
+The ``stub::function`` object act like a "sink" for function calls
+i.e. we can define a function object to accept any type of function
 call and it will simply store the arguments for later inspection.
 
-The typical use-case for the call object is when testing that
+The typical use-case for the function object is when testing that
 some code invokes a specific set of functions with a specific
 set of arguments.
 
@@ -33,7 +33,7 @@ need a relatively recent compiler to use it.
 Function Calls
 --------------
 
-One of the useful features of the call stub is the possibility to
+One of the useful features of the function stub is the possibility to
 check the parameters of the "simulated" function calls:
 
 Check a set of function calls
@@ -43,11 +43,11 @@ Example:
 
 ::
 
-   #include <stub/call.hpp>
+   #include <stub/function.hpp>
 
-   stub::call<void(uint32_t)> some_function;
+   stub::function<void(uint32_t)> some_function;
 
-The above call takes an ``uint32_t`` and returns nothing, lets see how to
+The above function takes an ``uint32_t`` and returns nothing, lets see how to
 invoke it:
 
 ::
@@ -81,11 +81,11 @@ Functions taking no arguments
 ............................
 
 The ``with(...)`` function takes exactly the same number and type of
-arguments as the ``stub::call`` function.
+arguments as the ``stub::function`` function.
 
 ::
 
-    stub::call<void()> function;
+    stub::function<void()> function;
     function();
     function();
 
@@ -105,7 +105,7 @@ made.
 
 ::
 
-    stub::call<void(uint32_t)> some_function;
+    stub::function<void(uint32_t)> some_function;
 
     some_function(3);
     some_function(4);
@@ -125,7 +125,7 @@ function.
 
 ::
 
-    stub::call<void(uint32_t,uint32_t)> function;
+    stub::function<void(uint32_t,uint32_t)> function;
 
     function(3,4);
     function(4,3);
@@ -144,7 +144,7 @@ arguments of the second call:
 
 **Note:** You should use the "unqualified types" of the function
 arguments. This means that if you have a function
-``stub::call<void(const uint32_t&>`` then the stub library will store
+``stub::function<void(const uint32_t&>`` then the stub library will store
 the argument passed in an ``uint32_t`` instead of a ``const
 uint32_t&``. So our comparison should use ``std::tuple<uint32_t>``
 
@@ -175,7 +175,7 @@ And a function with takes those objects as arguments:
 
 ::
 
-    stub::call<void(const cup&)> function;
+    stub::function<void(const cup&)> function;
 
     function(cup{2.3});
     function(cup{4.5});
@@ -216,7 +216,7 @@ library we need to provide a custom comparison function.
             return a == b;
         };
 
-    stub::call<void(const element&)> function;
+    stub::function<void(const element&)> function;
     function(element(2,3));
     function(element(20,3));
 
@@ -241,7 +241,7 @@ inline:
 
 ::
 
-    stub::call<void(uint32_t)> some_function;
+    stub::function<void(uint32_t)> some_function;
 
     // Call the function
     for (uint32_t i = 0; i < 10; i++)
@@ -267,7 +267,7 @@ Instead an expectation can be built by storing it as a variable and calling the
 
 ::
 
-    stub::call<void(uint32_t)> some_function;
+    stub::function<void(uint32_t)> some_function;
 
     auto some_function_expectation = some_function.expect_calls();
 
@@ -284,11 +284,11 @@ Instead an expectation can be built by storing it as a variable and calling the
 Function return values
 ----------------------
 
-We can also define a ``stub::call`` which returns a value:
+We can also define a ``stub::function`` which returns a value:
 
 ::
 
-    stub::call<bool(uint32_t)> some_function;
+    stub::function<bool(uint32_t)> some_function;
 
 Here we have to specify what return value we expect:
 
@@ -306,7 +306,7 @@ Or alternatively we can set multiple return values:
 
 ::
 
-    stub::call<uint32_t()> some_function;
+    stub::function<uint32_t()> some_function;
 
     some_function.set_return({4U,3U});
 
@@ -327,7 +327,7 @@ The default behavior is to repeat the specified return values i.e.:
 
 ::
 
-    stub::call<uint32_t()> some_function;
+    stub::function<uint32_t()> some_function;
     some_function.set_return(3U);
 
     uint32_t a = some_function();
@@ -342,7 +342,7 @@ specified:
 
 ::
 
-    stub::call<uint32_t()> some_function;
+    stub::function<uint32_t()> some_function;
     some_function.set_return(1U).no_repeat();
 
     uint32_t a = some_function();
@@ -356,8 +356,8 @@ specified:
     uint32_t d = some_function(); // <---- Crash
 
 In addition to the functionality shown in this example the
-``stub::call`` object provides a couple of extra functions for
-checking the current state. See the src/stub/call.hpp header for more
+``stub::function`` object provides a couple of extra functions for
+checking the current state. See the src/stub/function.hpp header for more
 information.
 
 For more information on the options for return values see the
