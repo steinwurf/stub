@@ -13,13 +13,17 @@
 
 namespace stub
 {
+    /// Tuple containing the values actually passed in the call
+    template<class... T>
+    using arguments = std::tuple<typename unqualified_type<T>::type...>;
+
     /// This stores a tuple of types that is to, at some point, be compared with
     /// a different tuple of arguments.
     ///
     /// The basic usage is as follows:
     ///
     ///    auto expectation = std::make_tuple(5, true, 4.0);
-    ///    expect_arguments<int, bool, double> expect(expectation);
+    ///    compare_call<int, bool, double> expect(expectation);
     ///
     ///    auto actual = std::make_tuple(4, true, 4.0);
     ///
@@ -27,7 +31,7 @@ namespace stub
     ///    bool result = expect.compare(actual);
     ///    assert(result == false);
     ///
-    /// The expect_arguments::compare(...) function uses compare_arguments(...)
+    /// The compare_call::compare(...) function uses compare_arguments(...)
     /// to compare the elements of the two tuples element-wise using
     /// compare_argument(...). In the case above the two tuples contain the same
     /// types. So every thing is pretty straight-forward.
@@ -46,7 +50,7 @@ namespace stub
     ///    // Notice how we can pass ignore() as the second argument to our
     ///    // expectation tuple.
     ///    auto expectation = std::make_tuple(5, ignore(), 4.0);
-    ///    expect_arguments<int, bool, double> expect(expectation);
+    ///    compare_call<int, bool, double> expect(expectation);
     ///
     ///    auto actual = std::make_tuple(5, true, 4.0);
     ///
@@ -60,24 +64,22 @@ namespace stub
     /// extend support for more special values to support custom behaviour.
     ///
     template<class... Args>
-    struct expect_arguments
+    struct compare_call
     {
-        /// Tuple containing the values actually passed in the call
-        using actual_arguments =
-            std::tuple<typename unqualified_type<Args>::type...>;
 
-        /// Construct a new expectation with some expected values.
+
         template<class... WithArgs>
-        expect_arguments(const std::tuple<WithArgs...>& expected)
+        compare_call(arguments<WithArgs...> expected)
         {
             assert(!m_implementation);
+
             m_implementation = std::unique_ptr<interface>(
                 new implementation<WithArgs...>(expected));
         }
 
         /// @return Compare the values of the passed tuple with those of the
         ///         expectation.
-        bool compare(const actual_arguments& actual) const
+        bool compare(const arguments<Args...>& actual) const
         {
             assert(m_implementation);
             return m_implementation->compare(actual);
@@ -88,7 +90,7 @@ namespace stub
         /// Interface used in the type erasure
         struct interface
         {
-            virtual bool compare(const std::tuple<Args...>& value) const = 0;
+            virtual bool compare(const arguments<Args...>& value) const = 0;
         };
 
         // Container for the expected values
@@ -96,18 +98,17 @@ namespace stub
         struct implementation : public interface
         {
 
-
-            implementation(const std::tuple<WithArgs...>& expected)
+            implementation(const arguments<WithArgs...>& expected)
                 : m_expected(expected)
             { }
 
-            bool compare(const actual_arguments& actual) const override
+            bool compare(const arguments<Args...>& actual) const override
             {
                 return compare_arguments(actual, m_expected);
             }
 
             /// The tuple containing the expected values
-            std::tuple<WithArgs...> m_expected;
+            arguments<WithArgs...> m_expected;
         };
 
     private:

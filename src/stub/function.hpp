@@ -15,7 +15,7 @@
 #include "return_handler.hpp"
 #include "unqualified_type.hpp"
 #include "print_arguments.hpp"
-#include "expect_arguments.hpp"
+#include "compare_call.hpp"
 
 namespace stub
 {
@@ -84,7 +84,7 @@ namespace stub
         /// when we want to compare.
         ///
         /// A tuple is used to store the arguments passed
-        using arguments = std::tuple<typename unqualified_type<Args>::type...>;
+        /// using arguments = std::tuple<typename unqualified_type<Args>::type...>;
 
     public:
 
@@ -95,9 +95,6 @@ namespace stub
         /// expectation was correct.
         struct expectation
         {
-            using expect_arguments_type = expect_arguments<
-                typename unqualified_type<Args>::type...>;
-
             /// @param the_function The function we configuring an expectation for
             ///
             /// @param predicate The function object used to compare the
@@ -125,9 +122,11 @@ namespace stub
             ///
             /// @return The expectation itself, which allows chaining
             ///         function calls
-            expectation& with(Args&&... args)
+            template<class... WithArgs>
+            expectation& with(WithArgs&&... args)
             {
-                m_calls.emplace_back(std::make_tuple(args...));
+                //arguments<WithArgs...> a(std::forward<WithArgs>(args)...);
+                //m_calls.emplace_back(std::move(a));
                 return *this;
             }
 
@@ -145,7 +144,7 @@ namespace stub
             {
                 // An expectation can't be evaluated if it hasn't been setup.
                 assert(!m_calls.empty());
-
+/*
                 if (m_function.m_calls.size() != m_calls.size())
                     return false;
 
@@ -157,7 +156,7 @@ namespace stub
                         return false;
                     }
                 }
-
+*/
                 return true;
             }
 
@@ -177,7 +176,7 @@ namespace stub
             const function& m_function;
 
             /// The expected calls
-            std::vector<expect> m_calls;
+            std::vector<compare_call<Args...>> m_calls;
         };
 
     public:
@@ -220,7 +219,7 @@ namespace stub
         }
 
         /// @return The arguments passed to the n'th call
-        const arguments& call_arguments(uint32_t index) const
+        const arguments<Args...>& call_arguments(uint32_t index) const
         {
             assert(index < m_calls.size());
             return m_calls[index];
@@ -279,7 +278,7 @@ namespace stub
         return_handler<R> m_return_handler;
 
         /// Stores the arguments every time the operator() is invoked
-        mutable std::vector<arguments> m_calls;
+        mutable std::vector<arguments<Args...>> m_calls;
     };
 
     /// Output operator for printing function objects, see more info in
