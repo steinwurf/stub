@@ -69,12 +69,13 @@ namespace stub
 
 
         template<class... WithArgs>
-        compare_call(arguments<WithArgs...> expected)
+        compare_call(WithArgs&&... expected)
         {
             assert(!m_implementation);
 
             m_implementation = std::unique_ptr<interface>(
-                new implementation<WithArgs...>(expected));
+                new implementation<WithArgs...>(
+                    std::forward<WithArgs>(expected)...));
         }
 
         /// @return Compare the values of the passed tuple with those of the
@@ -98,8 +99,8 @@ namespace stub
         struct implementation : public interface
         {
 
-            implementation(const arguments<WithArgs...>& expected)
-                : m_expected(expected)
+            implementation(WithArgs&&... expected)
+                : m_expected(std::forward<WithArgs>(expected)...)
             { }
 
             bool compare(const arguments<Args...>& actual) const override

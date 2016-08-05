@@ -125,8 +125,7 @@ namespace stub
             template<class... WithArgs>
             expectation& with(WithArgs&&... args)
             {
-                //arguments<WithArgs...> a(std::forward<WithArgs>(args)...);
-                //m_calls.emplace_back(std::move(a));
+                m_calls.emplace_back(std::forward<WithArgs>(args)...);
                 return *this;
             }
 
@@ -144,7 +143,7 @@ namespace stub
             {
                 // An expectation can't be evaluated if it hasn't been setup.
                 assert(!m_calls.empty());
-/*
+
                 if (m_function.m_calls.size() != m_calls.size())
                     return false;
 
@@ -156,7 +155,7 @@ namespace stub
                         return false;
                     }
                 }
-*/
+
                 return true;
             }
 
