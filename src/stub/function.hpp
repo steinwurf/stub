@@ -95,7 +95,7 @@ namespace stub
         /// expectation was correct.
         struct expectation
         {
-            using expect = expect_arguments<
+            using expect_arguments_type = expect_arguments<
                 typename unqualified_type<Args>::type...>;
 
             /// @param the_function The function we configuring an expectation for
@@ -125,7 +125,7 @@ namespace stub
             ///
             /// @return The expectation itself, which allows chaining
             ///         function calls
-            expectation& with(Args... args)
+            expectation& with(Args&&... args)
             {
                 m_calls.emplace_back(std::make_tuple(args...));
                 return *this;

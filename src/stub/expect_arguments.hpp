@@ -80,7 +80,7 @@ namespace stub
         bool compare(const actual_arguments& actual) const
         {
             assert(m_implementation);
-            return m_implementation->compare(actual_arguments);
+            return m_implementation->compare(actual);
         }
 
     private:
