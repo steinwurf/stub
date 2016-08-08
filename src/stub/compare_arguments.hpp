@@ -13,17 +13,6 @@
 
 namespace stub
 {
-
-    /// Empty tuple overload
-/*    inline bool compare_arguments(const std::tuple<>& actual,
-                                  const std::tuple<>& with)
-    {
-        (void) actual;
-        (void) with;
-        return true;
-    }*/
-
-
     /// Specialization chosen for empty tuples or when Index reaches the
     /// sizeof the tuple (i.e. the number of values in the tuple), see
     /// description below.
