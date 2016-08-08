@@ -9,9 +9,6 @@
 #include <functional>
 #include <ostream>
 
-/// @todo remove
-#include <iostream>
-
 #include "return_handler.hpp"
 #include "unqualified_type.hpp"
 #include "print_arguments.hpp"

@@ -202,15 +202,12 @@ TEST(function, expect_predicate_custom_type)
     function(cup{2.3});
     function(cup{4.5});
 
-    auto c1 = stub::make_compare([](const cup& c)-> bool
-        { return c.m_volume == 2.3; });
-
-    auto c2 = stub::make_compare([](const cup& c)-> bool
-        { return c.m_volume == 4.5; });
+    auto compare = [](double expected, const cup& c)-> bool
+        { return c.m_volume == expected; };
 
     EXPECT_TRUE(function.expect_calls()
-        .with(c1)
-        .with(c2)
+        .with(stub::make_compare(std::bind(compare, 2.3, std::placeholders::_1)))
+        .with(stub::make_compare(std::bind(compare, 4.5, std::placeholders::_1)))
         .to_bool());
 }
 
@@ -221,28 +218,30 @@ TEST(function, expect_predicate_pair)
     /// @todo implement
     using element = std::pair<uint32_t, uint32_t>;
 
-    auto p = [](const std::tuple<element>& a,
-                const std::tuple<element>& b) -> bool
-        { return std::get<0>(a).second == std::get<0>(b).second; };
+    auto expect = [](uint32_t expected, const element& actual) -> bool
+        { return expected == actual.second; };
+
+    auto expect_3 = stub::make_compare(
+        std::bind(expect, 3, std::placeholders::_1));
 
     stub::function<void(const element&)> function;
     function(element(2,3));
 
     // We only check for the second parameter so this should work
-    EXPECT_TRUE(function.expect_calls(p)
-        .with(element(10,3))
+    EXPECT_TRUE(function.expect_calls()
+        .with(expect_3)
         .to_bool());
 
     function(element(20,3));
 
     // We have called more than once
-    EXPECT_FALSE(function.expect_calls(p)
-        .with(element(10,3))
+    EXPECT_FALSE(function.expect_calls()
+        .with(expect_3)
         .to_bool());
 
-    EXPECT_TRUE(function.expect_calls(p)
-        .with(element(1,3))
-        .with(element(2,3))
+    EXPECT_TRUE(function.expect_calls()
+        .with(expect_3)
+        .with(expect_3)
         .to_bool());
 
     // Try without the predicate
@@ -252,7 +251,7 @@ TEST(function, expect_predicate_pair)
         .to_bool());
 
     // The actual calls that were made
-    EXPECT_TRUE(function.expect_calls(p)
+    EXPECT_TRUE(function.expect_calls()
         .with(element(2,3))
         .with(element(20,3))
         .to_bool());
@@ -263,14 +262,9 @@ TEST(function, expect_predicate_pair)
 // how we document it.
 TEST(function, predicate_argument_order)
 {
-/*    auto p = [](const std::tuple<uint32_t>& actual,
-                const std::tuple<uint32_t>& expected) -> bool
+    auto compare = [](uint32_t value) -> bool
         {
-
-            if (std::get<0>(actual) != 5U)
-                return false;
-
-            if (std::get<0>(expected) != 10U)
+            if (value != 5U)
                 return false;
 
             return true;
@@ -282,14 +276,16 @@ TEST(function, predicate_argument_order)
     stub::function<void(uint32_t)> function;
     function(5);
 
-    EXPECT_TRUE(function.expect_calls(p).with(10U).to_bool());*/
+    EXPECT_TRUE(function.expect_calls()
+        .with(stub::make_compare(compare))
+        .to_bool());
 }
 
 // Test that we can pretty-print the function object, where the function takes
 // no arguments
 TEST(function, pretty_print_without_arguments)
 {
-/*    stub::function<void()> function;
+    stub::function<void()> function;
 
     function();
     function();
@@ -297,14 +293,14 @@ TEST(function, pretty_print_without_arguments)
     std::stringstream stream;
     stream << function;
 
-    EXPECT_EQ(stream.str(), "Number of calls: 2\n");*/
+    EXPECT_EQ(stream.str(), "Number of calls: 2\n");
 }
 
 // Test that we can pretty-print the function object, where the function takes
 // arguments
 TEST(function, pretty_print_with_arguments)
 {
-/*    stub::function<void(uint32_t, uint32_t)> function;
+    stub::function<void(uint32_t, uint32_t)> function;
 
     function(2,3);
     function(4,5);
@@ -318,5 +314,5 @@ TEST(function, pretty_print_with_arguments)
                             "Arg 1: 3\n"
                             "Call 1:\n"
                             "Arg 0: 4\n"
-                            "Arg 1: 5\n");*/
+                            "Arg 1: 5\n");
 }

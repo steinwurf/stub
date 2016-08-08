@@ -5,6 +5,10 @@
 
 #pragma once
 
+#include "ignore.hpp"
+#include "compare.hpp"
+#include "make_compare.hpp"
+
 namespace stub
 {
     /// Compares two arguments
@@ -13,40 +17,17 @@ namespace stub
     {
         return a == b;
     }
-/*
+
     template<class T>
     inline bool compare_argument(T a, ignore)
     {
-        (void)a;
+        (void) a;
         return true;
     }
-*/
-
-    template<class Compare>
-    struct compare
-    {
-
-        template<class Value>
-        bool operator()(Value v)
-        {
-            return m_compare(v);
-        }
-
-        Compare m_compare;
-    };
-
-    template<class C>
-    compare<C> make_compare(C c)
-    {
-        return compare<C>{ c };
-    }
-
 
     template<class T, class Compare>
     inline bool compare_argument(T a, Compare t)
     {
         return t(a);
     }
-
-
 }

@@ -23,7 +23,6 @@ struct cup
 
 TEST(test_compare_argument, compare)
 {
-
     auto cmp = stub::make_compare([](const cup& c)->bool
         {
             return c.m_volume == 2.3;
@@ -31,5 +30,10 @@ TEST(test_compare_argument, compare)
 
     EXPECT_TRUE(stub::compare_argument(cup{2.3}, cmp));
     EXPECT_FALSE(stub::compare_argument(cup{2.4}, cmp));
+}
 
+TEST(test_compare_argument, ignore)
+{
+    EXPECT_TRUE(stub::compare_argument(cup{2.3}, stub::ignore()));
+    EXPECT_TRUE(stub::compare_argument(true, stub::ignore()));
 }
