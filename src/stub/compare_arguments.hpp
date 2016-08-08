@@ -37,20 +37,20 @@ namespace stub
         return true;
     }
 
-    /// Prints the content of a tuple to the specified std::ostream.
+    /// Compare the content of two tuples.
     ///
-    /// The two functions print_arguments use SFINAE (Substitution Failure
+    /// The two functions compare_arguments use SFINAE (Substitution Failure
     /// Is Not An Error) to select which overload to call.
     ///
     /// The overloading works like this:
     ///
-    ///   1. If print_arguments is called with an empty tuple then the
+    ///   1. If compare_arguments is called with an empty tuple then the
     ///      empty overload will be chosen.
     ///
-    ///   2. If print_argument is called with a non-empty tuple the
-    ///      Index!=LastIndex is true and the overload writing to the
-    ///      std::ostream will be called. This will then recursively call
-    ///      print_arguments incrementing the Index. A some point
+    ///   2. If compare_arguments is called with a non-empty tuple the
+    ///      Index!=LastIndex is true and the overload calling
+    ///      compare_arugment(...) will be called. This will then recursively
+    ///      call compare_arguments incrementing the Index. A some point
     ///      Index==LastIndex and the empty overload gets chosen and we
     ///      are done.
     ///
