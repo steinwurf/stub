@@ -13,11 +13,11 @@
 namespace stub
 {
     /// Empty tuple overload
-    inline void print_arguments(std::ostream& out, const std::tuple<>& t)
+/*    inline void print_arguments(std::ostream& out, const std::tuple<>& t)
     {
         (void) out;
         (void) t;
-    }
+    }*/
 
     /// Specialization chosen for empty tuples or when Index reaches the
     /// sizeof the tuple (i.e. the number of values in the tuple), see
