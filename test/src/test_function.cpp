@@ -7,8 +7,6 @@
 
 #include <gtest/gtest.h>
 
-/// @todo imple
-
 /// Test that the call operator works as expected
 TEST(function, call_operator)
 {

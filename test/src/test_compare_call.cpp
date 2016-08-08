@@ -32,21 +32,20 @@ TEST(test_compare_call, argument_types)
 
 TEST(test_compare_call, store_in_vector)
 {
-/*    using expect = stub::compare_call<int, bool, double>;
+    using expect = stub::compare_call<int, bool, double>;
     std::vector<expect> expectations;
 
-    expectations.push_back(std::make_tuple(4, true, 4.0));
-    expectations.push_back(std::make_tuple(5, true, 4.0));
+    expectations.emplace_back(4, true, 4.0);
+    expectations.emplace_back(5, true, 4.0);
 
     auto t1 = std::make_tuple(4, true, 4.0);
     EXPECT_TRUE(expectations[0].compare(t1));
-    EXPECT_FALSE(expectations[1].compare(t1));*/
+    EXPECT_FALSE(expectations[1].compare(t1));
 }
 
-/*TEST(test_compare_call, ignore)
+TEST(test_compare_call, ignore)
 {
-    auto expectation = std::make_tuple(5, true, 4.0);
-    stub::compare_call<int, bool, double> expect(expectation);
+    stub::compare_call<int, bool, double> expect(5, true, stub::ignore());
 
     auto t1 = std::make_tuple(4, true, 4.0);
     EXPECT_FALSE(expect.compare(t1));
@@ -54,4 +53,3 @@ TEST(test_compare_call, store_in_vector)
     auto t2 = std::make_tuple(5, true, 4.0);
     EXPECT_TRUE(expect.compare(t2));
 }
-*/
