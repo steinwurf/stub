@@ -20,12 +20,33 @@ namespace stub
         (void)a;
         return true;
     }
-
-    template<class T>
-    inline bool compare_argument(T a, compare<T> t)
-    {
-        return t.m_compare(a);
-    }
 */
+
+    template<class Compare>
+    struct compare
+    {
+
+        template<class Value>
+        bool operator()(Value v)
+        {
+            return m_compare(v);
+        }
+
+        Compare m_compare;
+    };
+
+    template<class C>
+    compare<C> make_compare(C c)
+    {
+        return compare<C>{ c };
+    }
+
+
+    template<class T, class Compare>
+    inline bool compare_argument(T a, Compare t)
+    {
+        return t(a);
+    }
+
 
 }

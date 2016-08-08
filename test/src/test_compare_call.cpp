@@ -9,21 +9,26 @@
 
 TEST(test_compare_call, same_type)
 {
-    //std::tuple<int&> t;
+    stub::compare_call<int, bool, double> expect(5, true, 4.0);
 
-   //auto expectation = std::make_tuple(5, true, 4.0);
-
-    stub::compare_call<int&, bool, double> expect(5, true, 4.0);
-/*
     auto t1 = std::make_tuple(4, true, 4.0);
     EXPECT_FALSE(expect.compare(t1));
-/*
-    auto t2 = std::make_tuple(5, true, 4.0);
-    EXPECT_TRUE(expect.compare(t2));*/
 
-    //int a = 3;
-    //std::tuple<int&, bool, double> t3 = std::make_tuple(a, true, 4.0);
+    auto t2 = std::make_tuple(5, true, 4.0);
+    EXPECT_TRUE(expect.compare(t2));
 }
+
+TEST(test_compare_call, argument_types)
+{
+    stub::compare_call<int, const bool&, double&> expect(5, true, 4.0);
+
+    auto t1 = std::make_tuple(4, true, 4.0);
+    EXPECT_FALSE(expect.compare(t1));
+
+    auto t2 = std::make_tuple(5, true, 4.0);
+    EXPECT_TRUE(expect.compare(t2));
+}
+
 
 TEST(test_compare_call, store_in_vector)
 {

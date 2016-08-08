@@ -7,7 +7,7 @@
 
 #include <gtest/gtest.h>
 
-TEST(test_compare_arguments, api)
+TEST(test_compare_arguments, basic)
 {
     auto t1 = std::make_tuple(5, true, false);
     auto t2 = std::make_tuple(5, true, false);

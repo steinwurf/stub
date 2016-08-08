@@ -9,14 +9,10 @@
 #include <cassert>
 
 #include "compare_arguments.hpp"
-#include "unqualified_type.hpp"
+#include "arguments.hpp"
 
 namespace stub
 {
-    /// Tuple containing the values actually passed in the call
-    template<class... T>
-    using arguments = std::tuple<typename unqualified_type<T>::type...>;
-
     /// This stores a tuple of types that is to, at some point, be compared with
     /// a different tuple of arguments.
     ///
@@ -66,8 +62,7 @@ namespace stub
     template<class... Args>
     struct compare_call
     {
-
-
+        /// Construct a new call comparison
         template<class... WithArgs>
         compare_call(WithArgs&&... expected)
         {
