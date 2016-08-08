@@ -6,6 +6,7 @@
 #pragma once
 
 #include <tuple>
+#include <type_traits>
 
 #include "compare_argument.hpp"
 
@@ -13,13 +14,13 @@ namespace stub
 {
 
     /// Empty tuple overload
-    inline bool compare_arguments(const std::tuple<>& actual,
+/*    inline bool compare_arguments(const std::tuple<>& actual,
                                   const std::tuple<>& with)
     {
         (void) actual;
         (void) with;
         return true;
-    }
+    }*/
 
 
     /// Specialization chosen for empty tuples or when Index reaches the
