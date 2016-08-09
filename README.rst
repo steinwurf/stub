@@ -120,7 +120,7 @@ Get the arguments of a specific function call
 .............................................
 
 If you are interested in manually inspecting the arguments passed to a
-function call this can be done using the ``call_arguements(uint32_t)``
+function call this can be done using the ``call_arguments(uint32_t)``
 function.
 
 ::
@@ -180,22 +180,19 @@ And a function with takes those objects as arguments:
     function(cup{2.3});
     function(cup{4.5});
 
-    auto p = [](const std::tuple<cup>& actual,
-                const std::tuple<cup>& expected) -> bool
-        {
-            auto a = std::get<0>(actual).m_volume;
-            auto b = std::get<0>(expected).m_volume;
-            return a == b;
-        };
+    auto compare = [](double expected, const cup& c)-> bool
+        { return c.m_volume == expected; };
 
-    assert(function.expect_calls(p)
-        .with(cup{2.3})
-        .with(cup{4.5}));
+    assert(function.expect_calls()
+        .with(stub::make_compare(
+            std::bind(compare, 2.3, std::placeholders::_1)))
+        .with(stub::make_compare(
+            std::bind(compare, 4.5, std::placeholders::_1)))
+        .to_bool());
 
 In this case we are using a c++11 lambda function as comparison
-function. Notice that we get the arguments wrapped in ``std::tuple``
-objects (as unqualified types see above if you don't know what that
-means).
+function. Notice that we use `std::bind` to bind the expected value as the first
+value to the lambda.
 
 As another example use a custom comparison for objects that do have
 ``operator==(...)`` but where we have custom equality criteria.
@@ -208,31 +205,29 @@ library we need to provide a custom comparison function.
 
     using element = std::pair<uint32_t, uint32_t>;
 
-    auto p = [](const std::tuple<element>& actual,
-                const std::tuple<element>& expected) -> bool
-        {
-            auto a = std::get<0>(actual).second;
-            auto b = std::get<0>(expected).second;
-            return a == b;
-        };
+    auto expect = [](uint32_t expected, const element& actual) -> bool
+        { return expected == actual.second; };
 
     stub::function<void(const element&)> function;
     function(element(2,3));
     function(element(20,3));
 
     // We have called the function more than once
-    assert(false == function.expect_calls(p)
-        .with(element(10,3)));
+    assert(false == function.expect_calls()
+        .with(stub::make_compare(
+            std::bind(expect, 3, std::placeholders::_1))).to_bool());
 
     // Works since we only match the second value of the pair
-    assert(function.expect_calls(p)
-        .with(element(1,3))
-        .with(element(2,3)));
+    assert(true == function.expect_calls()
+        .with(stub::make_compare(
+            std::bind(expect, 3, std::placeholders::_1)))
+        .with(stub::make_compare(
+            std::bind(expect, 3, std::placeholders::_1))).to_bool());
 
     // Without the custom comparison it fails
     assert(false == function.expect_calls()
         .with(element(1,3))
-        .with(element(2,3)));
+        .with(element(2,3)).to_bool());
 
 Building an Expectation
 .......................

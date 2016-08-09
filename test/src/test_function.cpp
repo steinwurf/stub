@@ -215,8 +215,10 @@ TEST(test_function, expect_predicate_custom_type)
         { return c.m_volume == expected; };
 
     EXPECT_TRUE(function.expect_calls()
-        .with(stub::make_compare(std::bind(compare, 2.3, std::placeholders::_1)))
-        .with(stub::make_compare(std::bind(compare, 4.5, std::placeholders::_1)))
+        .with(stub::make_compare(
+            std::bind(compare, 2.3, std::placeholders::_1)))
+        .with(stub::make_compare(
+            std::bind(compare, 4.5, std::placeholders::_1)))
         .to_bool());
 }
 
@@ -224,7 +226,6 @@ TEST(test_function, expect_predicate_custom_type)
 // element of the pair works when checking for equality
 TEST(test_function, expect_predicate_pair)
 {
-    /// @todo implement
     using element = std::pair<uint32_t, uint32_t>;
 
     auto expect = [](uint32_t expected, const element& actual) -> bool
@@ -264,6 +265,23 @@ TEST(test_function, expect_predicate_pair)
         .with(element(2,3))
         .with(element(20,3))
         .to_bool());
+
+    // We have called the function more than once
+    assert(false == function.expect_calls()
+        .with(stub::make_compare(
+            std::bind(expect, 3, std::placeholders::_1))).to_bool());
+
+    // Works since we only match the second value of the pair
+    assert(true == function.expect_calls()
+        .with(stub::make_compare(
+            std::bind(expect, 3, std::placeholders::_1)))
+        .with(stub::make_compare(
+            std::bind(expect, 3, std::placeholders::_1))).to_bool());
+
+    // Without the custom comparison it fails
+    assert(false == function.expect_calls()
+        .with(element(1,3))
+        .with(element(2,3)).to_bool());
 }
 
 // Test that with a custom predicate the first argument is the actual
@@ -329,7 +347,7 @@ TEST(test_function, pretty_print_with_arguments)
 // Test that the expect_calls().with(...) igore arguments function works
 TEST(test_function, expect_calls_with_ignore)
 {
-/*    stub::function<void(uint32_t,uint32_t)> function;
+    stub::function<void(uint32_t,uint32_t)> function;
 
     function(2U, 3U);
     function(4U, 5U);
@@ -337,5 +355,5 @@ TEST(test_function, expect_calls_with_ignore)
     EXPECT_TRUE(function.expect_calls()
         .with(2U, stub::ignore())
         .with(stub::ignore(), 5U)
-        .to_bool());*/
+        .to_bool());
 }

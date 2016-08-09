@@ -6,7 +6,13 @@ every change, see the Git log.
 
 Latest
 ------
-* tbd
+* Major: Renamed stub::call to stub::function as this better reflects its true
+  purpose.
+* Major: Change the approach to providing custom comparisons of function
+  arguments. This is now done by passing stub::compare to
+  expect_calls().with(...).
+* Minor: Added the ability to ignore specific arguments when comparing function
+  calls in expect_calls().
 
 4.0.1
 -----
