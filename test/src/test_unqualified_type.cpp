@@ -16,7 +16,7 @@ namespace
 }
 
 /// Test that the unqualified type helper works as expected
-TEST(unqualified_type, test)
+TEST(test_unqualified_type, test)
 {
     {
         auto ok = test<const uint32_t&, uint32_t>::value;

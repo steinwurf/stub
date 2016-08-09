@@ -7,14 +7,14 @@
 
 #include <gtest/gtest.h>
 
-TEST(return_handler, void)
+TEST(test_return_handler, void)
 {
     // Just checking that it can be instantiated
     stub::return_handler<void> r;
     r();
 }
 
-TEST(return_handler, api)
+TEST(test_return_handler, api)
 {
     // Return a single value multiple times
     {

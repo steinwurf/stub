@@ -12,8 +12,8 @@
 namespace stub
 {
     /// Compares two arguments of same type
-    template<class T>
-    inline bool compare_argument(T a, T b)
+    template<class T, class U>
+    inline bool compare_argument(T a, U b)
     {
         return a == b;
     }
@@ -29,7 +29,7 @@ namespace stub
 
     /// Compare argument using custom comparison functor.
     template<class T, class Compare>
-    inline bool compare_argument(T a, Compare t)
+    inline bool compare_argument(T a, compare<Compare> t)
     {
         return t(a);
     }

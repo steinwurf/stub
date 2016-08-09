@@ -8,7 +8,7 @@
 #include <gtest/gtest.h>
 
 /// Test that the call operator works as expected
-TEST(function, call_operator)
+TEST(test_function, call_operator)
 {
     {
         stub::function<void()> function;
@@ -47,7 +47,7 @@ TEST(function, call_operator)
 }
 
 /// Test that the set_return(...) function works as expected
-TEST(function, set_return)
+TEST(test_function, set_return)
 {
     stub::function<uint32_t(uint32_t)> function;
     function.set_return(5U);
@@ -70,7 +70,7 @@ TEST(function, set_return)
 }
 
 /// Test that the set_return(...) with multiple return values works as expected
-TEST(function, set_multiple_return)
+TEST(test_function, set_multiple_return)
 {
     stub::function<uint32_t(uint32_t)> function;
     function.set_return({5U, 10U, 15U});
@@ -86,7 +86,7 @@ TEST(function, set_multiple_return)
 }
 
 /// Test that the set_return(...) with const references work
-TEST(function, set_return_const_reference)
+TEST(test_function, set_return_const_reference)
 {
     stub::function<const uint32_t&()> function;
     function.set_return({5U, 10U});
@@ -98,7 +98,7 @@ TEST(function, set_return_const_reference)
 }
 
 /// Test that the number of calls work
-TEST(function, calls_no_calls)
+TEST(test_function, calls_no_calls)
 {
     stub::function<void()> function;
     EXPECT_TRUE(function.no_calls());
@@ -112,7 +112,7 @@ TEST(function, calls_no_calls)
 }
 
 // Test that the call_arguments(...) function works as expected
-TEST(function, call_arguments)
+TEST(test_function, call_arguments)
 {
     stub::function<void(uint32_t,uint32_t)> function;
 
@@ -129,17 +129,17 @@ TEST(function, call_arguments)
 }
 
 // Test that the basic expect_calls() function works
-TEST(function, expect_calls_with)
+TEST(test_function, expect_calls_with)
 {
-    stub::function<void(uint32_t,uint32_t)> function8;
+    stub::function<void(uint8_t,uint8_t)> function8;
 
     function8(2U,3U);
     function8(4U,5U);
 
     EXPECT_TRUE(function8.expect_calls()
-                    .with(2U,3U)
-                    .with(4U,5U)
-                    .to_bool());
+        .with(2U,3U)
+        .with(4U,5U)
+        .to_bool());
 
     stub::function<void(uint32_t,uint32_t)> function32;
 
@@ -147,20 +147,23 @@ TEST(function, expect_calls_with)
     function32(4U,5U);
 
     EXPECT_TRUE(function32.expect_calls()
-                    .with(2U,3U)
-                    .with(4U,5U)
-                    .to_bool());
+        .with(2U,3U)
+        .with(4U,5U)
+        .to_bool());
 }
 
 // Test that the basic expect_calls() function works when we have more
 // with statements than actual function calls and the other way
 // around.
-TEST(function, expect_calls_with_out_of_bounds)
+TEST(test_function, expect_calls_with_out_of_bounds)
 {
     {
         stub::function<void(uint32_t,uint32_t)> function;
 
-        EXPECT_FALSE(function.expect_calls().with(2U,3U).with(4U,5U).to_bool());
+        EXPECT_FALSE(function.expect_calls()
+            .with(2U,3U)
+            .with(4U,5U)
+            .to_bool());
     }
 
     {
@@ -169,20 +172,28 @@ TEST(function, expect_calls_with_out_of_bounds)
         function(2U,3U);
         function(4U,5U);
 
-        EXPECT_FALSE(function.expect_calls().with(2U,3U).to_bool());
+        EXPECT_FALSE(function.expect_calls()
+            .with(2U,3U)
+            .to_bool());
     }
 }
 
 /// Test that the check function works as expected
-TEST(function, use_to_bool)
+TEST(test_function, use_to_bool)
 {
     stub::function<void(int)> function;
 
     function(1);
     function(2);
 
-    EXPECT_TRUE(function.expect_calls().with(1).with(2).to_bool());
-    EXPECT_FALSE(function.expect_calls().with(1).to_bool());
+    EXPECT_TRUE(function.expect_calls()
+        .with(1)
+        .with(2)
+        .to_bool());
+
+    EXPECT_FALSE(function.expect_calls()
+        .with(1)
+        .to_bool());
 }
 
 /// Test that we can use a binary predicate to provide custom
@@ -192,7 +203,7 @@ struct cup
     double m_volume;
 };
 
-TEST(function, expect_predicate_custom_type)
+TEST(test_function, expect_predicate_custom_type)
 {
     /// @todo implement
     stub::function<void(const cup&)> function;
@@ -211,7 +222,7 @@ TEST(function, expect_predicate_custom_type)
 
 // Test that a custom predicate that only checks for the second
 // element of the pair works when checking for equality
-TEST(function, expect_predicate_pair)
+TEST(test_function, expect_predicate_pair)
 {
     /// @todo implement
     using element = std::pair<uint32_t, uint32_t>;
@@ -258,7 +269,7 @@ TEST(function, expect_predicate_pair)
 // Test that with a custom predicate the first argument is the actual
 // call value and the second argument is the expected. Because this is
 // how we document it.
-TEST(function, predicate_argument_order)
+TEST(test_function, predicate_argument_order)
 {
     auto compare = [](uint32_t value) -> bool
         {
@@ -281,7 +292,7 @@ TEST(function, predicate_argument_order)
 
 // Test that we can pretty-print the function object, where the function takes
 // no arguments
-TEST(function, pretty_print_without_arguments)
+TEST(test_function, pretty_print_without_arguments)
 {
     stub::function<void()> function;
 
@@ -296,7 +307,7 @@ TEST(function, pretty_print_without_arguments)
 
 // Test that we can pretty-print the function object, where the function takes
 // arguments
-TEST(function, pretty_print_with_arguments)
+TEST(test_function, pretty_print_with_arguments)
 {
     stub::function<void(uint32_t, uint32_t)> function;
 
@@ -313,4 +324,18 @@ TEST(function, pretty_print_with_arguments)
                             "Call 1:\n"
                             "Arg 0: 4\n"
                             "Arg 1: 5\n");
+}
+
+// Test that the expect_calls().with(...) igore arguments function works
+TEST(test_function, expect_calls_with_ignore)
+{
+/*    stub::function<void(uint32_t,uint32_t)> function;
+
+    function(2U, 3U);
+    function(4U, 5U);
+
+    EXPECT_TRUE(function.expect_calls()
+        .with(2U, stub::ignore())
+        .with(stub::ignore(), 5U)
+        .to_bool());*/
 }

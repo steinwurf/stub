@@ -7,7 +7,7 @@
 
 #include <gtest/gtest.h>
 
-TEST(print_argument, non_pointer)
+TEST(test_print_argument, non_pointer)
 {
     std::stringstream stream;
 
@@ -17,7 +17,7 @@ TEST(print_argument, non_pointer)
     EXPECT_EQ(stream.str(), "Arg 5: 6\n");
 }
 
-TEST(print_argument, pointer)
+TEST(test_print_argument, pointer)
 {
     std::stringstream stream;
 
