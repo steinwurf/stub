@@ -97,9 +97,10 @@ namespace stub
               m_position(0)
         { }
 
+        /// @todo remove this code. or consider a different way to handle this.
         /// Make the return_handler non-copyable
-        return_handler(const return_handler&) = delete;
-        return_handler& operator=(const return_handler&) = delete;
+        // return_handler(const return_handler&) = delete;
+        // return_handler& operator=(const return_handler&) = delete;
 
         /// Initializes the return_handler with one specific return
         /// value. Calling this function will also reset the
@@ -149,6 +150,7 @@ namespace stub
         /// Set repeat off. This means that no values will be repeated
         /// the user has to specify exactly the number of values that
         /// should be return otherwise an assert will be triggered.
+        /// @todo consider making opposite behavior default.
         void no_repeat()
         {
             m_repeat = false;

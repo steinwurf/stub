@@ -46,3 +46,12 @@ TEST(test_compare_arguments, compare)
 
     EXPECT_FALSE(stub::compare_arguments(t0, t3));
 }
+
+
+TEST(test_compare_arguments, string)
+{
+    auto t1 = std::make_tuple(std::string("hello"));
+    auto t2 = std::make_tuple("hello");
+
+    EXPECT_TRUE(stub::compare_arguments(t1, t2));
+}

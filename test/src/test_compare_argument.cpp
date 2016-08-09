@@ -37,3 +37,9 @@ TEST(test_compare_argument, ignore)
     EXPECT_TRUE(stub::compare_argument(cup{2.3}, stub::ignore()));
     EXPECT_TRUE(stub::compare_argument(true, stub::ignore()));
 }
+
+TEST(test_compare_argument, string)
+{
+    std::string str = "hello";
+    EXPECT_TRUE(stub::compare_argument(str, "hello"));
+}

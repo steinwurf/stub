@@ -357,3 +357,13 @@ TEST(test_function, expect_calls_with_ignore)
         .with(stub::ignore(), 5U)
         .to_bool());
 }
+
+TEST(test_function, value_by_reference)
+{
+    stub::function<void(uint32_t)> function;
+
+    uint32_t i = 3U;
+    function(i);
+
+    EXPECT_TRUE(function.expect_calls().with(3U).to_bool());
+}

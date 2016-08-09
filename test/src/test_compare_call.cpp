@@ -53,3 +53,10 @@ TEST(test_compare_call, ignore)
     auto t2 = std::make_tuple(5, true, 4.0);
     EXPECT_TRUE(expect.compare(t2));
 }
+
+TEST(test_compare_call, string)
+{
+    stub::compare_call<std::string> expect("hello");
+    auto t1 = std::make_tuple("hello");
+    EXPECT_TRUE(expect.compare(t1));
+}

@@ -68,9 +68,8 @@ namespace stub
         {
             assert(!m_implementation);
 
-            m_implementation = std::unique_ptr<interface>(
-                new implementation<WithArgs...>(
-                    std::forward<WithArgs>(expected)...));
+            m_implementation = make_implementation(
+                std::make_tuple(expected...));
         }
 
         /// @return Compare the values of the passed tuple with those of the
@@ -89,13 +88,18 @@ namespace stub
             virtual bool compare(const arguments<Args...>& value) const = 0;
         };
 
+        template<class T>
+        std::unique_ptr<interface> make_implementation(T t)
+        {
+            return std::unique_ptr<interface>(new implementation<T>(t));
+        }
+
         // Container for the expected values
-        template<class... WithArgs>
+        template<class T>
         struct implementation : public interface
         {
-
-            implementation(WithArgs&&... expected)
-                : m_expected(std::forward<WithArgs>(expected)...)
+            implementation(T expected)
+                : m_expected(expected)
             { }
 
             bool compare(const arguments<Args...>& actual) const override
@@ -104,7 +108,7 @@ namespace stub
             }
 
             /// The tuple containing the expected values
-            arguments<WithArgs...> m_expected;
+            T m_expected;
         };
 
     private:
@@ -112,6 +116,4 @@ namespace stub
         /// Stores the type-erased expectation
         std::unique_ptr<interface> m_implementation;
     };
-
-
 }
