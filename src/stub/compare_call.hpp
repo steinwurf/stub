@@ -89,13 +89,6 @@ namespace stub
             virtual bool compare(const arguments<Args...>& value) const = 0;
         };
 
-/*        template<class... WithArgs>
-        std::unique_ptr<interface> make_implementation(WithArgs&&... expected)
-        {
-            return std::unique_ptr<interface>(
-                new implementation<WithArgs...>(std::make_tuple(expected...)));
-        }*/
-
         // Container for the expected values
         template<class... WithArgs>
         struct implementation : public interface

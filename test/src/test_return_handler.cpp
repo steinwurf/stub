@@ -62,4 +62,13 @@ TEST(test_return_handler, api)
         // death
         // EXPECT_EQ(r(), 4U);
     }
+
+    // String
+    {
+        stub::return_handler<const char*> r;
+        r.set_return({"3U","4U"}).no_repeat();
+
+        EXPECT_EQ("3U", r());
+        EXPECT_EQ("4U", r());
+    }
 }
