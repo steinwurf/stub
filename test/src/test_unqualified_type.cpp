@@ -28,3 +28,20 @@ TEST(test_unqualified_type, test)
         EXPECT_TRUE(ok);
     }
 }
+
+template<class... Args>
+using arg = decltype(std::make_tuple(std::declval<Args>()...));
+
+TEST(test_unqualified_type, tuple)
+{
+    {
+    auto ok = std::is_same<arg<const uint32_t&>, std::tuple<uint32_t>>::value;
+    EXPECT_TRUE(ok);
+    }
+
+    {
+    auto ok = std::is_same<arg<const uint32_t&>, std::tuple<uint32_t>>::value;
+    EXPECT_TRUE(ok);
+    }
+
+}
