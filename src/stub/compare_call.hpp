@@ -68,8 +68,9 @@ namespace stub
         {
             assert(!m_implementation);
 
-            m_implementation = make_implementation(
-                std::make_tuple(expected...));
+            m_implementation = std::unique_ptr<interface>(
+                new implementation<WithArgs...>(
+                    std::forward<WithArgs>(expected)...));
         }
 
         /// @return Compare the values of the passed tuple with those of the
@@ -88,18 +89,19 @@ namespace stub
             virtual bool compare(const arguments<Args...>& value) const = 0;
         };
 
-        template<class T>
-        std::unique_ptr<interface> make_implementation(T t)
+/*        template<class... WithArgs>
+        std::unique_ptr<interface> make_implementation(WithArgs&&... expected)
         {
-            return std::unique_ptr<interface>(new implementation<T>(t));
-        }
+            return std::unique_ptr<interface>(
+                new implementation<WithArgs...>(std::make_tuple(expected...)));
+        }*/
 
         // Container for the expected values
-        template<class T>
+        template<class... WithArgs>
         struct implementation : public interface
         {
-            implementation(T expected)
-                : m_expected(expected)
+            implementation(WithArgs&&... expected)
+                : m_expected(std::forward<WithArgs>(expected)...)
             { }
 
             bool compare(const arguments<Args...>& actual) const override
@@ -108,7 +110,7 @@ namespace stub
             }
 
             /// The tuple containing the expected values
-            T m_expected;
+            arguments<WithArgs...> m_expected;
         };
 
     private:
