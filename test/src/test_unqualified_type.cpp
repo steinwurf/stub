@@ -7,6 +7,9 @@
 
 #include <gtest/gtest.h>
 
+// @todo remove
+#include <tuple>
+
 // Small alias to make testing easier
 
 namespace
