@@ -263,6 +263,7 @@ struct paper
     }
 };
 
+// Test stub printer object
 struct printer
 {
     stub::function<void(std::string)> print;

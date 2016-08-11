@@ -178,14 +178,6 @@ namespace stub
                 std::forward<Returns>(return_value)...);
         }
 
-        /// @copydoc return_handler::set_return(
-        ///              const std::initializer_list<T>&)
-/*        template<class T>
-        return_handler<R>& set_return(const std::initializer_list<T> &returns)
-        {
-            return m_return_handler.set_return(returns);
-        }*/
-
         /// @return The number of times the call operator has been invoked
         uint32_t calls() const
         {
@@ -207,6 +199,14 @@ namespace stub
         expectation expect_calls() const
         {
             return expectation(*this);
+        }
+
+        /// Removes all calls from the function object and reset the return
+        /// handler.
+        void clear()
+        {
+            m_return_handler = return_handler<R>();
+            m_calls.clear();
         }
 
         /// Prints the status of the function object to the std::ostream.

@@ -47,6 +47,31 @@ TEST(test_function, call_operator)
 }
 
 /// Test that the set_return(...) function works as expected
+TEST(test_function, clear)
+{
+    stub::function<uint32_t(uint32_t)> function;
+    function.set_return(5U);
+
+    EXPECT_EQ(function.calls(), 0U);
+
+    auto a = function(2U);
+
+    EXPECT_EQ(a, 5U);
+    EXPECT_EQ(function.calls(), 1U);
+
+    function.clear();
+    function.set_return(8U);
+
+    EXPECT_EQ(function.calls(), 0U);
+
+    auto b = function(8U);
+
+    EXPECT_EQ(b, 8U);
+
+    EXPECT_EQ(function.calls(), 1U);
+}
+
+/// Test that the set_return(...) function works as expected
 TEST(test_function, set_return)
 {
     stub::function<uint32_t(uint32_t)> function;
