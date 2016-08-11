@@ -48,6 +48,7 @@ TEST(test_readme, function_taking_no_arguments)
     assert(works);
 }
 
+
 TEST(test_readme, check_the_number_of_function_calls)
 {
     stub::function<void(uint32_t)> some_function;
@@ -61,6 +62,7 @@ TEST(test_readme, check_the_number_of_function_calls)
     // Return true if no calls were made
     assert(some_function.no_calls() == false);
 }
+
 
 TEST(test_readme, get_the_arguments_of_a_specific_call)
 {
@@ -76,12 +78,11 @@ TEST(test_readme, get_the_arguments_of_a_specific_call)
     assert(a == b);
 }
 
+
 struct cup
 {
     double m_volume;
 };
-
-
 
 
 TEST(test_readme, comparing_custom_arguments)
@@ -129,5 +130,107 @@ TEST(test_readme, comparing_custom_arguments)
     assert(false == function.expect_calls()
         .with(element(1,3))
         .with(element(2,3)).to_bool());
+    }
+}
+
+TEST(test_readme, building_an_expectation)
+{
+    {
+        stub::function<void(uint32_t)> some_function;
+
+        // Call the function
+        for (uint32_t i = 0; i < 10; i++)
+        {
+            some_function(i);
+        }
+
+        // Check the expectation.
+        assert(some_function.expect_calls()
+            .with(0)
+            .with(1)
+            .with(2)
+            .with(3)
+            .with(4)
+            .with(5)
+            .with(6)
+            .with(7)
+            .with(8)
+            .with(9));
+    }
+
+    {
+            stub::function<void(uint32_t)> some_function;
+
+            auto some_function_expectation = some_function.expect_calls();
+
+            // Call the function and setup expectation
+            for (uint32_t i = 0; i < 10; i++)
+            {
+                some_function(i);
+                some_function_expectation.with(i);
+            }
+
+            // Check the expectation.
+            assert(some_function_expectation);
+    }
+}
+
+TEST(test_readme, function_return_values)
+{
+    {
+        stub::function<bool(uint32_t)> some_function;
+
+        some_function.set_return(true);
+
+        bool a = some_function(23);
+        bool b = some_function(13);
+
+        assert(a == true);
+        assert(b == true);
+    }
+
+    {
+        stub::function<uint32_t()> some_function;
+
+        some_function.set_return({4U,3U});
+
+        uint32_t a = some_function();
+        assert(a == 4U);
+
+        uint32_t b = some_function();
+        assert(b == 3U);
+
+        uint32_t c = some_function();
+        assert(c == 4U);
+
+        uint32_t d = some_function();
+        assert(d != 4U);
+        assert(d == 3U);
+    }
+
+    {
+        stub::function<uint32_t()> some_function;
+        some_function.set_return(3U);
+
+        uint32_t a = some_function();
+        uint32_t b = some_function();
+        uint32_t c = some_function();
+
+        assert(a == 3U && b == 3U && c == 3U);
+    }
+
+    {
+        stub::function<uint32_t()> some_function;
+        some_function.set_return(1U).no_repeat();
+
+        uint32_t a = some_function();
+        // uint32_t b = some_function(); // <---- Crash
+
+        some_function.set_return({1U,2U,3U}).no_repeat();
+
+        uint32_t e = some_function();
+        uint32_t f = some_function();
+        uint32_t g = some_function();
+        // uint32_t h = some_function(); // <---- Crash
     }
 }
