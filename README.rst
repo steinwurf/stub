@@ -441,6 +441,7 @@ Define our static printer object::
         static stub::function<void(std::string)> print;
     };
 
+    // Definition of the static stub
     stub::function<void(std::string)> static_printer::print;
 
 The unit test code::
