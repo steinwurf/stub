@@ -387,7 +387,40 @@ src/stub/return_handler.hpp
 Using stub with template arguments
 ----------------------------------
 
-One place wh
+One place where stub works well is when testing policy classes or template code.
+
+As a small example, say we have the following::
+
+    struct paper
+    {
+        // Call the print function on the printer object
+        template<class Printer>
+        void print(Printer& printer)
+        {
+            printer.print("Hello world");
+        }
+    };
+
+Lets define a ``Printer`` object that we can use to test the behaviour of a
+`paper` object::
+
+    // Test stub printer object
+    struct printer
+    {
+        stub::function<void(std::string)> print;
+    };
+
+Our unit test code could now look something along the lines of::
+
+    printer printer;
+    paper hello;
+
+    hello.print(printer);
+
+    assert(printer.print.expect_calls()
+        .with("Hello world")
+        .to_bool());
+
 
 Unit testing
 ------------
