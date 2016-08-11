@@ -114,7 +114,7 @@ made.
     assert(some_function.calls() == 2);
 
     // Return true if no calls were made
-    assert(some_function.no_calls() == false);
+    assert(some_function.calls() != 0);
 
 Get the arguments of a specific function call
 .............................................

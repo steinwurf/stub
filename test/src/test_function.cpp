@@ -52,20 +52,20 @@ TEST(test_function, set_return)
     stub::function<uint32_t(uint32_t)> function;
     function.set_return(5U);
 
-    EXPECT_TRUE(function.no_calls());
+    EXPECT_EQ(function.calls(), 0U);
 
     auto a = function(2U);
 
     EXPECT_EQ(a, 5U);
 
-    EXPECT_FALSE(function.no_calls());
+    EXPECT_TRUE(function.calls() != 0U);
     EXPECT_EQ(function.calls(), 1U);
 
     auto b = function(8U);
 
     EXPECT_EQ(b, 5U);
 
-    EXPECT_FALSE(function.no_calls());
+    EXPECT_FALSE(function.calls() == 0);
     EXPECT_EQ(function.calls(), 2U);
 }
 
@@ -101,13 +101,13 @@ TEST(test_function, set_return_const_reference)
 TEST(test_function, calls_no_calls)
 {
     stub::function<void()> function;
-    EXPECT_TRUE(function.no_calls());
+    EXPECT_TRUE(function.calls() == 0U);
     function();
-    EXPECT_FALSE(function.no_calls());
+    EXPECT_FALSE(function.calls() == 0U);
     EXPECT_EQ(function.calls(), 1U);
 
     function();
-    EXPECT_FALSE(function.no_calls());
+    EXPECT_FALSE(function.calls() == 0U);
     EXPECT_EQ(function.calls(), 2U);
 }
 
