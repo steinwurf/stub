@@ -14,7 +14,7 @@
 namespace stub
 {
     /// @brief The return_handler is a helper object that is used
-    ///        e.g. in the call object to control which return values
+    ///        e.g. in the function object to control which return values
     ///        should be generated when called.
     ///
     /// The return_handler provides the call operator() and when
@@ -97,27 +97,10 @@ namespace stub
               m_position(0)
         { }
 
-        /// Initializes the return_handler with one specific return
-        /// value. Calling this function will also reset the
-        /// return_handler state. So any previously specified returns
-        /// values will be removed etc.
-        ///
-        /// @param values The return value to use
-        ///
-        /// @return Reference to the return handler, this allows the
-        /// caller to perform additional customization to the return
-        /// handler such as turn on or off repeat.
-        // return_handler& set_return(const R& value)
-        return_handler& set_return(const return_type& value)
-        {
-            m_repeat = true;
-            m_position = 0;
-            m_returns.clear();
-
-            m_returns = {value};
-
-            return *this;
-        }
+        /// @todo remove this code. or consider a different way to handle this.
+        /// Make the return_handler non-copyable
+        // return_handler(const return_handler&) = delete;
+        // return_handler& operator=(const return_handler&) = delete;
 
         /// Initializes the return_handler with the return values to
         /// use. Calling this function will also reset the
@@ -129,15 +112,14 @@ namespace stub
         /// @return Reference to the return handler, this allows the
         /// caller to perform additional customization to the return
         /// handler such as turn on or off repeat.
-        // return_handler& set_return(const std::initializer_list<R>& values)
-        return_handler&
-        set_return(const std::initializer_list<return_type>& values)
+        template<class... Args>
+        return_handler& set_return(Args&&... values)
         {
             m_repeat = true;
             m_position = 0;
             m_returns.clear();
 
-            m_returns = values;
+            add_return(std::forward<Args>(values)...);
 
             return *this;
         }
@@ -145,6 +127,7 @@ namespace stub
         /// Set repeat off. This means that no values will be repeated
         /// the user has to specify exactly the number of values that
         /// should be return otherwise an assert will be triggered.
+        /// @todo consider making opposite behavior default.
         void no_repeat()
         {
             m_repeat = false;
@@ -172,6 +155,23 @@ namespace stub
 
     private:
 
+        /// Overload that adds a return value
+        void add_return(const return_type& value)
+        {
+            m_returns.push_back(value);
+
+        }
+
+        /// Add a number of return values
+        template<class... Args>
+        void add_return(const return_type& value, Args&&... more)
+        {
+            m_returns.push_back(value);
+            add_return(std::forward<Args>(more)...);
+        }
+
+    private:
+
         /// Boolean value controlling whether we should repeat return
         /// values when reaching the end of the return value vector or
         /// assert. True means we repeat, false means we should assert.
@@ -190,7 +190,7 @@ namespace stub
     /// Specialization for the case of a void function i.e. no return
     /// value. We expect no calls to this return_handler the call
     /// operator is only there to allow the code to compile when
-    /// e.g. the call class instantiates a return handler.
+    /// e.g. the function class instantiates a return handler.
     template<>
     class return_handler<void>
     {

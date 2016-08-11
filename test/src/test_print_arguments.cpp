@@ -7,7 +7,7 @@
 
 #include <gtest/gtest.h>
 
-TEST(print_arguments, empty_arguments)
+TEST(test_print_arguments, empty_arguments)
 {
     std::stringstream stream;
 
@@ -18,7 +18,7 @@ TEST(print_arguments, empty_arguments)
 
 }
 
-TEST(print_arguments, non_empty_arguments)
+TEST(test_print_arguments, non_empty_arguments)
 {
     std::stringstream stream;
 
@@ -45,7 +45,7 @@ namespace stub_testing
     }
 }
 
-TEST(print_arguments, user_defined_types)
+TEST(test_print_arguments, user_defined_types)
 {
     std::stringstream stream;
 
@@ -55,7 +55,7 @@ TEST(print_arguments, user_defined_types)
     EXPECT_EQ(stream.str(), "Arg 0: 43\nArg 1: okok42\n");
 }
 
-TEST(print_arguments, pointers)
+TEST(test_print_arguments, pointers)
 {
     std::stringstream stream;
 

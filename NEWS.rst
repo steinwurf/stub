@@ -6,7 +6,16 @@ every change, see the Git log.
 
 Latest
 ------
-* tbd
+* Major: Renamed stub::call to stub::function as this better reflects its true
+  purpose.
+* Major: Change the approach to providing custom comparisons of function
+  arguments. This is now done by passing stub::compare to
+  expect_calls().with(...).
+* Minor: Added the ability to ignore specific arguments when comparing function
+  calls in expect_calls().
+* Minor: Added the ability to clear function objects
+* Major: Removed the need to use ``std::initializer_list`` when specifying
+  multiple return values.
 
 4.0.1
 -----
@@ -39,7 +48,7 @@ Latest
 2.2.0
 -----
 * Minor: Added ``buildbot.py`` for coverage reports.
-* Minor: Added methods allowing a ``stub::call`` object to be printed to an
+* Minor: Added methods allowing a ``stub::function`` object to be printed to an
   ``std::ostream``.
 
 2.1.2
@@ -56,7 +65,7 @@ Latest
 
 2.0.1
 -----
-* Bug: Added const modifier to the ``stub::call::expect_calls()``
+* Bug: Added const modifier to the ``stub::function::expect_calls()``
   functions. They do not modify the object so they should be ``const``.
 * Bug: Updated documentation to specify in which order arguments are
   passed to a custom predicate function.
@@ -71,7 +80,7 @@ Latest
 1.1.0
 -----
 * Minor: Added the ``call_arguments(..)`` function to access a specific
-  call's arguments
+  function's arguments
 
 1.0.1
 -----

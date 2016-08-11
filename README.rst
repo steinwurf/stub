@@ -12,11 +12,11 @@ functions to ease sometimes tedious testing tasks.
 
 Usage
 -----
-The ``stub::call`` object act like a "sink" for function calls
-i.e. we can define a call object to accept any type of function
+The ``stub::function`` object act like a "sink" for function calls
+i.e. we can define a function object to accept any type of function
 call and it will simply store the arguments for later inspection.
 
-The typical use-case for the call object is when testing that
+The typical use-case for the function object is when testing that
 some code invokes a specific set of functions with a specific
 set of arguments.
 
@@ -33,7 +33,7 @@ need a relatively recent compiler to use it.
 Function Calls
 --------------
 
-One of the useful features of the call stub is the possibility to
+One of the useful features of the function stub is the possibility to
 check the parameters of the "simulated" function calls:
 
 Check a set of function calls
@@ -43,11 +43,11 @@ Example:
 
 ::
 
-   #include <stub/call.hpp>
+   #include <stub/function.hpp>
 
-   stub::call<void(uint32_t)> some_function;
+   stub::function<void(uint32_t)> some_function;
 
-The above call takes an ``uint32_t`` and returns nothing, lets see how to
+The above function takes an ``uint32_t`` and returns nothing, lets see how to
 invoke it:
 
 ::
@@ -81,11 +81,11 @@ Functions taking no arguments
 ............................
 
 The ``with(...)`` function takes exactly the same number and type of
-arguments as the ``stub::call`` function.
+arguments as the ``stub::function``.
 
 ::
 
-    stub::call<void()> function;
+    stub::function<void()> function;
     function();
     function();
 
@@ -105,7 +105,7 @@ made.
 
 ::
 
-    stub::call<void(uint32_t)> some_function;
+    stub::function<void(uint32_t)> some_function;
 
     some_function(3);
     some_function(4);
@@ -114,18 +114,37 @@ made.
     assert(some_function.calls() == 2);
 
     // Return true if no calls were made
-    assert(some_function.no_calls() == false);
+    assert(some_function.calls() != 0);
+
+Clear the state of the function object
+......................................
+
+Somethings we need to reset things to its initial state::
+
+    stub::function<void(uint32_t)> some_function;
+
+    some_function(3);
+    some_function(4);
+
+    // Return how many calls where made
+    assert(some_function.calls() == 2);
+
+    some_function.clear();
+
+    // Return true if no calls were made
+    assert(some_function.calls() == 0);
+
 
 Get the arguments of a specific function call
 .............................................
 
 If you are interested in manually inspecting the arguments passed to a
-function call this can be done using the ``call_arguements(uint32_t)``
+function call this can be done using the ``call_arguments(uint32_t)``
 function.
 
 ::
 
-    stub::call<void(uint32_t,uint32_t)> function;
+    stub::function<void(uint32_t,uint32_t)> function;
 
     function(3,4);
     function(4,3);
@@ -142,22 +161,46 @@ arguments of the second call:
 
    assert(a == b);
 
-**Note:** You should use the "unqualified types" of the function
+**Note:** You should use the "unqualified and decayed types" of the function
 arguments. This means that if you have a function
-``stub::call<void(const uint32_t&>`` then the stub library will store
+``stub::function<void(const uint32_t&>`` then the stub library will store
 the argument passed in an ``uint32_t`` instead of a ``const
-uint32_t&``. So our comparison should use ``std::tuple<uint32_t>``
+uint32_t&``. So our comparison should use ``std::tuple<uint32_t>``. If you use
+``std::make_tuple(...)`` to build the your expectation this should happen
+automatically (so you don't have to worry about it).
 
 You can find more information about unqualified types `here
 <http://stackoverflow.com/questions/17295169>`_ and `here
 <http://bit.ly/1Markab>`_.
 
+Ignore specific arguments of a function call
+............................................
+
+Sometimes it is useful to ignore specific arguments to a function call. They may
+be internally computed or just in general not interesting when testing for
+correctness.
+
+::
+
+    stub::function<void(uint32_t,uint32_t)> function;
+
+    function(3U,4U);
+    function(4U,3U);
+
+    // Is matched by:
+    bool works = function.expect_calls()
+        .with(stub::ignore(), 4U)
+        .with(4U, stub::ignore())
+        .to_bool();
+
+    assert(works);
+
 Comparing custom arguments
 ..........................
 
-The default behavior for the ``expect_calls(...)`` function is to
+The default behavior for the ``expect_calls()`` function is to
 compare arguments passed though the ``with(...)`` function to the
-actual arguments using the ``operator==(...)`` function. However,
+actual arguments using ``operator==(...)``. However,
 sometimes we want to make custom comparisons or to compare objects
 that do not provide ``operator==(...)``. In those cases we can provide
 a custom comparison function.
@@ -175,27 +218,24 @@ And a function with takes those objects as arguments:
 
 ::
 
-    stub::call<void(const cup&)> function;
+    stub::function<void(const cup&)> function;
 
     function(cup{2.3});
     function(cup{4.5});
 
-    auto p = [](const std::tuple<cup>& actual,
-                const std::tuple<cup>& expected) -> bool
-        {
-            auto a = std::get<0>(actual).m_volume;
-            auto b = std::get<0>(expected).m_volume;
-            return a == b;
-        };
+    auto compare = [](double expected, const cup& c)-> bool
+        { return c.m_volume == expected; };
 
-    assert(function.expect_calls(p)
-        .with(cup{2.3})
-        .with(cup{4.5}));
+    assert(function.expect_calls()
+        .with(stub::make_compare(
+            std::bind(compare, 2.3, std::placeholders::_1)))
+        .with(stub::make_compare(
+            std::bind(compare, 4.5, std::placeholders::_1)))
+        .to_bool());
 
 In this case we are using a c++11 lambda function as comparison
-function. Notice that we get the arguments wrapped in ``std::tuple``
-objects (as unqualified types see above if you don't know what that
-means).
+function. Notice that we use `std::bind` to bind the expected value as the first
+value to the lambda.
 
 As another example use a custom comparison for objects that do have
 ``operator==(...)`` but where we have custom equality criteria.
@@ -208,31 +248,29 @@ library we need to provide a custom comparison function.
 
     using element = std::pair<uint32_t, uint32_t>;
 
-    auto p = [](const std::tuple<element>& actual,
-                const std::tuple<element>& expected) -> bool
-        {
-            auto a = std::get<0>(actual).second;
-            auto b = std::get<0>(expected).second;
-            return a == b;
-        };
+    auto expect = [](uint32_t expected, const element& actual) -> bool
+        { return expected == actual.second; };
 
-    stub::call<void(const element&)> function;
+    stub::function<void(const element&)> function;
     function(element(2,3));
     function(element(20,3));
 
     // We have called the function more than once
-    assert(false == function.expect_calls(p)
-        .with(element(10,3)));
+    assert(false == function.expect_calls()
+        .with(stub::make_compare(
+            std::bind(expect, 3, std::placeholders::_1))).to_bool());
 
     // Works since we only match the second value of the pair
-    assert(function.expect_calls(p)
-        .with(element(1,3))
-        .with(element(2,3)));
+    assert(true == function.expect_calls()
+        .with(stub::make_compare(
+            std::bind(expect, 3, std::placeholders::_1)))
+        .with(stub::make_compare(
+            std::bind(expect, 3, std::placeholders::_1))).to_bool());
 
     // Without the custom comparison it fails
     assert(false == function.expect_calls()
         .with(element(1,3))
-        .with(element(2,3)));
+        .with(element(2,3)).to_bool());
 
 Building an Expectation
 .......................
@@ -241,38 +279,38 @@ inline:
 
 ::
 
-    stub::call<void(uint32_t)> some_function;
+    stub::function<void(uint32_t)> some_function;
 
     // Call the function
-    for (uint32_t i = 0; i < 10; i++)
+    for (uint32_t i = 0; i < 10; ++i)
     {
         some_function(i);
     }
 
     // Check the expectation.
     assert(some_function.expect_calls()
-        .with(0)
-        .with(1)
-        .with(2)
-        .with(3)
-        .with(4)
-        .with(5)
-        .with(6)
-        .with(7)
-        .with(8)
-        .with(9));
+        .with(0U)
+        .with(1U
+        .with(2U)
+        .with(3U)
+        .with(4U)
+        .with(5U)
+        .with(6U)
+        .with(7U)
+        .with(8U)
+        .with(9U));
 
 Instead an expectation can be built by storing it as a variable and calling the
 ``with`` member function:
 
 ::
 
-    stub::call<void(uint32_t)> some_function;
+    stub::function<void(uint32_t)> some_function;
 
     auto some_function_expectation = some_function.expect_calls();
 
     // Call the function and setup expectation
-    for (uint32_t i = 0; i < 10; i++)
+    for (uint32_t i = 0; i < 10; ++i)
     {
         some_function(i);
         some_function_expectation.with(i);
@@ -284,11 +322,11 @@ Instead an expectation can be built by storing it as a variable and calling the
 Function return values
 ----------------------
 
-We can also define a ``stub::call`` which returns a value:
+We can also define a ``stub::function`` which returns a value:
 
 ::
 
-    stub::call<bool(uint32_t)> some_function;
+    stub::function<bool(uint32_t)> some_function;
 
 Here we have to specify what return value we expect:
 
@@ -306,9 +344,9 @@ Or alternatively we can set multiple return values:
 
 ::
 
-    stub::call<uint32_t()> some_function;
+    stub::function<uint32_t()> some_function;
 
-    some_function.set_return({4U,3U});
+    some_function.set_return(4U,3U);
 
     uint32_t a = some_function();
     assert(a == 4U);
@@ -327,7 +365,7 @@ The default behavior is to repeat the specified return values i.e.:
 
 ::
 
-    stub::call<uint32_t()> some_function;
+    stub::function<uint32_t()> some_function;
     some_function.set_return(3U);
 
     uint32_t a = some_function();
@@ -342,26 +380,105 @@ specified:
 
 ::
 
-    stub::call<uint32_t()> some_function;
+    stub::function<uint32_t()> some_function;
     some_function.set_return(1U).no_repeat();
 
     uint32_t a = some_function();
-    uint32_t b = some_function(); // <---- Crash
+    // uint32_t b = some_function(); // <---- Will crash
 
-    some_function.set_return({1U,2U,3U}).no_repeat();
+    some_function.set_return(1U,2U,3U).no_repeat();
 
-    uint32_t a = some_function();
-    uint32_t b = some_function();
-    uint32_t c = some_function();
-    uint32_t d = some_function(); // <---- Crash
+    uint32_t e = some_function();
+    uint32_t f = some_function();
+    uint32_t g = some_function();
+    // uint32_t h = some_function(); // <---- Will crash
+
+    assert(a == 1U && e == 1U && f == 2U && g == 3U);
 
 In addition to the functionality shown in this example the
-``stub::call`` object provides a couple of extra functions for
-checking the current state. See the src/stub/call.hpp header for more
+``stub::function`` object provides a couple of extra functions for
+checking the current state. See the src/stub/function.hpp header for more
 information.
 
 For more information on the options for return values see the
 src/stub/return_handler.hpp
+
+Using stub with template arguments
+----------------------------------
+
+One place where stub works well is when testing policy classes or template code.
+
+Member function
+...............
+
+As a small example, say we have the following::
+
+    struct paper
+    {
+        // Call the print function on the printer object
+        template<class Printer>
+        void print(Printer& printer)
+        {
+            printer.print("Hello world");
+        }
+    };
+
+Lets define a ``Printer`` object that we can use to test the behaviour of a
+`paper` object::
+
+    // Test stub printer object
+    struct printer
+    {
+        stub::function<void(std::string)> print;
+    };
+
+Our unit test code could now look something along the lines of::
+
+    printer printer;
+    paper hello;
+
+    hello.print(printer);
+
+    assert(printer.print.expect_calls()
+        .with("Hello world")
+        .to_bool());
+
+
+Static member function
+......................
+
+If our ``paper`` class was invoking a static method on the the ``Printer`` type
+then our test code could look as follows::
+
+    struct static_paper
+    {
+        // Call the static print function on the Printer type
+        template<class Printer>
+        void print()
+        {
+            Printer::print("Hello world");
+        }
+    };
+
+Define our static printer object::
+
+    struct static_printer
+    {
+        static stub::function<void(std::string)> print;
+    };
+
+    // Definition of the static stub
+    stub::function<void(std::string)> static_printer::print;
+
+The unit test code::
+
+    static_paper hello;
+
+    hello.print<static_printer>();
+
+    assert(static_printer::print.expect_calls()
+        .with("Hello world")
+        .to_bool());
 
 Unit testing
 ------------
