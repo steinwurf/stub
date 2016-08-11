@@ -232,5 +232,7 @@ TEST(test_readme, function_return_values)
         uint32_t f = some_function();
         uint32_t g = some_function();
         // uint32_t h = some_function(); // <---- Crash
+
+        assert(a == 1U && e == 1U && f == 2U && g == 3U);
     }
 }
