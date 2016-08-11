@@ -241,23 +241,23 @@ inline:
     stub::function<void(uint32_t)> some_function;
 
     // Call the function
-    for (uint32_t i = 0; i < 10; i++)
+    for (uint32_t i = 0; i < 10; ++i)
     {
         some_function(i);
     }
 
     // Check the expectation.
     assert(some_function.expect_calls()
-        .with(0)
-        .with(1)
-        .with(2)
-        .with(3)
-        .with(4)
-        .with(5)
-        .with(6)
-        .with(7)
-        .with(8)
-        .with(9));
+        .with(0U)
+        .with(1U
+        .with(2U)
+        .with(3U)
+        .with(4U)
+        .with(5U)
+        .with(6U)
+        .with(7U)
+        .with(8U)
+        .with(9U));
 
 Instead an expectation can be built by storing it as a variable and calling the
 ``with`` member function:
@@ -269,7 +269,7 @@ Instead an expectation can be built by storing it as a variable and calling the
     auto some_function_expectation = some_function.expect_calls();
 
     // Call the function and setup expectation
-    for (uint32_t i = 0; i < 10; i++)
+    for (uint32_t i = 0; i < 10; ++i)
     {
         some_function(i);
         some_function_expectation.with(i);
