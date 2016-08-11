@@ -73,7 +73,7 @@ TEST(test_function, set_return)
 TEST(test_function, set_multiple_return)
 {
     stub::function<uint32_t(uint32_t)> function;
-    function.set_return({5U, 10U, 15U});
+    function.set_return(5U, 10U, 15U);
 
     EXPECT_EQ(function(1U), 5U);
     EXPECT_EQ(function(2U), 10U);
@@ -89,7 +89,7 @@ TEST(test_function, set_multiple_return)
 TEST(test_function, set_return_const_reference)
 {
     stub::function<const uint32_t&()> function;
-    function.set_return({5U, 10U});
+    function.set_return(5U, 10U);
 
     const auto& v = function();
 

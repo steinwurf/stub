@@ -203,11 +203,11 @@ TEST(test_readme, function_return_values)
         assert(a == true);
         assert(b == true);
     }
-
+    /// @todo update readme
     {
         stub::function<uint32_t()> some_function;
 
-        some_function.set_return({4U,3U});
+        some_function.set_return(4U,3U);
 
         uint32_t a = some_function();
         assert(a == 4U);
@@ -234,6 +234,7 @@ TEST(test_readme, function_return_values)
         assert(a == 3U && b == 3U && c == 3U);
     }
 
+    /// @todo update readme
     {
         stub::function<uint32_t()> some_function;
         some_function.set_return(1U).no_repeat();
@@ -241,7 +242,7 @@ TEST(test_readme, function_return_values)
         uint32_t a = some_function();
         // uint32_t b = some_function(); // <---- Will crash
 
-        some_function.set_return({1U,2U,3U}).no_repeat();
+        some_function.set_return(1U,2U,3U).no_repeat();
 
         uint32_t e = some_function();
         uint32_t f = some_function();

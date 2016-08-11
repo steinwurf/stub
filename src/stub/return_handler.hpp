@@ -102,28 +102,6 @@ namespace stub
         // return_handler(const return_handler&) = delete;
         // return_handler& operator=(const return_handler&) = delete;
 
-        /// Initializes the return_handler with one specific return
-        /// value. Calling this function will also reset the
-        /// return_handler state. So any previously specified returns
-        /// values will be removed etc.
-        ///
-        /// @param values The return value to use
-        ///
-        /// @return Reference to the return handler, this allows the
-        /// caller to perform additional customization to the return
-        /// handler such as turn on or off repeat.
-        // return_handler& set_return(const R& value)
-        return_handler& set_return(const return_type& value)
-        {
-            m_repeat = true;
-            m_position = 0;
-            m_returns.clear();
-
-            m_returns = {value};
-
-            return *this;
-        }
-
         /// Initializes the return_handler with the return values to
         /// use. Calling this function will also reset the
         /// return_handler state. So any previously specified returns
@@ -134,8 +112,25 @@ namespace stub
         /// @return Reference to the return handler, this allows the
         /// caller to perform additional customization to the return
         /// handler such as turn on or off repeat.
+        template<class... Args>
+        return_handler& set_return(Args&&... values)
+        {
+            m_repeat = true;
+            m_position = 0;
+            m_returns.clear();
+
+            add_return(std::forward<Args>(values)...);
+
+            return *this;
+        }
+
+
+        ///
+        /// @return Reference to the return handler, this allows the
+        /// caller to perform additional customization to the return
+        /// handler such as turn on or off repeat.
         // return_handler& set_return(const std::initializer_list<R>& values)
-        return_handler&
+/*        return_handler&
         set_return(const std::initializer_list<return_type>& values)
         {
             m_repeat = true;
@@ -145,7 +140,7 @@ namespace stub
             m_returns = values;
 
             return *this;
-        }
+        }*/
 
         /// Set repeat off. This means that no values will be repeated
         /// the user has to specify exactly the number of values that
@@ -174,6 +169,21 @@ namespace stub
             ++m_position;
 
             return value;
+        }
+
+    private:
+
+        void add_return(const return_type& value)
+        {
+            m_returns.push_back(value);
+
+        }
+
+        template<class... Args>
+        void add_return(const return_type& value, Args... more)
+        {
+            m_returns.push_back(value);
+            add_return(std::forward<Args>(more)...);
         }
 
     private:

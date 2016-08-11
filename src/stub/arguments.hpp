@@ -7,8 +7,6 @@
 
 #include <tuple>
 
-//#include "unqualified_type.hpp"
-
 namespace stub
 {
     /// Tuple containing the values actually passed in the call
