@@ -12,11 +12,6 @@
 namespace stub
 {
     /// Tuple containing the values actually passed in the call
-    //template<class... T>
-    //using arguments = std::tuple<typename unqualified_type<T>::type...>;
-
     template<class... Args>
     using arguments = decltype(std::make_tuple(std::declval<Args>()...));
-
-
 }

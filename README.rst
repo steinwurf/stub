@@ -81,7 +81,7 @@ Functions taking no arguments
 ............................
 
 The ``with(...)`` function takes exactly the same number and type of
-arguments as the ``stub::function`` function.
+arguments as the ``stub::function``.
 
 ::
 
@@ -341,14 +341,14 @@ specified:
     some_function.set_return(1U).no_repeat();
 
     uint32_t a = some_function();
-    uint32_t b = some_function(); // <---- Crash
+    // uint32_t b = some_function(); // <---- Crash
 
     some_function.set_return({1U,2U,3U}).no_repeat();
 
-    uint32_t a = some_function();
-    uint32_t b = some_function();
-    uint32_t c = some_function();
-    uint32_t d = some_function(); // <---- Crash
+    uint32_t e = some_function();
+    uint32_t f = some_function();
+    uint32_t g = some_function();
+    // uint32_t h = some_function(); // <---- Crash
 
 In addition to the functionality shown in this example the
 ``stub::function`` object provides a couple of extra functions for
