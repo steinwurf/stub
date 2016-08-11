@@ -182,8 +182,8 @@ TEST(test_readme, function_return_values)
 
         some_function.set_return(true);
 
-        bool a = some_function(23);
-        bool b = some_function(13);
+        bool a = some_function(23U);
+        bool b = some_function(13U;
 
         assert(a == true);
         assert(b == true);
@@ -224,14 +224,14 @@ TEST(test_readme, function_return_values)
         some_function.set_return(1U).no_repeat();
 
         uint32_t a = some_function();
-        // uint32_t b = some_function(); // <---- Crash
+        // uint32_t b = some_function(); // <---- Will crash
 
         some_function.set_return({1U,2U,3U}).no_repeat();
 
         uint32_t e = some_function();
         uint32_t f = some_function();
         uint32_t g = some_function();
-        // uint32_t h = some_function(); // <---- Crash
+        // uint32_t h = some_function(); // <---- Will crash
 
         assert(a == 1U && e == 1U && f == 2U && g == 3U);
     }

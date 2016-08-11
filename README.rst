@@ -142,11 +142,13 @@ arguments of the second call:
 
    assert(a == b);
 
-**Note:** You should use the "unqualified types" of the function
+**Note:** You should use the "unqualified and decayed types" of the function
 arguments. This means that if you have a function
 ``stub::function<void(const uint32_t&>`` then the stub library will store
 the argument passed in an ``uint32_t`` instead of a ``const
-uint32_t&``. So our comparison should use ``std::tuple<uint32_t>``
+uint32_t&``. So our comparison should use ``std::tuple<uint32_t>``. If you use
+`std::make_tuple(...)` to build the your expectation this should happen
+automatically (so you don't have to worry about it).
 
 You can find more information about unqualified types `here
 <http://stackoverflow.com/questions/17295169>`_ and `here
@@ -341,14 +343,16 @@ specified:
     some_function.set_return(1U).no_repeat();
 
     uint32_t a = some_function();
-    // uint32_t b = some_function(); // <---- Crash
+    // uint32_t b = some_function(); // <---- Will crash
 
     some_function.set_return({1U,2U,3U}).no_repeat();
 
     uint32_t e = some_function();
     uint32_t f = some_function();
     uint32_t g = some_function();
-    // uint32_t h = some_function(); // <---- Crash
+    // uint32_t h = some_function(); // <---- Will crash
+
+    assert(a == 1U && e == 1U && f == 2U && g == 3U);
 
 In addition to the functionality shown in this example the
 ``stub::function`` object provides a couple of extra functions for
