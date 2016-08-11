@@ -389,6 +389,9 @@ Using stub with template arguments
 
 One place where stub works well is when testing policy classes or template code.
 
+Member function
+...............
+
 As a small example, say we have the following::
 
     struct paper
@@ -420,6 +423,10 @@ Our unit test code could now look something along the lines of::
     assert(printer.print.expect_calls()
         .with("Hello world")
         .to_bool());
+
+
+Static member function
+......................
 
 If our ``paper`` class was invoking a static method on the the ``Printer`` type
 then our test code could look as follows::
