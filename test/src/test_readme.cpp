@@ -68,16 +68,31 @@ TEST(test_readme, get_the_arguments_of_a_specific_call)
 {
     stub::function<void(uint32_t,uint32_t)> function;
 
-    function(3,4);
-    function(4,3);
-    function(2,6);
+    function(3U,4U);
+    function(4U,3U);
+    function(2U,6U);
 
     auto a = function.call_arguments(1);
-    auto b = std::make_tuple(4,3);
+    auto b = std::make_tuple(4U,3U);
 
     assert(a == b);
 }
 
+TEST(test_readme, ignore_specific_arguments_of_a_function_call)
+{
+    stub::function<void(uint32_t,uint32_t)> function;
+
+    function(3U,4U);
+    function(4U,3U);
+
+    // Is matched by:
+    bool works = function.expect_calls()
+        .with(stub::ignore(), 4U)
+        .with(4U, stub::ignore())
+        .to_bool();
+
+    assert(works);
+}
 
 struct cup
 {

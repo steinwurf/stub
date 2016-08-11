@@ -147,19 +147,41 @@ arguments. This means that if you have a function
 ``stub::function<void(const uint32_t&>`` then the stub library will store
 the argument passed in an ``uint32_t`` instead of a ``const
 uint32_t&``. So our comparison should use ``std::tuple<uint32_t>``. If you use
-`std::make_tuple(...)` to build the your expectation this should happen
+``std::make_tuple(...)`` to build the your expectation this should happen
 automatically (so you don't have to worry about it).
 
 You can find more information about unqualified types `here
 <http://stackoverflow.com/questions/17295169>`_ and `here
 <http://bit.ly/1Markab>`_.
 
+Ignore specific arguments of a function call
+............................................
+
+Sometimes it is useful to ignore specific arguments to a function call. They may
+be internally computed or just in general not interesting when testing for
+correctness.
+
+::
+
+    stub::function<void(uint32_t,uint32_t)> function;
+
+    function(3U,4U);
+    function(4U,3U);
+
+    // Is matched by:
+    bool works = function.expect_calls()
+        .with(stub::ignore(), 4U)
+        .with(4U, stub::ignore())
+        .to_bool();
+
+    assert(works);
+
 Comparing custom arguments
 ..........................
 
-The default behavior for the ``expect_calls(...)`` function is to
+The default behavior for the ``expect_calls()`` function is to
 compare arguments passed though the ``with(...)`` function to the
-actual arguments using the ``operator==(...)`` function. However,
+actual arguments using ``operator==(...)``. However,
 sometimes we want to make custom comparisons or to compare objects
 that do not provide ``operator==(...)``. In those cases we can provide
 a custom comparison function.
