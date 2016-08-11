@@ -63,6 +63,23 @@ TEST(test_readme, check_the_number_of_function_calls)
     assert(some_function.calls() != 0);
 }
 
+TEST(test_readme, clear_the_state_of_the_function_object)
+{
+    stub::function<void(uint32_t)> some_function;
+
+    some_function(3);
+    some_function(4);
+
+    // Return how many calls where made
+    assert(some_function.calls() == 2);
+
+    some_function.clear();
+
+    // Return true if no calls were made
+    assert(some_function.calls() == 0);
+}
+
+
 
 TEST(test_readme, get_the_arguments_of_a_specific_call)
 {

@@ -116,6 +116,25 @@ made.
     // Return true if no calls were made
     assert(some_function.calls() != 0);
 
+Clear the state of the function object
+......................................
+
+Somethings we need to reset things to its initial state::
+
+    stub::function<void(uint32_t)> some_function;
+
+    some_function(3);
+    some_function(4);
+
+    // Return how many calls where made
+    assert(some_function.calls() == 2);
+
+    some_function.clear();
+
+    // Return true if no calls were made
+    assert(some_function.calls() == 0);
+
+
 Get the arguments of a specific function call
 .............................................
 

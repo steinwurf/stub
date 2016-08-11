@@ -13,6 +13,9 @@ Latest
   expect_calls().with(...).
 * Minor: Added the ability to ignore specific arguments when comparing function
   calls in expect_calls().
+* Minor: Added the ability to clear function objects
+* Major: Removed the need to use ``std::initializer_list`` when specifying
+  multiple return values.
 
 4.0.1
 -----
