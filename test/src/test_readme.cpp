@@ -147,7 +147,7 @@ TEST(test_readme, building_an_expectation)
         // Check the expectation.
         assert(some_function.expect_calls()
             .with(0U)
-            .with(1U
+            .with(1U)
             .with(2U)
             .with(3U)
             .with(4U)
@@ -183,7 +183,7 @@ TEST(test_readme, function_return_values)
         some_function.set_return(true);
 
         bool a = some_function(23U);
-        bool b = some_function(13U;
+        bool b = some_function(13U);
 
         assert(a == true);
         assert(b == true);
