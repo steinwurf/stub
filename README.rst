@@ -421,6 +421,37 @@ Our unit test code could now look something along the lines of::
         .with("Hello world")
         .to_bool());
 
+If our ``paper`` class was invoking a static method on the the ``Printer`` type
+then our test code could look as follows::
+
+    struct static_paper
+    {
+        // Call the static print function on the Printer type
+        template<class Printer>
+        void print()
+        {
+            Printer::print("Hello world");
+        }
+    };
+
+Define our static printer object::
+
+    struct static_printer
+    {
+        static stub::function<void(std::string)> print;
+    };
+
+    stub::function<void(std::string)> static_printer::print;
+
+The unit test code::
+
+    static_paper hello;
+
+    hello.print<static_printer>();
+
+    assert(static_printer::print.expect_calls()
+        .with("Hello world")
+        .to_bool());
 
 Unit testing
 ------------
