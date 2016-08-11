@@ -327,7 +327,7 @@ Or alternatively we can set multiple return values:
 
     stub::function<uint32_t()> some_function;
 
-    some_function.set_return({4U,3U});
+    some_function.set_return(4U,3U);
 
     uint32_t a = some_function();
     assert(a == 4U);
@@ -367,7 +367,7 @@ specified:
     uint32_t a = some_function();
     // uint32_t b = some_function(); // <---- Will crash
 
-    some_function.set_return({1U,2U,3U}).no_repeat();
+    some_function.set_return(1U,2U,3U).no_repeat();
 
     uint32_t e = some_function();
     uint32_t f = some_function();

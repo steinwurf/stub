@@ -124,24 +124,6 @@ namespace stub
             return *this;
         }
 
-
-        ///
-        /// @return Reference to the return handler, this allows the
-        /// caller to perform additional customization to the return
-        /// handler such as turn on or off repeat.
-        // return_handler& set_return(const std::initializer_list<R>& values)
-/*        return_handler&
-        set_return(const std::initializer_list<return_type>& values)
-        {
-            m_repeat = true;
-            m_position = 0;
-            m_returns.clear();
-
-            m_returns = values;
-
-            return *this;
-        }*/
-
         /// Set repeat off. This means that no values will be repeated
         /// the user has to specify exactly the number of values that
         /// should be return otherwise an assert will be triggered.
@@ -173,14 +155,16 @@ namespace stub
 
     private:
 
+        /// Overload that adds a return value
         void add_return(const return_type& value)
         {
             m_returns.push_back(value);
 
         }
 
+        /// Add a number of return values
         template<class... Args>
-        void add_return(const return_type& value, Args... more)
+        void add_return(const return_type& value, Args&&... more)
         {
             m_returns.push_back(value);
             add_return(std::forward<Args>(more)...);
