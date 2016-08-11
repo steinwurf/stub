@@ -203,7 +203,7 @@ TEST(test_readme, function_return_values)
         assert(a == true);
         assert(b == true);
     }
-    /// @todo update readme
+
     {
         stub::function<uint32_t()> some_function;
 
@@ -234,7 +234,7 @@ TEST(test_readme, function_return_values)
         assert(a == 3U && b == 3U && c == 3U);
     }
 
-    /// @todo update readme
+
     {
         stub::function<uint32_t()> some_function;
         some_function.set_return(1U).no_repeat();
@@ -251,4 +251,59 @@ TEST(test_readme, function_return_values)
 
         assert(a == 1U && e == 1U && f == 2U && g == 3U);
     }
+}
+
+struct paper
+{
+    // Call the print function on the printer object
+    template<class Printer>
+    void print(Printer& printer)
+    {
+        printer.print("Hello world");
+    }
+};
+
+struct printer
+{
+    stub::function<void(std::string)> print;
+};
+
+TEST(test_readme, using_stub_with_template_arguments)
+{
+    printer printer;
+    paper hello;
+
+    hello.print(printer);
+
+    assert(printer.print.expect_calls()
+        .with("Hello world")
+        .to_bool());
+}
+
+struct static_paper
+{
+    // Call the static print function on the Printer type
+    template<class Printer>
+    void print()
+    {
+        Printer::print("Hello world");
+    }
+};
+
+struct static_printer
+{
+    static stub::function<void(std::string)> print;
+};
+
+stub::function<void(std::string)> static_printer::print;
+
+TEST(test_readme, using_static_stub_with_template_arguments)
+{
+    static_paper hello;
+
+    hello.print<static_printer>();
+
+    assert(static_printer::print.expect_calls()
+        .with("Hello world")
+        .to_bool());
 }

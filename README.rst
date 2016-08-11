@@ -384,6 +384,11 @@ information.
 For more information on the options for return values see the
 src/stub/return_handler.hpp
 
+Using stub with template arguments
+----------------------------------
+
+One place wh
+
 Unit testing
 ------------
 
