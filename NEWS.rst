@@ -6,6 +6,10 @@ every change, see the Git log.
 
 Latest
 ------
+* tbd
+
+5.0.0
+-----
 * Major: Renamed stub::call to stub::function as this better reflects its true
   purpose.
 * Major: Change the approach to providing custom comparisons of function
