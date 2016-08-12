@@ -7,6 +7,8 @@
 
 #include <gtest/gtest.h>
 
+#include <initializer_list>
+
 TEST(test_return_handler, void)
 {
     // Just checking that it can be instantiated
@@ -67,6 +69,17 @@ TEST(test_return_handler, api)
     {
         stub::return_handler<const char*> r;
         r.set_return("3U","4U").no_repeat();
+
+        EXPECT_EQ("3U", r());
+        EXPECT_EQ("4U", r());
+    }
+
+    // String
+    {
+        std::initializer_list<const char*> a {"3U","4U"};
+
+        stub::return_handler<const char*> r;
+        r.set_return(a).no_repeat();
 
         EXPECT_EQ("3U", r());
         EXPECT_EQ("4U", r());

@@ -8,6 +8,7 @@
 #include <cstdint>
 #include <cassert>
 #include <vector>
+#include <iostream>
 
 #include "unqualified_type.hpp"
 
@@ -160,6 +161,13 @@ namespace stub
         {
             m_returns.push_back(value);
 
+        }
+
+        template<template <class> class Sequence>
+        void add_return(const Sequence<return_type>& value)
+        {
+            m_returns.insert(std::end(m_returns), std::begin(value),
+                std::end(value));
         }
 
         /// Add a number of return values
