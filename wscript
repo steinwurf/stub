@@ -2,7 +2,7 @@
 # encoding: utf-8
 
 APPNAME = 'stub'
-VERSION = '5.0.0'
+VERSION = '5.0.1'
 
 import waflib.extras.wurf_options
 
