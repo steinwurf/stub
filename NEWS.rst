@@ -6,7 +6,7 @@ every change, see the Git log.
 
 Latest
 ------
-* tbd
+* Patch: Fixed memory leak in compare_call due to missing virtual destructor.
 
 5.0.0
 -----

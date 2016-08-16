@@ -87,6 +87,8 @@ namespace stub
         struct interface
         {
             virtual bool compare(const arguments<Args...>& value) const = 0;
+            virtual ~interface()
+            { }
         };
 
         // Container for the expected values
