@@ -158,22 +158,35 @@ TEST(test_function, expect_calls_with)
 {
     stub::function<void(uint8_t,uint8_t)> function8;
 
-    function8(2U,3U);
-    function8(4U,5U);
+    function8(2U, 3U);
+    function8(4U, 5U);
 
     EXPECT_TRUE(function8.expect_calls()
-        .with(2U,3U)
-        .with(4U,5U)
+        .with(2U, 3U)
+        .with(4U, 5U)
         .to_bool());
 
     stub::function<void(uint32_t,uint32_t)> function32;
 
-    function32(2U,3U);
-    function32(4U,5U);
+    function32(2U, 3U);
+    function32(4U, 5U);
 
     EXPECT_TRUE(function32.expect_calls()
-        .with(2U,3U)
-        .with(4U,5U)
+        .with(2U, 3U)
+        .with(4U, 5U)
+        .to_bool());
+
+    stub::function<void(std::string)> function_string;
+
+    function_string("hello");
+    function_string("world");
+
+    EXPECT_TRUE(function_string.expect_calls()
+        .with("hello")
+        /// Force the compare_call class to store an std::string. The call above
+        /// will be stored as a char pointer, and hence have no heap allocations
+        /// needing clean up.
+        .with(std::string("world"))
         .to_bool());
 }
 
@@ -186,19 +199,19 @@ TEST(test_function, expect_calls_with_out_of_bounds)
         stub::function<void(uint32_t,uint32_t)> function;
 
         EXPECT_FALSE(function.expect_calls()
-            .with(2U,3U)
-            .with(4U,5U)
+            .with(2U, 3U)
+            .with(4U, 5U)
             .to_bool());
     }
 
     {
         stub::function<void(uint32_t,uint32_t)> function;
 
-        function(2U,3U);
-        function(4U,5U);
+        function(2U, 3U);
+        function(4U, 5U);
 
         EXPECT_FALSE(function.expect_calls()
-            .with(2U,3U)
+            .with(2U, 3U)
             .to_bool());
     }
 }
@@ -391,4 +404,55 @@ TEST(test_function, value_by_reference)
     function(i);
 
     EXPECT_TRUE(function.expect_calls().with(3U).to_bool());
+}
+
+/// This test was added due to a memory leak.
+/// It ensures that objects stored stored by the compare_call class have their
+/// destructor invoked.
+namespace
+{
+    struct leak_counter
+    {
+        /// implement copy constructor
+        leak_counter(const leak_counter& other):
+            m_count(other.m_count)
+        {
+            ++m_count;
+        }
+
+        /// Delete copy assignment constructor
+        leak_counter& operator=(const leak_counter&) = delete;
+
+        leak_counter(uint8_t& count):
+            m_count(count)
+        {
+            ++m_count;
+        }
+
+        ~leak_counter()
+        {
+            --m_count;
+        }
+
+        uint8_t& m_count;
+    };
+
+    inline bool operator==(const leak_counter&, const leak_counter&)
+    {
+        return true;
+    }
+}
+
+TEST(test_function, check_virtual_destructor)
+{
+    uint8_t count = 0U;
+    {
+        leak_counter c(count);
+        stub::function<void(leak_counter&)> test_function;
+        EXPECT_FALSE(test_function.expect_calls()
+            .with(c)
+            .to_bool());
+    }
+
+    EXPECT_EQ(0U, count);
 }
