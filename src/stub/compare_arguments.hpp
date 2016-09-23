@@ -71,10 +71,10 @@ namespace stub
                                   const std::tuple<WithArgs...>& with)
     {
         static_assert(sizeof...(Args) == sizeof...(WithArgs),
-            "The tuples must have same size");
+                      "The tuples must have same size");
 
         bool result = compare_argument(std::get<Index::value>(actual),
-            std::get<Index::value>(with));
+                                       std::get<Index::value>(with));
 
         if (result == false)
         {

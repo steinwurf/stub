@@ -95,8 +95,8 @@ namespace stub
         template<class... WithArgs>
         struct implementation : public interface
         {
-            implementation(WithArgs&&... expected)
-                : m_expected(std::forward<WithArgs>(expected)...)
+            implementation(WithArgs&&... expected) :
+                m_expected(std::forward<WithArgs>(expected)...)
             { }
 
             bool compare(const arguments<Args...>& actual) const override

@@ -64,7 +64,7 @@ namespace stub
     /// return_handler.hpp
     ///
     template<typename R, typename... Args>
-    class function<R (Args...)>
+    class function<R(Args...)>
     {
     public:
 
@@ -79,8 +79,8 @@ namespace stub
             ///
             /// @param predicate The function object used to compare the
             ///        call arguments
-            expectation(const function& the_function)
-                : m_function(the_function)
+            expectation(const function& the_function) :
+                m_function(the_function)
             { }
 
             /// Calling with(...) will add a set of arguments we
@@ -226,10 +226,10 @@ namespace stub
         {
             out << "Number of calls: " << m_calls.size() << std::endl;
 
-            if(sizeof...(Args) == 0)
+            if (sizeof...(Args) == 0)
                 return;
 
-            for(uint32_t i = 0; i < m_calls.size(); ++i)
+            for (uint32_t i = 0; i < m_calls.size(); ++i)
             {
                 out << "Call " << i << ":\n";
                 print_arguments(out, m_calls[i]);

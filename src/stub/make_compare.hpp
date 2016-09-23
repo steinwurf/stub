@@ -22,7 +22,7 @@ namespace stub
     template<class C>
     compare<C> make_compare(C c)
     {
-        return compare<C>{ c };
+        return compare<C> { c };
     }
 
 }

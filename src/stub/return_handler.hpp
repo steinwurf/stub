@@ -92,9 +92,9 @@ namespace stub
         using return_type = typename unqualified_type<R>::type;
 
         /// Constructor
-        return_handler()
-            : m_repeat(true),
-              m_position(0)
+        return_handler() :
+            m_repeat(true),
+            m_position(0)
         { }
 
         /// @todo remove this code. or consider a different way to handle this.
