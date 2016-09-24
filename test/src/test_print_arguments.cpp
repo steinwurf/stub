@@ -30,19 +30,20 @@ TEST(test_print_arguments, non_empty_arguments)
 
 namespace stub_testing
 {
-    struct my_type
-    {
-        my_type() : m_string("okok"), m_value(42U) {}
+struct my_type
+{
+    my_type() :
+        m_string("okok"), m_value(42U) {}
 
-        std::string m_string;
-        uint32_t m_value;
-    };
+    std::string m_string;
+    uint32_t m_value;
+};
 
-    std::ostream& operator<<(std::ostream& out, const my_type& t)
-    {
-        out << t.m_string << t.m_value;
-        return out;
-    }
+std::ostream& operator<<(std::ostream& out, const my_type& t)
+{
+    out << t.m_string << t.m_value;
+    return out;
+}
 }
 
 TEST(test_print_arguments, user_defined_types)
@@ -61,7 +62,7 @@ TEST(test_print_arguments, pointers)
 
     char* p1 = (char*)0xdead1111;
     uint8_t* p2 = (uint8_t*)0xdead2222;
-    bool *p3 = (bool*)0xdead3333;
+    bool* p3 = (bool*)0xdead3333;
     uint16_t* p4 = (uint16_t*)0xdead4444;
     stub_testing::my_type* p5 = (stub_testing::my_type*)0xdead5555;
 
@@ -69,6 +70,6 @@ TEST(test_print_arguments, pointers)
     stub::print_arguments(stream, t);
 
     EXPECT_EQ(stream.str(), "Arg 0: 0xdead1111\nArg 1: 0xdead2222\n"
-                            "Arg 2: 0xdead3333\nArg 3: 0xdead4444\n"
-                            "Arg 4: 0xdead5555\n");
+              "Arg 2: 0xdead3333\nArg 3: 0xdead4444\n"
+              "Arg 4: 0xdead5555\n");
 }

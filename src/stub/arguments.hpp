@@ -9,7 +9,7 @@
 
 namespace stub
 {
-    /// Tuple containing the values actually passed in the call
-    template<class... Args>
-    using arguments = decltype(std::make_tuple(std::declval<Args>()...));
+/// Tuple containing the values actually passed in the call
+template<class... Args>
+using arguments = decltype(std::make_tuple(std::declval<Args>()...));
 }
