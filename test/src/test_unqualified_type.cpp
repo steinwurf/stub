@@ -14,8 +14,8 @@
 
 namespace
 {
-    template<class A, class B>
-    using test = std::is_same<typename stub::unqualified_type<A>::type, B>;
+template<class A, class B>
+using test = std::is_same<typename stub::unqualified_type<A>::type, B>;
 }
 
 /// Test that the unqualified type helper works as expected

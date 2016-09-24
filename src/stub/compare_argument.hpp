@@ -11,26 +11,26 @@
 
 namespace stub
 {
-    /// Compares two arguments of same type
-    template<class T, class U>
-    inline bool compare_argument(T a, U b)
-    {
-        return a == b;
-    }
+/// Compares two arguments of same type
+template<class T, class U>
+inline bool compare_argument(T a, U b)
+{
+    return a == b;
+}
 
-    /// Compare function where the second argument is ignore - this always
-    /// compares true
-    template<class T>
-    inline bool compare_argument(T a, ignore)
-    {
-        (void) a;
-        return true;
-    }
+/// Compare function where the second argument is ignore - this always
+/// compares true
+template<class T>
+inline bool compare_argument(T a, ignore)
+{
+    (void) a;
+    return true;
+}
 
-    /// Compare argument using custom comparison functor.
-    template<class T, class Compare>
-    inline bool compare_argument(T a, compare<Compare> t)
-    {
-        return t(a);
-    }
+/// Compare argument using custom comparison functor.
+template<class T, class Compare>
+inline bool compare_argument(T a, compare<Compare> t)
+{
+    return t(a);
+}
 }

@@ -30,20 +30,20 @@ TEST(test_print_arguments, non_empty_arguments)
 
 namespace stub_testing
 {
-    struct my_type
-    {
-        my_type() :
-            m_string("okok"), m_value(42U) {}
+struct my_type
+{
+    my_type() :
+        m_string("okok"), m_value(42U) {}
 
-        std::string m_string;
-        uint32_t m_value;
-    };
+    std::string m_string;
+    uint32_t m_value;
+};
 
-    std::ostream& operator<<(std::ostream& out, const my_type& t)
-    {
-        out << t.m_string << t.m_value;
-        return out;
-    }
+std::ostream& operator<<(std::ostream& out, const my_type& t)
+{
+    out << t.m_string << t.m_value;
+    return out;
+}
 }
 
 TEST(test_print_arguments, user_defined_types)

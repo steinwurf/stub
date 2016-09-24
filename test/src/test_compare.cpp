@@ -9,10 +9,10 @@
 
 namespace
 {
-    bool test(uint32_t v)
-    {
-        return v == 1U;
-    }
+bool test(uint32_t v)
+{
+    return v == 1U;
+}
 }
 
 TEST(test_compare, basic)

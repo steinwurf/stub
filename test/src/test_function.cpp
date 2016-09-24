@@ -411,36 +411,36 @@ TEST(test_function, value_by_reference)
 /// destructor invoked.
 namespace
 {
-    struct leak_counter
+struct leak_counter
+{
+    /// implement copy constructor
+    leak_counter(const leak_counter& other) :
+        m_count(other.m_count)
     {
-        /// implement copy constructor
-        leak_counter(const leak_counter& other) :
-            m_count(other.m_count)
-        {
-            ++m_count;
-        }
-
-        /// Delete copy assignment constructor
-        leak_counter& operator=(const leak_counter&) = delete;
-
-        leak_counter(uint8_t& count) :
-            m_count(count)
-        {
-            ++m_count;
-        }
-
-        ~leak_counter()
-        {
-            --m_count;
-        }
-
-        uint8_t& m_count;
-    };
-
-    inline bool operator==(const leak_counter&, const leak_counter&)
-    {
-        return true;
+        ++m_count;
     }
+
+    /// Delete copy assignment constructor
+    leak_counter& operator=(const leak_counter&) = delete;
+
+    leak_counter(uint8_t& count) :
+        m_count(count)
+    {
+        ++m_count;
+    }
+
+    ~leak_counter()
+    {
+        --m_count;
+    }
+
+    uint8_t& m_count;
+};
+
+inline bool operator==(const leak_counter&, const leak_counter&)
+{
+    return true;
+}
 }
 
 TEST(test_function, check_virtual_destructor)
