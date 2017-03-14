@@ -408,35 +408,33 @@ TEST(test_function, value_by_reference)
 
 namespace
 {
-    struct YouShallNotCopy
+    struct you_shall_not_copy
     {
-        // YouShallNotCopy()
-        // { }
+        you_shall_not_copy() = default;
+        you_shall_not_copy(const you_shall_not_copy& other) = delete;
 
-        YouShallNotCopy(YouShallNotCopy& other) = delete;
-
-        YouShallNotCopy(YouShallNotCopy&& other)
+        you_shall_not_copy(const you_shall_not_copy&& other)
         {
             (void) other;
             // do move
         }
 
-        uint32_t m_value;
+        uint32_t m_value = 0;
     };
 }
 
-
+// Test that non-copyable types work with stub
 TEST(test_function, non_copyable_type)
 {
-    stub::function<void(YouShallNotCopy)> function;
+    you_shall_not_copy yc;
 
-    // YouShallNotCopy unique;
-    // unique.m_value = 42U;
+    stub::function<void(you_shall_not_copy)> function;
 
-    // function(std::ref(unique));
+    function(std::move(yc));
+    function(you_shall_not_copy());
 
+    EXPECT_EQ(function.calls(), 2U);
 }
-
 
 /// This test was added due to a memory leak.
 /// It ensures that objects stored stored by the compare_call class have their
