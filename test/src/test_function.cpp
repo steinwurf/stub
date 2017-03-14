@@ -406,6 +406,38 @@ TEST(test_function, value_by_reference)
     EXPECT_TRUE(function.expect_calls().with(3U).to_bool());
 }
 
+namespace
+{
+    struct YouShallNotCopy
+    {
+        // YouShallNotCopy()
+        // { }
+
+        YouShallNotCopy(YouShallNotCopy& other) = delete;
+
+        YouShallNotCopy(YouShallNotCopy&& other)
+        {
+            (void) other;
+            // do move
+        }
+
+        uint32_t m_value;
+    };
+}
+
+
+TEST(test_function, non_copyable_type)
+{
+    stub::function<void(YouShallNotCopy)> function;
+
+    // YouShallNotCopy unique;
+    // unique.m_value = 42U;
+
+    // function(std::ref(unique));
+
+}
+
+
 /// This test was added due to a memory leak.
 /// It ensures that objects stored stored by the compare_call class have their
 /// destructor invoked.
