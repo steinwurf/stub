@@ -408,19 +408,19 @@ TEST(test_function, value_by_reference)
 
 namespace
 {
-    struct you_shall_not_copy
+struct you_shall_not_copy
+{
+    you_shall_not_copy() = default;
+    you_shall_not_copy(const you_shall_not_copy& other) = delete;
+
+    you_shall_not_copy(const you_shall_not_copy&& other)
     {
-        you_shall_not_copy() = default;
-        you_shall_not_copy(const you_shall_not_copy& other) = delete;
+        (void) other;
+        // do move
+    }
 
-        you_shall_not_copy(const you_shall_not_copy&& other)
-        {
-            (void) other;
-            // do move
-        }
-
-        uint32_t m_value = 0;
-    };
+    uint32_t m_value = 0;
+};
 }
 
 // Test that non-copyable types work with stub
