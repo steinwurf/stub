@@ -406,6 +406,36 @@ TEST(test_function, value_by_reference)
     EXPECT_TRUE(function.expect_calls().with(3U).to_bool());
 }
 
+namespace
+{
+struct you_shall_not_copy
+{
+    you_shall_not_copy() = default;
+    you_shall_not_copy(const you_shall_not_copy& other) = delete;
+
+    you_shall_not_copy(const you_shall_not_copy&& other)
+    {
+        (void) other;
+        // do move
+    }
+
+    uint32_t m_value = 0;
+};
+}
+
+// Test that non-copyable types work with stub
+TEST(test_function, non_copyable_type)
+{
+    you_shall_not_copy yc;
+
+    stub::function<void(you_shall_not_copy)> function;
+
+    function(std::move(yc));
+    function(you_shall_not_copy());
+
+    EXPECT_EQ(function.calls(), 2U);
+}
+
 /// This test was added due to a memory leak.
 /// It ensures that objects stored stored by the compare_call class have their
 /// destructor invoked.
