@@ -184,6 +184,12 @@ public:
         return (uint32_t) m_calls.size();
     }
 
+    /// @return True if no calls have been made otherwise false
+    bool no_calls() const
+    {
+        return m_calls.size() == 0;
+    }
+
     /// @return The arguments passed to the n'th call
     const arguments<Args...>& call_arguments(uint32_t index) const
     {
