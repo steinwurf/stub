@@ -126,12 +126,15 @@ TEST(test_function, set_return_const_reference)
 TEST(test_function, calls_no_calls)
 {
     stub::function<void()> function;
+    EXPECT_TRUE(function.no_calls());
     EXPECT_TRUE(function.calls() == 0U);
     function();
+    EXPECT_FALSE(function.no_calls());
     EXPECT_FALSE(function.calls() == 0U);
     EXPECT_EQ(function.calls(), 1U);
 
     function();
+    EXPECT_FALSE(function.no_calls());
     EXPECT_FALSE(function.calls() == 0U);
     EXPECT_EQ(function.calls(), 2U);
 }
