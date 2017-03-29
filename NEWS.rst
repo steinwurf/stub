@@ -8,6 +8,11 @@ Latest
 ------
 * tbd
 
+6.0.0
+-----
+* Major: Upgrade to waf-tools 4
+* Minor: Upgrade to gtest 4
+
 5.0.1
 -----
 * Patch: Fixed memory leak in compare_call due to missing virtual destructor.
