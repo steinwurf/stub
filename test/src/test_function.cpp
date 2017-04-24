@@ -496,12 +496,29 @@ namespace
     {
         stub::function<void()> member;
     };
+
+    void t(dummy d)
+    {
+        d.member();
+        std::cout << d.member << std::endl;
+    }
 }
 
 TEST(test_function, bind_member_variable)
 {
     dummy d;
-    auto b = std::bind(&dummy::member, d);
+    auto b = std::bind(std::ref(d.member));
     b();
+
     EXPECT_TRUE(d.member.expect_calls().with().to_bool());
+}
+
+TEST(test_function, bind_member_variable_2)
+{
+    dummy d;
+    auto ptr = &dummy::member;
+    //auto b = std::bind(d.member);
+    //b();
+
+    //EXPECT_TRUE(d.member.expect_calls().with().to_bool());
 }
