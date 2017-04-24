@@ -489,3 +489,19 @@ TEST(test_function, check_virtual_destructor)
 
     EXPECT_EQ(0U, count);
 }
+
+namespace
+{
+    struct dummy
+    {
+        stub::function<void()> member;
+    };
+}
+
+TEST(test_function, bind_member_variable)
+{
+    dummy d;
+    auto b = std::bind(&dummy::member, d);
+    b();
+    EXPECT_TRUE(d.member.expect_calls().with().to_bool());
+}
