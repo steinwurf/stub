@@ -496,12 +496,6 @@ namespace
     {
         stub::function<void()> member;
     };
-
-    void t(dummy d)
-    {
-        d.member();
-        std::cout << d.member << std::endl;
-    }
 }
 
 TEST(test_function, bind_member_variable)
@@ -517,7 +511,7 @@ TEST(test_function, bind_member_variable_2)
 {
     dummy d;
     auto ptr = &dummy::member;
-    //auto b = std::bind(d.member);
+    auto b = std::bind(b.*ptr);
     //b();
 
     //EXPECT_TRUE(d.member.expect_calls().with().to_bool());
