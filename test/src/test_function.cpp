@@ -492,13 +492,13 @@ TEST(test_function, check_virtual_destructor)
 
 namespace
 {
-    struct dummy
-    {
-        dummy() = default;
-        dummy(const dummy&) = delete;
+struct dummy
+{
+    dummy() = default;
+    dummy(const dummy&) = delete;
 
-        stub::function<void()> member;
-    };
+    stub::function<void()> member;
+};
 }
 
 TEST(test_function, bind_member_variable)
