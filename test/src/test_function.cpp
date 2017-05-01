@@ -518,8 +518,10 @@ TEST(test_function, bind_member_variable_2)
 {
     dummy d;
 
+    // Explanation of the double call operator:
+    // http://stackoverflow.com/a/43716824/1717320
     auto b = std::bind(&dummy::member, &d);
-    b();
+    b()();
 
     EXPECT_TRUE(d.member.expect_calls().with().to_bool());
 }
