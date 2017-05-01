@@ -489,3 +489,39 @@ TEST(test_function, check_virtual_destructor)
 
     EXPECT_EQ(0U, count);
 }
+
+namespace
+{
+struct dummy
+{
+    dummy() = default;
+    dummy(const dummy&) = delete;
+
+    stub::function<void()> member;
+};
+}
+
+TEST(test_function, bind_member_variable)
+{
+    dummy d;
+
+    // std::ref is needed otherwise bind will make a copy of the
+    // stub::function object and invoke the call on that one.
+
+    auto b = std::bind(std::ref(d.member));
+    b();
+
+    EXPECT_TRUE(d.member.expect_calls().with().to_bool());
+}
+
+TEST(test_function, bind_member_variable_2)
+{
+    dummy d;
+
+    // Explanation of the double call operator:
+    // http://stackoverflow.com/a/43716824/1717320
+    auto b = std::bind(&dummy::member, &d);
+    b()();
+
+    EXPECT_TRUE(d.member.expect_calls().with().to_bool());
+}
