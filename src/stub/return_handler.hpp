@@ -135,7 +135,7 @@ public:
     /// @return Reference to the return handler, this allows the
     /// caller to perform additional customization to the return
     /// handler such as turn on or off repeat.
-    return_handler& set_return(std::initializer_list<R> values)
+    return_handler& set_return(std::initializer_list<return_type> values)
     {
         m_repeat = true;
         m_position = 0;

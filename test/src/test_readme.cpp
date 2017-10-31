@@ -281,7 +281,15 @@ TEST(test_readme, function_return_values)
 
         assert(some_function() == true);
         assert(some_function() == false);
-        assert(some_function() == true);    
+        assert(some_function() == true);
+    }
+
+    {
+        stub::function<const std::string&()> some_function {"yes", "no"};
+
+        assert(some_function() == "yes");
+        assert(some_function() == "no");
+
     }
 }
 

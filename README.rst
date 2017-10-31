@@ -424,6 +424,15 @@ You can assign multiple values, like when using ``set_return(...)``::
     assert(some_function() == true);
 
 
+    stub::function<const std::string&()> some_function {"yes", "no"};
+
+    assert(some_function() == "yes");
+    assert(some_function() == "no");
+
+
+
+
+
 Using stub with template arguments
 ----------------------------------
 

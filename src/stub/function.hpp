@@ -166,7 +166,7 @@ public:
     /// use.
     ///
     /// @param values The list of return values to use
-    function(std::initializer_list<R> values)
+    function(std::initializer_list<typename unqualified_type<R>::type> values)
     {
         m_return_handler.set_return(values);
     }
