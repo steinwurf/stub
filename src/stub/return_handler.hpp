@@ -8,6 +8,7 @@
 #include <cstdint>
 #include <cassert>
 #include <vector>
+#include <initializer_list>
 
 #include "unqualified_type.hpp"
 
@@ -120,6 +121,28 @@ public:
         m_returns.clear();
 
         add_return(std::forward<Args>(values)...);
+
+        return *this;
+    }
+
+    /// Initializes the return_handler with the return values to
+    /// use. Calling this function will also reset the
+    /// return_handler state. So any previously specified returns
+    /// values will be removed etc.
+    ///
+    /// @param values The list of return values to use
+    ///
+    /// @return Reference to the return handler, this allows the
+    /// caller to perform additional customization to the return
+    /// handler such as turn on or off repeat.
+    return_handler& set_return(std::initializer_list<R> values)
+    {
+        m_repeat = true;
+        m_position = 0;
+        m_returns.clear();
+
+        for (auto& r : values)
+            add_return(r);
 
         return *this;
     }

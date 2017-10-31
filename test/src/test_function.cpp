@@ -46,7 +46,7 @@ TEST(test_function, call_operator)
     }
 }
 
-/// Test that the set_return(...) function works as expected
+/// Test that the clear(...) function works as expected
 TEST(test_function, clear)
 {
     stub::function<uint32_t(uint32_t)> function;
@@ -92,6 +92,46 @@ TEST(test_function, set_return)
 
     EXPECT_FALSE(function.calls() == 0);
     EXPECT_EQ(function.calls(), 2U);
+}
+
+/// Test that the initializer_list constructor works as expected
+TEST(test_function, return_value)
+{
+    stub::function<uint32_t(uint32_t)> function { 5U };
+
+    EXPECT_EQ(function.calls(), 0U);
+
+    auto a = function(2U);
+
+    EXPECT_EQ(a, 5U);
+
+    EXPECT_TRUE(function.calls() != 0U);
+    EXPECT_EQ(function.calls(), 1U);
+
+    auto b = function(8U);
+
+    EXPECT_EQ(b, 5U);
+
+    EXPECT_FALSE(function.calls() == 0);
+    EXPECT_EQ(function.calls(), 2U);
+}
+
+/// Test that the initializer_list constructor works as expected in
+/// class initilization
+
+class in_class_initializer
+{
+public:
+    stub::function<uint32_t(uint32_t)> function { 5U };
+};
+
+TEST(test_function, in_class_initializer)
+{
+    in_class_initializer ici;
+
+    auto a = ici.function(2U);
+
+    EXPECT_EQ(a, 5U);
 }
 
 /// Test that the set_return(...) with multiple return values works as expected

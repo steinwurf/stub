@@ -403,6 +403,27 @@ information.
 For more information on the options for return values see the
 src/stub/return_handler.hpp
 
+Short syntax for defining return values
+.......................................
+
+To assign return values we created a "short-hand" API by having the
+``stub::function`` take a ``std::initializer_list`` containing the return
+values to use::
+
+    stub::function<uint32_t()> some_function {1U};
+
+    uint32_t a = some_function();
+    assert(a == 1U);
+
+You can assign multiple values, like when using ``set_return(...)``::
+
+    stub::function<bool()> some_function {true, false, true};
+
+    assert(some_function() == true);
+    assert(some_function() == false);
+    assert(some_function() == true);
+
+
 Using stub with template arguments
 ----------------------------------
 

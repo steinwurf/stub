@@ -10,7 +10,6 @@
 #include <ostream>
 
 #include "return_handler.hpp"
-//#include "unqualified_type.hpp"
 #include "print_arguments.hpp"
 #include "compare_call.hpp"
 
@@ -159,6 +158,19 @@ public:
     };
 
 public:
+
+    /// Default constructor
+    function() = default;
+
+    /// Construct the function with the return values to
+    /// use.
+    ///
+    /// @param values The list of return values to use
+    function(std::initializer_list<R> values)
+    {
+        m_return_handler.set_return(values);
+    }
+
     /// The call operator to "simulate" performing a function call.
     ///
     /// @param args The arguments that should be stored

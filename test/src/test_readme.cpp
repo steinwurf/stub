@@ -268,6 +268,21 @@ TEST(test_readme, function_return_values)
 
         assert(a == 1U && e == 1U && f == 2U && g == 3U);
     }
+
+    {
+        stub::function<uint32_t()> some_function {1U};
+
+        uint32_t a = some_function();
+        assert(a == 1U);
+    }
+
+    {
+        stub::function<bool()> some_function {true, false, true};
+
+        assert(some_function() == true);
+        assert(some_function() == false);
+        assert(some_function() == true);    
+    }
 }
 
 struct paper
