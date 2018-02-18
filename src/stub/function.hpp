@@ -215,6 +215,12 @@ public:
         m_calls.clear();
     }
 
+    /// Clear the calls
+    void clear_calls()
+    {
+        m_calls.clear();
+    }
+
     /// Prints the status of the function object to the std::ostream.
     ///
     /// Example (using the output operator):

@@ -65,10 +65,14 @@ TEST(test_readme, check_the_number_of_function_calls)
 
 TEST(test_readme, clear_the_state_of_the_function_object)
 {
-    stub::function<void(uint32_t)> some_function;
+    stub::function<uint32_t(uint32_t)> some_function;
+    some_function.set_return(5);
 
-    some_function(3);
-    some_function(4);
+    uint32_t a = some_function(3);
+    uint32_t b = some_function(4);
+
+    assert(a == 5);
+    assert(b == 5);
 
     // Return how many calls where made
     assert(some_function.calls() == 2);
@@ -77,9 +81,38 @@ TEST(test_readme, clear_the_state_of_the_function_object)
 
     // Return true if no calls were made
     assert(some_function.calls() == 0);
+
+    // Before we can use some_function again we have to set a new return value
+    some_function.set_return(6);
+    uint32_t c = some_function(1);
+
+    assert(c == 6);
 }
 
+TEST(test_readme, clear_only_the_function_calls_state)
+{
+    stub::function<uint32_t(uint32_t)> some_function;
+    some_function.set_return(5);
 
+    uint32_t a = some_function(3);
+    uint32_t b = some_function(4);
+
+    assert(a == 5);
+    assert(b == 5);
+
+    // Return how many calls where made
+    assert(some_function.calls() == 2);
+
+    some_function.clear_calls();
+
+    // Return true if no calls were made
+    assert(some_function.calls() == 0);
+
+    // We can continue to call the function
+    uint32_t c = some_function(1);
+
+    assert(c == 5);
+}
 
 TEST(test_readme, get_the_arguments_of_a_specific_call)
 {
