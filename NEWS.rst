@@ -6,6 +6,10 @@ every change, see the Git log.
 
 Latest
 ------
+* tbd
+
+6.1.0
+-----
 * Minor: Allow a user to clear only the function calls made.
 
 6.0.0
