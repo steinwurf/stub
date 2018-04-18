@@ -1,6 +1,12 @@
 stub
 ====
 
+.. image:: ./stub.svg
+   :height: 200px
+   :width: 200px
+
+Overview
+========
 stub is a simple C++ library that is meant to provide simple helper
 functions to ease sometimes tedious testing tasks.
 
