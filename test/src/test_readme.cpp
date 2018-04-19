@@ -144,7 +144,7 @@ TEST(test_readme, ignore_specific_arguments_of_a_function_call)
     assert(works);
 }
 
-TEST(test_readme, ensure_specific_arguments_of_a_function_call_not_null)
+TEST(test_readme, ensure_specific_arguments_of_a_function_call_not_nullptr)
 {
     stub::function<void(uint8_t*, uint32_t)> function;
 
@@ -153,7 +153,7 @@ TEST(test_readme, ensure_specific_arguments_of_a_function_call_not_null)
 
     // Is matched by:
     bool works = function.expect_calls()
-                 .with(stub::not_null(), 1U)
+                 .with(stub::not_nullptr(), 1U)
                  .to_bool();
 
     assert(works);
@@ -172,14 +172,9 @@ TEST(test_readme, comparing_custom_arguments)
         function(cup{2.3});
         function(cup{4.5});
 
-        auto compare = [](double expected, const cup& c)-> bool
-        { return c.m_volume == expected; };
-
         assert(function.expect_calls()
-               .with(stub::make_compare(
-                   std::bind(compare, 2.3, std::placeholders::_1)))
-               .with(stub::make_compare(
-                   std::bind(compare, 4.5, std::placeholders::_1)))
+               .with(stub::make_compare([](auto& c){return c.m_volume == 2.3;}))
+               .with(stub::make_compare([](auto& c){return c.m_volume == 4.5;}))
                .to_bool());
     }
 

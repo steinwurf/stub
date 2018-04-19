@@ -3,8 +3,8 @@
 //
 // Distributed under the "BSD License". See the accompanying LICENSE.rst file.
 
-#include <stub/not_null.hpp>
+#include <stub/not_nullptr.hpp>
 
 #include <gtest/gtest.h>
 
-// stub::not_null is just a tag object - so no unit test to run.
+// stub::not_nullptr is just a tag object - so no unit test to run.

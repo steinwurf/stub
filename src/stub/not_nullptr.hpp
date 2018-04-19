@@ -7,7 +7,8 @@
 
 namespace stub
 {
-/// An object used to check if a value is not null comparing two function calls.
+/// An object used to check if a value is not a null pointer,
+/// when comparing two function calls.
 ///
 /// Example:
 ///
@@ -17,7 +18,7 @@ namespace stub
 ///    foo(3U, buffer.data());
 ///
 ///    assert(fool.expect_calls()
-///        .with(3U, stub::not_null()));
+///        .with(3U, stub::not_nullptr()));
 ///
-struct not_null { };
+struct not_nullptr { };
 }

@@ -244,8 +244,8 @@ Check if specific arguments are values other than null
 Sometimes it is useful to check if specific arguments to a function call are
 not null.
 If a pointer given to a function is internally computed it can be impossible or
-complex to know what the correct value is. There for not_null can be used when
-that is the only value not allowed.
+complex to know what the correct value is. There for not_nullptr can be used
+when that is the only value not allowed.
 ::
 
     stub::function<void(uint8_t*, uint32_t)> function;
@@ -255,7 +255,7 @@ that is the only value not allowed.
 
     // Is matched by:
     bool works = function.expect_calls()
-        .with(stub::not_null(), 1U)
+        .with(stub::not_nullptr(), 1U)
         .to_bool();
 
     assert(works);
@@ -288,19 +288,13 @@ And a function with takes those objects as arguments:
     function(cup{2.3});
     function(cup{4.5});
 
-    auto compare = [](double expected, const cup& c)-> bool
-        { return c.m_volume == expected; };
-
     assert(function.expect_calls()
-        .with(stub::make_compare(
-            std::bind(compare, 2.3, std::placeholders::_1)))
-        .with(stub::make_compare(
-            std::bind(compare, 4.5, std::placeholders::_1)))
+        .with(stub::make_compare([](auto& c){return c.m_volume == 2.3;}))
+        .with(stub::make_compare([](auto& c){return c.m_volume == 4.5;}))
         .to_bool());
 
-In this case we are using a c++11 lambda function as comparison
-function. Notice that we use `std::bind` to bind the expected value as the first
-value to the lambda.
+In this case we are using a c++14 lambda function as comparison
+function.
 
 As another example use a custom comparison for objects that do have
 ``operator==(...)`` but where we have custom equality criteria.
