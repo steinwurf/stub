@@ -144,58 +144,67 @@ TEST(test_readme, ignore_specific_arguments_of_a_function_call)
     assert(works);
 }
 
+TEST(test_readme, ensure_specific_arguments_of_a_function_call_not_nullptr)
+{
+    stub::function<void(uint8_t*, uint32_t)> function;
+
+    std::vector<uint8_t> buffer(1);
+    function(buffer.data(), buffer.size());
+
+    // Is matched by:
+    bool works = function.expect_calls()
+                 .with(stub::not_nullptr(), 1U)
+                 .to_bool();
+
+    assert(works);
+}
+namespace
+{
 struct cup
 {
     double m_volume;
 };
+}
 
 
-TEST(test_readme, comparing_custom_arguments)
+TEST(test_readme, comparing_custom_arguments1)
 {
-    {
-        stub::function<void(const cup&)> function;
+    stub::function<void(const cup&)> function;
 
-        function(cup{2.3});
-        function(cup{4.5});
+    function(cup{2.3});
+    function(cup{4.5});
 
-        auto compare = [](double expected, const cup& c)-> bool
-        { return c.m_volume == expected; };
+    assert(function.expect_calls()
+           .with(stub::make_compare([](auto& c) {return c.m_volume == 2.3;}))
+    .with(stub::make_compare([](auto& c) {return c.m_volume == 4.5;}))
+    .to_bool());
+}
 
-        assert(function.expect_calls()
-               .with(stub::make_compare(
-                   std::bind(compare, 2.3, std::placeholders::_1)))
-               .with(stub::make_compare(
-                   std::bind(compare, 4.5, std::placeholders::_1)))
-               .to_bool());
-    }
+TEST(test_readme, comparing_custom_arguments2)
+{
+    using element = std::pair<uint32_t, uint32_t>;
 
-    {
-        using element = std::pair<uint32_t, uint32_t>;
+    auto expect = [](uint32_t expected, const element& actual) -> bool
+    { return expected == actual.second; };
 
-        auto expect = [](uint32_t expected, const element& actual) -> bool
-        { return expected == actual.second; };
+    stub::function<void(const element&)> function;
+    function(element(2,3));
+    function(element(20,3));
 
-        stub::function<void(const element&)> function;
-        function(element(2,3));
-        function(element(20,3));
+    using namespace std::placeholders;
+    // We have called the function more than once
+    assert(false == function.expect_calls()
+           .with(stub::make_compare(std::bind(expect, 3, _1))).to_bool());
 
-        // We have called the function more than once
-        assert(false == function.expect_calls()
-               .with(stub::make_compare(
-                   std::bind(expect, 3, std::placeholders::_1))).to_bool());
+    // Works since we only match the second value of the pair
+    assert(true == function.expect_calls()
+           .with(stub::make_compare(std::bind(expect, 3, _1)))
+           .with(stub::make_compare(std::bind(expect, 3, _1))).to_bool());
 
-        // Works since we only match the second value of the pair
-        assert(true == function.expect_calls()
-               .with(stub::make_compare(
-                   std::bind(expect, 3, std::placeholders::_1)))
-               .with(stub::make_compare(
-                   std::bind(expect, 3, std::placeholders::_1))).to_bool());
-
-        // Without the custom comparison it fails
-        assert(false == function.expect_calls()
-               .with(element(1,3))
-               .with(element(2,3)).to_bool());
-    }
+    // Without the custom comparison it fails
+    assert(false == function.expect_calls()
+           .with(element(1,3))
+           .with(element(2,3)).to_bool());
 }
 
 TEST(test_readme, building_an_expectation)
@@ -303,6 +312,8 @@ TEST(test_readme, function_return_values)
     }
 }
 
+namespace
+{
 struct paper
 {
     // Call the print function on the printer object
@@ -318,6 +329,7 @@ struct printer
 {
     stub::function<void(std::string)> print;
 };
+}
 
 TEST(test_readme, using_stub_with_template_arguments)
 {
@@ -330,7 +342,8 @@ TEST(test_readme, using_stub_with_template_arguments)
            .with("Hello world")
            .to_bool());
 }
-
+namespace
+{
 struct static_paper
 {
     // Call the static print function on the Printer type
@@ -347,7 +360,7 @@ struct static_printer
 };
 
 stub::function<void(std::string)> static_printer::print;
-
+}
 TEST(test_readme, using_static_stub_with_template_arguments)
 {
     static_paper hello;

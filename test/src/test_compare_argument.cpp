@@ -16,10 +16,13 @@ TEST(test_compare_argument, basic)
     EXPECT_FALSE(stub::compare_argument(true,false));
 }
 
+namespace
+{
 struct cup
 {
     double m_volume;
 };
+}
 
 TEST(test_compare_argument, compare)
 {
@@ -36,6 +39,17 @@ TEST(test_compare_argument, ignore)
 {
     EXPECT_TRUE(stub::compare_argument(cup{2.3}, stub::ignore()));
     EXPECT_TRUE(stub::compare_argument(true, stub::ignore()));
+}
+
+TEST(test_compare_argument, not_nullptr)
+{
+    EXPECT_FALSE(stub::compare_argument(nullptr, stub::not_nullptr()));
+
+    std::vector<uint8_t> buffer(1);
+    EXPECT_NE(nullptr, buffer.data());
+    EXPECT_TRUE(stub::compare_argument(buffer.data(), stub::not_nullptr()));
+    EXPECT_TRUE(stub::compare_argument("", stub::not_nullptr()));
+    EXPECT_TRUE(stub::compare_argument("hello", stub::not_nullptr()));
 }
 
 TEST(test_compare_argument, string)

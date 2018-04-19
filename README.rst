@@ -238,6 +238,28 @@ correctness.
 
     assert(works);
 
+Check if specific arguments are values other than null
+......................................................
+
+Sometimes it is useful to check if specific arguments to a function call are
+not null.
+If a pointer given to a function is internally computed it can be impossible or
+complex to know what the correct value is. There for not_nullptr can be used
+when that is the only value not allowed.
+::
+
+    stub::function<void(uint8_t*, uint32_t)> function;
+
+    std::vector<uint8_t> buffer(1);
+    function(buffer.data(), buffer.size());
+
+    // Is matched by:
+    bool works = function.expect_calls()
+        .with(stub::not_nullptr(), 1U)
+        .to_bool();
+
+    assert(works);
+
 Comparing custom arguments
 ..........................
 
@@ -266,19 +288,13 @@ And a function with takes those objects as arguments:
     function(cup{2.3});
     function(cup{4.5});
 
-    auto compare = [](double expected, const cup& c)-> bool
-        { return c.m_volume == expected; };
-
     assert(function.expect_calls()
-        .with(stub::make_compare(
-            std::bind(compare, 2.3, std::placeholders::_1)))
-        .with(stub::make_compare(
-            std::bind(compare, 4.5, std::placeholders::_1)))
+        .with(stub::make_compare([](auto& c){return c.m_volume == 2.3;}))
+        .with(stub::make_compare([](auto& c){return c.m_volume == 4.5;}))
         .to_bool());
 
-In this case we are using a c++11 lambda function as comparison
-function. Notice that we use `std::bind` to bind the expected value as the first
-value to the lambda.
+In this case we are using a c++14 lambda function as comparison
+function.
 
 As another example use a custom comparison for objects that do have
 ``operator==(...)`` but where we have custom equality criteria.
@@ -288,32 +304,29 @@ equal if their second element is equal. To do this with the stub
 library we need to provide a custom comparison function.
 
 ::
-
     using element = std::pair<uint32_t, uint32_t>;
 
     auto expect = [](uint32_t expected, const element& actual) -> bool
-        { return expected == actual.second; };
+    { return expected == actual.second; };
 
     stub::function<void(const element&)> function;
     function(element(2,3));
     function(element(20,3));
 
+    using namespace std::placeholders;
     // We have called the function more than once
     assert(false == function.expect_calls()
-        .with(stub::make_compare(
-            std::bind(expect, 3, std::placeholders::_1))).to_bool());
+           .with(stub::make_compare(std::bind(expect, 3, _1))).to_bool());
 
     // Works since we only match the second value of the pair
     assert(true == function.expect_calls()
-        .with(stub::make_compare(
-            std::bind(expect, 3, std::placeholders::_1)))
-        .with(stub::make_compare(
-            std::bind(expect, 3, std::placeholders::_1))).to_bool());
+           .with(stub::make_compare(std::bind(expect, 3, _1)))
+           .with(stub::make_compare(std::bind(expect, 3, _1))).to_bool());
 
     // Without the custom comparison it fails
     assert(false == function.expect_calls()
-        .with(element(1,3))
-        .with(element(2,3)).to_bool());
+           .with(element(1,3))
+           .with(element(2,3)).to_bool());
 
 Building an Expectation
 .......................
