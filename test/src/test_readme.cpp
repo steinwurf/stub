@@ -153,8 +153,8 @@ TEST(test_readme, ensure_specific_arguments_of_a_function_call_not_null)
 
     // Is matched by:
     bool works = function.expect_calls()
-        .with(stub::not_null(), 1U)
-        .to_bool();
+                 .with(stub::not_null(), 1U)
+                 .to_bool();
 
     assert(works);
 }
