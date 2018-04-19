@@ -38,6 +38,17 @@ TEST(test_compare_argument, ignore)
     EXPECT_TRUE(stub::compare_argument(true, stub::ignore()));
 }
 
+TEST(test_compare_argument, not_null)
+{
+    EXPECT_FALSE(stub::compare_argument(nullptr, stub::not_null()));
+
+    std::vector<uint8_t> buffer(1);
+    EXPECT_NE(nullptr, buffer.data());
+    EXPECT_TRUE(stub::compare_argument(buffer.data(), stub::not_null()));
+    EXPECT_TRUE(stub::compare_argument("", stub::not_null()));
+    EXPECT_TRUE(stub::compare_argument("hello", stub::not_null()));
+}
+
 TEST(test_compare_argument, string)
 {
     std::string str = "hello";

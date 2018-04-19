@@ -139,7 +139,7 @@ public:
             return true;
         }
 
-        /// Use the to_bool member function when casting thís expectation
+        /// Use the to_bool member function when casting this expectation
         /// to a boolean value.
         ///
         /// @return True if the expectation matches the function,

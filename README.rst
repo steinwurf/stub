@@ -201,6 +201,28 @@ correctness.
 
     assert(works);
 
+Check if specific arguments are values other than null
+......................................................
+
+Sometimes it is useful to check if specific arguments to a function call are
+not null.
+If a pointer given to a function is internally computed it can be impossible or
+complex to know what the correct value is. There for not_null can be used when
+that is the only value not allowed.
+::
+
+    stub::function<void(uint8_t*, uint32_t)> function;
+
+    std::vector<uint8_t> buffer(1);
+    function(buffer.data(), buffer.size());
+
+    // Is matched by:
+    bool works = function.expect_calls()
+        .with(stub::not_null(), 1U)
+        .to_bool();
+
+    assert(works);
+
 Comparing custom arguments
 ..........................
 

@@ -111,6 +111,20 @@ TEST(test_readme, ignore_specific_arguments_of_a_function_call)
     assert(works);
 }
 
+TEST(test_readme, ensure_specific_arguments_of_a_function_call_not_null)
+{
+    stub::function<void(uint8_t*, uint32_t)> function;
+
+    std::vector<uint8_t> buffer(1);
+    function(buffer.data(), buffer.size());
+
+    // Is matched by:
+    bool works = function.expect_calls()
+        .with(stub::not_null(), 1U)
+        .to_bool();
+
+    assert(works);
+}
 struct cup
 {
     double m_volume;
