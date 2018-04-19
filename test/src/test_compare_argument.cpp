@@ -16,10 +16,13 @@ TEST(test_compare_argument, basic)
     EXPECT_FALSE(stub::compare_argument(true,false));
 }
 
+namespace
+{
 struct cup
 {
     double m_volume;
 };
+}
 
 TEST(test_compare_argument, compare)
 {
