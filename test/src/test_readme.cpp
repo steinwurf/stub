@@ -191,22 +191,20 @@ TEST(test_readme, comparing_custom_arguments2)
     function(element(2,3));
     function(element(20,3));
 
+    using namespace std::placeholders;
     // We have called the function more than once
     assert(false == function.expect_calls()
-            .with(stub::make_compare(
-                std::bind(expect, 3, std::placeholders::_1))).to_bool());
+           .with(stub::make_compare(std::bind(expect, 3, _1))).to_bool());
 
     // Works since we only match the second value of the pair
     assert(true == function.expect_calls()
-            .with(stub::make_compare(
-                std::bind(expect, 3, std::placeholders::_1)))
-            .with(stub::make_compare(
-                std::bind(expect, 3, std::placeholders::_1))).to_bool());
+           .with(stub::make_compare(std::bind(expect, 3, _1)))
+           .with(stub::make_compare(std::bind(expect, 3, _1))).to_bool());
 
     // Without the custom comparison it fails
     assert(false == function.expect_calls()
-            .with(element(1,3))
-            .with(element(2,3)).to_bool());
+           .with(element(1,3))
+           .with(element(2,3)).to_bool());
 }
 
 TEST(test_readme, building_an_expectation)
