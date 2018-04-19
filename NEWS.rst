@@ -9,6 +9,10 @@ Latest
 * Minor: Added the ability to check if specific arguments are not null when
   comparing function calls in expect_calls().
 
+6.1.0
+-----
+* Minor: Allow a user to clear only the function calls made.
+
 6.0.0
 -----
 * Major: Upgrade to waf-tools 4

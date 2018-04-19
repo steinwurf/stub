@@ -2,7 +2,7 @@
 # encoding: utf-8
 
 APPNAME = 'stub'
-VERSION = '6.0.0'
+VERSION = '6.1.0'
 
 
 def build(bld):
