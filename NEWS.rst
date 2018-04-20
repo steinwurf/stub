@@ -6,6 +6,10 @@ every change, see the Git log.
 
 Latest
 ------
+* tbd
+
+6.2.0
+-----
 * Minor: Added the ability to check if specific arguments are not null when
   comparing function calls in expect_calls().
 
