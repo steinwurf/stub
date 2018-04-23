@@ -9,38 +9,38 @@
 
 namespace
 {
-    template<class T>
-    void function_to_test(T& t)
-    {
-        t.some_function(4);
+template<class T>
+void function_to_test(T& t)
+{
+    t.some_function(4);
 
-        if (t.some_check())
-        {
-            t.do_something_else(false);
-        }
+    if (t.some_check())
+    {
+        t.do_something_else(false);
     }
+}
 
-    struct dummy
-    {
-        stub::function<void(int)> some_function;
-        stub::function<bool()> some_check;
-        stub::function<void(bool)> do_something_else;
-    };
+struct dummy
+{
+    stub::function<void(int)> some_function;
+    stub::function<bool()> some_check;
+    stub::function<void(bool)> do_something_else;
+};
 }
 /// Tests that all the examples given in the readme works as advertised
 TEST(test_readme, usage)
 {
-        // Construct object
-        dummy obj;
-        obj.some_check.set_return(true);
+    // Construct object
+    dummy obj;
+    obj.some_check.set_return(true);
 
-        // Run function
-        function_to_test(obj);
+    // Run function
+    function_to_test(obj);
 
-        // Check calls
-        assert(obj.some_function.expect_calls().with(4));
-        assert(obj.some_check.calls() == 1);
-        assert(obj.do_something_else.expect_calls().with(false));
+    // Check calls
+    assert(obj.some_function.expect_calls().with(4));
+    assert(obj.some_check.calls() == 1);
+    assert(obj.do_something_else.expect_calls().with(false));
 }
 
 TEST(test_readme, check_a_set_of_function_calls)

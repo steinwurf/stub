@@ -23,6 +23,7 @@ simpler. See this example of how `function_to_test` is tested:
     #include <stub/function.hpp>
     #include <cassert>
 
+    // Function to test
     template<class T>
     void function_to_test(T& t)
     {
@@ -34,6 +35,7 @@ simpler. See this example of how `function_to_test` is tested:
         }
     }
 
+    // Dummy object to test function with
     struct dummy
     {
         stub::function<void(int)> some_function;
@@ -45,6 +47,8 @@ simpler. See this example of how `function_to_test` is tested:
     {
         // Construct object
         dummy obj;
+
+        // Setup return value
         obj.some_check.set_return(true);
 
         // Run function
