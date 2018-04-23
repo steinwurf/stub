@@ -16,7 +16,7 @@ functions to ease sometimes tedious testing tasks.
 stub is especially helpful when testing template functions which
 takes hard-to-construct objects as parameters.
 With stub the task of making such tests short and self-contained, becomes much
-simpler. See this example of how `function_to_test` is tested:
+simpler. See this example of how ``function_to_test`` is tested:
 
 ::
 
