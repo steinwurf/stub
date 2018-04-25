@@ -1,4 +1,5 @@
-stub
+====
+Stub
 ====
 
 .. image:: ./stub.svg
