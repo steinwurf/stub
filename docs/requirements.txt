@@ -1,1 +1,2 @@
 wurfdocs
+sphinx_rtd_theme
