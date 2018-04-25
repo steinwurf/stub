@@ -11,9 +11,7 @@ Welcome to Stub's documentation!
    :caption: Contents:
 
    readme_link
-
-.. wurfdocs:: class_synopsis.rst
-  :selector: stub::function< R(Args...)>
+   api
 
 Indices and tables
 ==================
