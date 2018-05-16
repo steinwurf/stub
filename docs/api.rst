@@ -2,6 +2,6 @@
 API
 ===
 
-.. wurfdocs:: class_synopsis.rst
+.. wurfapi:: class_synopsis.rst
   :selector: stub::function< R(Args...)>
 

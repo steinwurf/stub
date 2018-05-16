@@ -1,2 +1,2 @@
 sphinx
-wurfdocs==1.0.0
+wurfapi==1.0.0

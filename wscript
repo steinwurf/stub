@@ -54,7 +54,7 @@ def docs(ctx):
         venv.env['PATH'] = os.path.pathsep.join(
             [venv.env['PATH'], os.environ['PATH']])
 
-        venv.pip_install(packages=['sphinx', 'wurfdocs'])
+        venv.pip_install(packages=['sphinx', 'wurfapi'])
 
         # venv.run('sphinx-versioning build -r add-docs docs docs/_build/html',
         #          cwd=ctx.path.abspath())
