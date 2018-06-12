@@ -10,7 +10,6 @@ Welcome to Stub's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-   readme_link
    api
 
 Indices and tables
