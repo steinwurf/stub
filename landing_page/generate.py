@@ -16,8 +16,8 @@ def build(outpath, docspath):
         tempdir = tempfile.gettempdir()
         outpath = os.path.join(tempdir, 'stub-landing')
 
-        if not os.path.isdir(outpath):
-            os.makedirs(outpath)
+    if not os.path.isdir(outpath):
+        os.makedirs(outpath)
 
     versions = []
 
