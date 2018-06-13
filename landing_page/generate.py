@@ -21,7 +21,7 @@ def build(outpath, docspath):
 
     versions = []
 
-    if docspath:
+    if docspath and os.path.isdir(docspath):
 
         for name in os.listdir(docspath):
 
