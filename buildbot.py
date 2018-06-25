@@ -55,6 +55,12 @@ def build(properties):
     run_command(command)
 
 
+def docs(properties):
+    print("RUNNING DOCS")
+    #command = [sys.executable, 'waf', 'build', '-v']
+    # run_command(command)
+
+
 def run_tests(properties):
     command = [sys.executable, 'waf', '-v', '--run_tests']
     run_cmd = None
@@ -103,6 +109,8 @@ def main():
         run_tests(properties)
     elif cmd == 'install':
         install(properties)
+    elif cmd == 'docs':
+        docs(properties)
     else:
         print("Unknown command: {}".format(cmd))
 
