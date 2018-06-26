@@ -44,7 +44,8 @@ def configure(properties):
             properties['dependency_project'],
             properties['dependency_checkout'])]
 
-    command += ["--cxx_mkspec={}".format(properties['cxx_mkspec'])]
+    if 'cxx_mkspec' in properties:
+        command += ["--cxx_mkspec={}".format(properties['cxx_mkspec'])]
     command += get_tool_options(properties)
 
     run_command(command)
@@ -52,6 +53,11 @@ def configure(properties):
 
 def build(properties):
     command = [sys.executable, 'waf', 'build', '-v']
+    run_command(command)
+
+
+def docs(properties):
+    command = [sys.executable, 'waf', 'docs', '-v']
     run_command(command)
 
 
@@ -103,6 +109,8 @@ def main():
         run_tests(properties)
     elif cmd == 'install':
         install(properties)
+    elif cmd == 'docs':
+        docs(properties)
     else:
         print("Unknown command: {}".format(cmd))
 

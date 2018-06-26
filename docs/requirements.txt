@@ -1,0 +1,2 @@
+sphinx
+wurfapi==1.0.0
