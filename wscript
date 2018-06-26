@@ -49,6 +49,7 @@ def build(bld):
 
 
 def docs(ctx):
+    """ Build and push the documentation see giit.json for details. """
     with _create_virtualenv(bld=ctx) as venv:
 
         venv.env['PATH'] = os.path.pathsep.join(
