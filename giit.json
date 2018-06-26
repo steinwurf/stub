@@ -6,7 +6,7 @@
         ],
         "requirements": "${source_path}/docs/requirements.txt",
         "cwd": "${source_path}/docs",
-        "allow_failure": true,
+        "tag_semver_filter": ">6.2.0",
         "scope": [
             "tag",
             "source_branch",
@@ -26,7 +26,6 @@
         ],
         "requirements": "${source_path}/landing_page/requirements.txt",
         "cwd": "${source_path}/landing_page",
-        "allow_failure": true,
         "variables": {
             "source_branch:master:output_path": "${build_path}/docs",
             "source_branch:output_path": "${build_path}/landing_page/${name}",

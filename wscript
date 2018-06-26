@@ -54,48 +54,16 @@ def docs(ctx):
         venv.env['PATH'] = os.path.pathsep.join(
             [venv.env['PATH'], os.environ['PATH']])
 
-        venv.pip_install(packages=['sphinx', 'wurfapi'])
+        venv.pip_install(packages=['giit'])
 
-        # venv.run('sphinx-versioning build -r add-docs docs docs/_build/html',
-        #          cwd=ctx.path.abspath())
+        venv.run('giit sphinx .',
+                 cwd=ctx.path.abspath())
 
-        git = Git(git_binary='git', ctx=ctx)
+        venv.run('giit landing_page .',
+                 cwd=ctx.path.abspath())
 
-        cwd = ctx.path.abspath()
-        build_dir = tempfile.gettempdir()
-
-        current_branch, other_branches = git.branch(cwd=cwd)
-        tags = git.tags(cwd=cwd)
-
-        checkouts = [current_branch] + other_branches + tags
-        checkouts = [c.strip() for c in checkouts]
-
-        print(checkouts)
-
-        for checkout in checkouts:
-
-            checkout_path = os.path.join(build_dir, 'checkouts', checkout)
-
-            if os.path.isdir(checkout_path):
-                remove_directory(path=checkout_path)
-
-            shutil.copytree(src=cwd, dst=checkout_path, symlinks=True)
-
-            args = ['git', 'checkout', '-f', checkout]
-            ctx.cmd_and_log(args, cwd=checkout_path)
-
-            docs_path = os.path.join(build_dir, 'docs', checkout)
-
-            try:
-
-                venv.run('sphinx-build --no-color -w log.txt -b html docs {}'.format(
-                    docs_path), cwd=checkout_path)
-
-            except Exception:
-                continue
-
-        print("Current branch {}".format(
-            git.current_branch(cwd=ctx.path.abspath())))
+        venv.run('giit gh_pages .',
+                 cwd=ctx.path.abspath())
 
 
 def _create_virtualenv(bld):
