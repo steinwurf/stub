@@ -61,7 +61,9 @@ def docs(ctx):
         venv.env['PATH'] = os.path.pathsep.join(
             [venv.env['PATH'], os.environ['PATH']])
 
-        venv.pip_install(packages=["giit"])
+        giit = 'git+https://github.com/steinwurf/giit.git@remove-checkout'
+
+        venv.pip_install(packages=[giit])
 
         venv.run('giit sphinx .',
                  cwd=ctx.path.abspath())
