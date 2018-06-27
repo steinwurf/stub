@@ -47,7 +47,7 @@
         "target_branch": "gh-pages",
         "nojekyll": true,
         "to_path": ".",
-        "from_path": "${build_path}",
+        "from_path": "${build_path}/docs",
         "git_url": "git@github.com:steinwurf/stub.git",
         "exclude_patterns": [
             "${build_path}/workingtree/*"
