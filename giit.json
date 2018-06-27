@@ -45,9 +45,14 @@
     "gh_pages": {
         "type": "push",
         "target_branch": "gh-pages",
+<<<<<<< HEAD
         "nojekyll": true,
         "to_path": ".",
         "from_path": "${build_path}/docs",
+=======
+        "to_path": ".",
+        "from_path": "${build_path}",
+>>>>>>> master
         "git_url": "git@github.com:steinwurf/stub.git",
         "exclude_patterns": [
             "${build_path}/workingtree/*"
