@@ -8,7 +8,7 @@
         "cwd": "${source_path}/docs",
         "tag_semver_filter": ">6.2.0",
         "branches": [
-            "master"
+            "origin/master"
         ],
         "scope": [
             "tag",
@@ -16,7 +16,7 @@
             "workingtree"
         ],
         "variables": {
-            "branch:master:output_path": "${build_path}/docs/latest",
+            "branch:origin/master:output_path": "${build_path}/docs/latest",
             "branch:output_path": "${build_path}/sphinx/${name}",
             "tag:output_path": "${build_path}/docs/${name}",
             "workingtree:output_path": "${build_path}/workingtree/sphinx"
@@ -29,11 +29,11 @@
         ],
         "requirements": "${source_path}/landing_page/requirements.txt",
         "branches": [
-            "master"
+            "origin/master"
         ],
         "cwd": "${source_path}/landing_page",
         "variables": {
-            "branch:master:output_path": "${build_path}",
+            "branch:origin/master:output_path": "${build_path}",
             "branch:output_path": "${build_path}/landing_page/${name}",
             "workingtree:output_path": "${build_path}/workingtree/landing_page"
         }
