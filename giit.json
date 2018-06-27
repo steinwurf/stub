@@ -7,14 +7,17 @@
         "requirements": "${source_path}/docs/requirements.txt",
         "cwd": "${source_path}/docs",
         "tag_semver_filter": ">6.2.0",
+        "branches": [
+            "master"
+        ],
         "scope": [
             "tag",
-            "source_branch",
+            "branch",
             "workingtree"
         ],
         "variables": {
-            "source_branch:master:output_path": "${build_path}/docs/latest",
-            "source_branch:output_path": "${build_path}/sphinx/${name}",
+            "branch:master:output_path": "${build_path}/docs/latest",
+            "branch:output_path": "${build_path}/sphinx/${name}",
             "tag:output_path": "${build_path}/docs/${name}",
             "workingtree:output_path": "${build_path}/workingtree/sphinx"
         }
@@ -25,10 +28,13 @@
             "python generate.py --docspath=${build_path}/docs --outpath=${output_path}"
         ],
         "requirements": "${source_path}/landing_page/requirements.txt",
+        "branches": [
+            "master"
+        ],
         "cwd": "${source_path}/landing_page",
         "variables": {
-            "source_branch:master:output_path": "${build_path}",
-            "source_branch:output_path": "${build_path}/landing_page/${name}",
+            "branch:master:output_path": "${build_path}",
+            "branch:output_path": "${build_path}/landing_page/${name}",
             "workingtree:output_path": "${build_path}/workingtree/landing_page"
         }
     },
@@ -47,6 +53,7 @@
         "target_branch": "gh-pages",
         "nojekyll": true,
         "to_path": ".",
+        "publish_url": "http://steinwurf.github.io/stub/",
         "from_path": "${build_path}",
         "git_url": "git@github.com:steinwurf/stub.git",
         "exclude_patterns": [
