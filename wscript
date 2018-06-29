@@ -73,7 +73,7 @@ def docs(ctx):
 
         if ctx.options.publish:
 
-            venv.run('giit gh_pages .',
+            venv.run('giit gh_pages . --clean_build',
                      cwd=ctx.path.abspath())
 
 
