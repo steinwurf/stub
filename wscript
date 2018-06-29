@@ -67,7 +67,7 @@ def docs(ctx):
 
         giit = 'git+https://github.com/steinwurf/giit.git@remove-checkout'
 
-        venv.pip_install(packages=[giit])
+        venv.pip_install(packages=['giit==3.0.0'])
 
         if ctx.options.publish_clean:
             venv.run('giit clean .',

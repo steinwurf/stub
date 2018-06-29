@@ -38,16 +38,6 @@
             "workingtree:output_path": "${build_path}/workingtree/landing_page"
         }
     },
-    "publish": {
-        "type": "sftp",
-        "hostname": "buildbot.steinwurf.dk",
-        "username": "buildbot",
-        "remote_path": "/tmp/www/docs/stub",
-        "local_path": "${build_path}",
-        "exclude_patterns": [
-            "${build_path}/workingtree/*"
-        ]
-    },
     "gh_pages": {
         "type": "push",
         "target_branch": "gh-pages",
