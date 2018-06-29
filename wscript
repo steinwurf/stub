@@ -21,7 +21,7 @@ class DocsContext(BuildContext):
 def options(opt):
     opt.add_option(
         '--publish', default=False, action='store_true',
-        help='Publish the documentation')
+        help='Publish the documentation.')
 
 
 def resolve(ctx):
