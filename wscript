@@ -18,6 +18,16 @@ class DocsContext(BuildContext):
     fun = 'docs'
 
 
+def options(opt):
+    opt.add_option(
+        '--publish', default=False, action='store_true',
+        help='Publish the documentation.')
+
+    opt.add_option(
+        '--publish_clean', default=False, action='store_true',
+        help='Remove any existing docs before pushing.')
+
+
 def resolve(ctx):
 
     # Testing dependencies
@@ -55,7 +65,13 @@ def docs(ctx):
         venv.env['PATH'] = os.path.pathsep.join(
             [venv.env['PATH'], os.environ['PATH']])
 
-        venv.pip_install(packages=['giit'])
+        giit = 'git+https://github.com/steinwurf/giit.git@remove-checkout'
+
+        venv.pip_install(packages=['giit==3.0.0'])
+
+        if ctx.options.publish_clean:
+            venv.run('giit clean .',
+                     cwd=ctx.path.abspath())
 
         venv.run('giit sphinx .',
                  cwd=ctx.path.abspath())
@@ -63,8 +79,10 @@ def docs(ctx):
         venv.run('giit landing_page .',
                  cwd=ctx.path.abspath())
 
-        venv.run('giit gh_pages .',
-                 cwd=ctx.path.abspath())
+        if ctx.options.publish:
+
+            venv.run('giit gh_pages .',
+                     cwd=ctx.path.abspath())
 
 
 def _create_virtualenv(bld):

@@ -64,6 +64,11 @@ simpler. See this example of how ``function_to_test`` is tested:
 .. contents:: Table of Contents:
    :local:
 
+API documentation
+-----------------
+
+* http://steinwurf.github.io/stub/
+
 Usage
 -----
 The ``stub::function`` object act like a "sink" for function calls
