@@ -23,6 +23,10 @@ def options(opt):
         '--publish', default=False, action='store_true',
         help='Publish the documentation.')
 
+    opt.add_option(
+        '--publish_clean', default=False, action='store_true',
+        help='Remove any existing docs before pushing.')
+
 
 def resolve(ctx):
 
@@ -65,6 +69,10 @@ def docs(ctx):
 
         venv.pip_install(packages=[giit])
 
+        if ctx.options.publish_clean:
+            venv.run('giit clean .',
+                     cwd=ctx.path.abspath())
+
         venv.run('giit sphinx .',
                  cwd=ctx.path.abspath())
 
@@ -73,7 +81,7 @@ def docs(ctx):
 
         if ctx.options.publish:
 
-            venv.run('giit gh_pages . --clean_build',
+            venv.run('giit gh_pages .',
                      cwd=ctx.path.abspath())
 
 
