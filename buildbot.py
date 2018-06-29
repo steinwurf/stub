@@ -57,7 +57,8 @@ def build(properties):
 
 
 def docs(properties):
-    command = [sys.executable, 'waf', 'docs', '--publish', '-v']
+    command = [sys.executable, 'waf', 'docs',
+               '--publish', '--publish_clean', '-v']
     run_command(command)
 
 
