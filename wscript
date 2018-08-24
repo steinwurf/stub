@@ -65,9 +65,9 @@ def docs(ctx):
         venv.env['PATH'] = os.path.pathsep.join(
             [venv.env['PATH'], os.environ['PATH']])
 
-        giit = 'git+https://github.com/steinwurf/giit.git@remove-checkout'
+        giit = 'git+https://github.com/steinwurf/giit.git@master'
 
-        venv.pip_install(packages=['giit==3.0.0'])
+        venv.pip_install(packages=[giit])
 
         if ctx.options.publish_clean:
             venv.run('giit clean .',
