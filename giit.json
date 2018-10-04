@@ -1,53 +1,34 @@
 {
-    "sphinx": {
-        "type": "python",
+    "local-sphinx": {
         "scripts": [
-            "sphinx-build -b html . ${output_path}"
+            "sphinx-build -b html . ${build_path}/workingtree -D release=${name}"
         ],
         "requirements": "${source_path}/docs/requirements.txt",
         "cwd": "${source_path}/docs",
-        "tag_semver_filter": ">6.2.0",
-        "branches": [
-            "origin/master"
-        ],
-        "scope": [
-            "tag",
-            "branch",
-            "workingtree"
-        ],
-        "variables": {
-            "branch:origin/master:output_path": "${build_path}/docs/latest",
-            "branch:output_path": "${build_path}/sphinx/${name}",
-            "tag:output_path": "${build_path}/docs/${name}",
-            "workingtree:output_path": "${build_path}/workingtree/sphinx"
-        }
+        "workingtree": true
     },
-    "landing_page": {
-        "type": "python",
+    "sphinx": {
         "scripts": [
-            "python generate.py --docspath=${build_path}/docs --outpath=${output_path}"
+            "sphinx-build -b html . ${build_path}/docs/${name}"
         ],
-        "requirements": "${source_path}/landing_page/requirements.txt",
-        "branches": [
+        "requirements": "${source_path}/docs/requirements.txt",
+        "cwd": "${source_path}/docs",
+        "tags.semver.filters": [
+            ">6.2.0"
+        ],
+        "branches.regex.filters": [
             "origin/master"
         ],
-        "cwd": "${source_path}/landing_page",
-        "variables": {
-            "branch:origin/master:output_path": "${build_path}",
-            "branch:output_path": "${build_path}/landing_page/${name}",
-            "workingtree:output_path": "${build_path}/workingtree/landing_page"
-        }
+        "branches.source_branch": true
     },
     "gh_pages": {
-        "type": "push",
-        "target_branch": "gh-pages",
-        "nojekyll": true,
-        "to_path": ".",
-        "publish_url": "http://steinwurf.github.io/stub/",
-        "from_path": "${build_path}",
-        "git_url": "git@github.com:steinwurf/stub.git",
-        "exclude_patterns": [
-            "${build_path}/workingtree/*"
-        ]
+        "branches.source_branch": true,
+        "scripts": [
+            "ghp-import --no-jekyll -m 'giit push' --push --force ${build_path}/docs"
+        ],
+        "pip_packages": [
+            "ghp-import"
+        ],
+        "cwd": "${source_path}"
     }
 }
