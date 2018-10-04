@@ -15,7 +15,7 @@
         "variables": {
             "branch:origin/master:output_path": "${build_path}",
             "branch:output_path": "${build_path}/landing_page/${name}",
-        }
+        },
         "requirements": "${source_path}/landing_page/requirements.txt",
         "scripts": [
             "python generate.py --docspath=${build_path}/docs --outpath=${output_path}"
