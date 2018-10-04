@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.13">
+  <compounddef id="structstub_1_1compare__call_1_1interface" kind="struct" language="C++" prot="private" abstract="yes">
+    <compoundname>stub::compare_call::interface</compoundname>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="structstub_1_1compare__call_1_1interface_1ad26c2b60a63aad8b2d0942ef876fb4a7" prot="public" static="no" const="yes" explicit="no" inline="no" virt="pure-virtual">
+        <type>bool</type>
+        <definition>virtual bool stub::compare_call&lt; Args &gt;::interface::compare</definition>
+        <argsstring>(const arguments&lt; Args... &gt; &amp;value) const =0</argsstring>
+        <name>compare</name>
+        <param>
+          <type>const arguments&lt; Args... &gt; &amp;</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/giit/data/clones/stub-5d6b38/src/stub/compare_call.hpp" line="89" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="structstub_1_1compare__call_1_1interface_1a9b21b098072b74170762cbba96142331" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type></type>
+        <definition>virtual stub::compare_call&lt; Args &gt;::interface::~interface</definition>
+        <argsstring>()</argsstring>
+        <name>~interface</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/giit/data/clones/stub-5d6b38/src/stub/compare_call.hpp" line="90" column="1" bodyfile="/tmp/giit/data/clones/stub-5d6b38/src/stub/compare_call.hpp" bodystart="90" bodyend="91"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>Interface used in the type erasure. </para>    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/tmp/giit/data/clones/stub-5d6b38/src/stub/compare_call.hpp" line="88" column="1" bodyfile="/tmp/giit/data/clones/stub-5d6b38/src/stub/compare_call.hpp" bodystart="87" bodyend="92"/>
+    <listofallmembers>
+      <member refid="structstub_1_1compare__call_1_1interface_1ad26c2b60a63aad8b2d0942ef876fb4a7" prot="public" virt="pure-virtual"><scope>stub::compare_call::interface</scope><name>compare</name></member>
+      <member refid="structstub_1_1compare__call_1_1interface_1a9b21b098072b74170762cbba96142331" prot="public" virt="virtual"><scope>stub::compare_call::interface</scope><name>~interface</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

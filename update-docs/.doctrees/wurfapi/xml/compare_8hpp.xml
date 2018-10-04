@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.13">
+  <compounddef id="compare_8hpp" kind="file" language="C++">
+    <compoundname>compare.hpp</compoundname>
+    <includedby refid="compare__argument_8hpp" local="yes">/tmp/giit/data/clones/stub-5d6b38/src/stub/compare_argument.hpp</includedby>
+    <includedby refid="make__compare_8hpp" local="yes">/tmp/giit/data/clones/stub-5d6b38/src/stub/make_compare.hpp</includedby>
+    <invincdepgraph>
+      <node id="11">
+        <label>/tmp/giit/data/clones/stub-5d6b38/src/stub/make_compare.hpp</label>
+        <link refid="make__compare_8hpp_source"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>/tmp/giit/data/clones/stub-5d6b38/src/stub/compare_call.hpp</label>
+        <link refid="compare__call_8hpp_source"/>
+        <childnode refid="10" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>/tmp/giit/data/clones/stub-5d6b38/src/stub/compare_argument.hpp</label>
+        <link refid="compare__argument_8hpp_source"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>/tmp/giit/data/clones/stub-5d6b38/src/stub/compare_arguments.hpp</label>
+        <link refid="compare__arguments_8hpp_source"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>/tmp/giit/data/clones/stub-5d6b38/src/stub/compare.hpp</label>
+        <link refid="compare_8hpp"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>/tmp/giit/data/clones/stub-5d6b38/src/stub/function.hpp</label>
+        <link refid="function_8hpp_source"/>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="structstub_1_1compare" prot="public">stub::compare</innerclass>
+    <innernamespace refid="namespacestub">stub</innernamespace>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">//<sp/>Copyright<sp/>(c)<sp/>2015<sp/>Steinwurf<sp/>ApS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="comment">//<sp/>All<sp/>Rights<sp/>Reserved</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Distributed<sp/>under<sp/>the<sp/>&quot;BSD<sp/>License&quot;.<sp/>See<sp/>the<sp/>accompanying<sp/>LICENSE.rst<sp/>file.</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>once</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal"><ref refid="namespacestub" kindref="compound">stub</ref></highlight></codeline>
+<codeline lineno="9"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="25"><highlight class="keyword">template</highlight><highlight class="normal">&lt;</highlight><highlight class="keyword">class</highlight><highlight class="normal"><sp/>Compare&gt;</highlight></codeline>
+<codeline lineno="26" refid="structstub_1_1compare" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structstub_1_1compare" kindref="compound">compare</ref></highlight></codeline>
+<codeline lineno="27"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="29"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">template</highlight><highlight class="normal">&lt;</highlight><highlight class="keyword">class</highlight><highlight class="normal"><sp/>Value&gt;</highlight></codeline>
+<codeline lineno="30" refid="structstub_1_1compare_1af276c7b92a05b7e7506d47dfed8033bf" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="structstub_1_1compare_1af276c7b92a05b7e7506d47dfed8033bf" kindref="member">operator()</ref>(Value<sp/>v)</highlight></codeline>
+<codeline lineno="31"><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="32"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/><ref refid="structstub_1_1compare_1aac6c6193606e19edbc9673dd36f9d810" kindref="member">m_compare</ref>(v);</highlight></codeline>
+<codeline lineno="33"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight></codeline>
+<codeline lineno="36" refid="structstub_1_1compare_1aac6c6193606e19edbc9673dd36f9d810" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>Compare<sp/><ref refid="structstub_1_1compare_1aac6c6193606e19edbc9673dd36f9d810" kindref="member">m_compare</ref>;</highlight></codeline>
+<codeline lineno="37"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="38"><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="/tmp/giit/data/clones/stub-5d6b38/src/stub/compare.hpp"/>
+  </compounddef>
+</doxygen>

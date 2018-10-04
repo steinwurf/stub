@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.13">
+  <compounddef id="dir_98b62e6613cdc232db37676a930adb40" kind="dir">
+    <compoundname>/tmp/giit/data/clones/stub-5d6b38/src</compoundname>
+    <innerdir refid="dir_dcec72376ba6e41b3838cd79c092f628">/tmp/giit/data/clones/stub-5d6b38/src/stub</innerdir>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/tmp/giit/data/clones/stub-5d6b38/src/"/>
+  </compounddef>
+</doxygen>

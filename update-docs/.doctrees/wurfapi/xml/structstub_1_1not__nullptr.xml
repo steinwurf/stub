@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.13">
+  <compounddef id="structstub_1_1not__nullptr" kind="struct" language="C++" prot="public">
+    <compoundname>stub::not_nullptr</compoundname>
+    <includes refid="not__nullptr_8hpp" local="no">not_nullptr.hpp</includes>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>An object used to check if a value is not a null pointer, when comparing two function calls.</para><para>Example:</para><para>stub::function&lt;void(uint32_t, uint8_t*)&gt; foo;</para><para>std::vector&lt;uint8_t&gt; buffer(10); foo(3U, buffer.data());</para><para>assert(fool.expect_calls() .with(3U, stub::not_nullptr())); </para>    </detaileddescription>
+    <location file="/tmp/giit/data/clones/stub-5d6b38/src/stub/not_nullptr.hpp" line="23" column="1" bodyfile="/tmp/giit/data/clones/stub-5d6b38/src/stub/not_nullptr.hpp" bodystart="23" bodyend="23"/>
+    <listofallmembers>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

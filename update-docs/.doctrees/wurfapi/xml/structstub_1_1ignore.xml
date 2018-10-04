@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.13">
+  <compounddef id="structstub_1_1ignore" kind="struct" language="C++" prot="public">
+    <compoundname>stub::ignore</compoundname>
+    <includes refid="ignore_8hpp" local="no">ignore.hpp</includes>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>An object used to ignore values of specific arguments when comparing two function calls.</para><para>Example:</para><para>stub::function&lt;void(uint32_t, bool)&gt; foo;</para><para>foo(3U, true);</para><para>assert(fool.expect_calls() .with(3U, stub::ignore())); </para>    </detaileddescription>
+    <location file="/tmp/giit/data/clones/stub-5d6b38/src/stub/ignore.hpp" line="22" column="1" bodyfile="/tmp/giit/data/clones/stub-5d6b38/src/stub/ignore.hpp" bodystart="22" bodyend="22"/>
+    <listofallmembers>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.13">
+  <compounddef id="ignore_8hpp" kind="file" language="C++">
+    <compoundname>ignore.hpp</compoundname>
+    <includedby refid="compare__argument_8hpp" local="yes">/tmp/giit/data/clones/stub-5d6b38/src/stub/compare_argument.hpp</includedby>
+    <invincdepgraph>
+      <node id="76">
+        <label>/tmp/giit/data/clones/stub-5d6b38/src/stub/compare_call.hpp</label>
+        <link refid="compare__call_8hpp_source"/>
+        <childnode refid="77" relation="include">
+        </childnode>
+      </node>
+      <node id="73">
+        <label>/tmp/giit/data/clones/stub-5d6b38/src/stub/ignore.hpp</label>
+        <link refid="ignore_8hpp"/>
+        <childnode refid="74" relation="include">
+        </childnode>
+      </node>
+      <node id="74">
+        <label>/tmp/giit/data/clones/stub-5d6b38/src/stub/compare_argument.hpp</label>
+        <link refid="compare__argument_8hpp_source"/>
+        <childnode refid="75" relation="include">
+        </childnode>
+      </node>
+      <node id="75">
+        <label>/tmp/giit/data/clones/stub-5d6b38/src/stub/compare_arguments.hpp</label>
+        <link refid="compare__arguments_8hpp_source"/>
+        <childnode refid="76" relation="include">
+        </childnode>
+      </node>
+      <node id="77">
+        <label>/tmp/giit/data/clones/stub-5d6b38/src/stub/function.hpp</label>
+        <link refid="function_8hpp_source"/>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="structstub_1_1ignore" prot="public">stub::ignore</innerclass>
+    <innernamespace refid="namespacestub">stub</innernamespace>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">//<sp/>Copyright<sp/>(c)<sp/>2015<sp/>Steinwurf<sp/>ApS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="comment">//<sp/>All<sp/>Rights<sp/>Reserved</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Distributed<sp/>under<sp/>the<sp/>&quot;BSD<sp/>License&quot;.<sp/>See<sp/>the<sp/>accompanying<sp/>LICENSE.rst<sp/>file.</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>once</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal"><ref refid="namespacestub" kindref="compound">stub</ref></highlight></codeline>
+<codeline lineno="9"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="22" refid="structstub_1_1ignore" refkind="compound"><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structstub_1_1ignore" kindref="compound">ignore</ref><sp/>{<sp/>};</highlight></codeline>
+<codeline lineno="23"><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="/tmp/giit/data/clones/stub-5d6b38/src/stub/ignore.hpp"/>
+  </compounddef>
+</doxygen>

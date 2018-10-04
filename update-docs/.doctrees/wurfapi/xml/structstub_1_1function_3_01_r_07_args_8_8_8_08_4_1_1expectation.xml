@@ -1,0 +1,149 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.13">
+  <compounddef id="structstub_1_1function_3_01_r_07_args_8_8_8_08_4_1_1expectation" kind="struct" language="C++" prot="public">
+    <compoundname>stub::function&lt; R(Args...)&gt;::expectation</compoundname>
+    <includes refid="function_8hpp" local="no">function.hpp</includes>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="structstub_1_1function_3_01_r_07_args_8_8_8_08_4_1_1expectation_1a7f775da1abda2cc5045b4025004a1fd9" prot="private" static="no" mutable="no">
+        <type>const <ref refid="classstub_1_1function" kindref="compound">function</ref> &amp;</type>
+        <definition>const function&amp; stub::function&lt; R(Args...)&gt;::expectation::m_function</definition>
+        <argsstring></argsstring>
+        <name>m_function</name>
+        <briefdescription>
+<para>The function we will check the expectation against. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/giit/data/clones/stub-5d6b38/src/stub/function.hpp" line="154" column="1" bodyfile="/tmp/giit/data/clones/stub-5d6b38/src/stub/function.hpp" bodystart="154" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structstub_1_1function_3_01_r_07_args_8_8_8_08_4_1_1expectation_1a3f9d8c8fc7fe2ead575e0d12a089836d" prot="private" static="no" mutable="no">
+        <type>std::vector&lt; <ref refid="structstub_1_1compare__call" kindref="compound">compare_call</ref>&lt; Args... &gt; &gt;</type>
+        <definition>std::vector&lt;compare_call&lt;Args...&gt; &gt; stub::function&lt; R(Args...)&gt;::expectation::m_calls</definition>
+        <argsstring></argsstring>
+        <name>m_calls</name>
+        <briefdescription>
+<para>The expected calls. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/giit/data/clones/stub-5d6b38/src/stub/function.hpp" line="157" column="1" bodyfile="/tmp/giit/data/clones/stub-5d6b38/src/stub/function.hpp" bodystart="157" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="structstub_1_1function_3_01_r_07_args_8_8_8_08_4_1_1expectation_1aaa32ac8121a8a6af356206ac8c144c28" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>stub::function&lt; R(Args...)&gt;::expectation::expectation</definition>
+        <argsstring>(const function &amp;the_function)</argsstring>
+        <name>expectation</name>
+        <param>
+          <type>const <ref refid="classstub_1_1function" kindref="compound">function</ref> &amp;</type>
+          <declname>the_function</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>the_function</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The function we configuring an expectation for</para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>predicate</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The function object used to compare the call arguments </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/giit/data/clones/stub-5d6b38/src/stub/function.hpp" line="81" column="1" bodyfile="/tmp/giit/data/clones/stub-5d6b38/src/stub/function.hpp" bodystart="81" bodyend="83"/>
+      </memberdef>
+      <memberdef kind="function" id="structstub_1_1function_3_01_r_07_args_8_8_8_08_4_1_1expectation_1aa4df36df083c489e7a6d4250267dc388" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>class...</type>
+            <declname>WithArgs</declname>
+            <defname>WithArgs</defname>
+          </param>
+        </templateparamlist>
+        <type><ref refid="structstub_1_1function_3_01_r_07_args_8_8_8_08_4_1_1expectation_1aaa32ac8121a8a6af356206ac8c144c28" kindref="member">expectation</ref> &amp;</type>
+        <definition>expectation&amp; stub::function&lt; R(Args...)&gt;::expectation::with</definition>
+        <argsstring>(WithArgs &amp;&amp;... args)</argsstring>
+        <name>with</name>
+        <param>
+          <type>WithArgs &amp;&amp;...</type>
+          <declname>args</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Calling with(...) will add a set of arguments we expect to see. with(...) can be called multiple times in a row if we expect multiple function calls to the function object.</para><para>As an example: <verbatim>stub::function&lt;void(uint32_t,uint32_t)&gt; function;
+function(3,1);
+function(4,2);
+
+assert(function.expect_calls()
+           .with(3,1).with(4,2));
+</verbatim></para><para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>args</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The arguments for a function call</para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The expectation itself, which allows chaining function calls </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/giit/data/clones/stub-5d6b38/src/stub/function.hpp" line="105" column="1" bodyfile="/tmp/giit/data/clones/stub-5d6b38/src/stub/function.hpp" bodystart="105" bodyend="109"/>
+      </memberdef>
+      <memberdef kind="function" id="structstub_1_1function_3_01_r_07_args_8_8_8_08_4_1_1expectation_1a24b47c097885ef09d50947ae0f71ef34" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool stub::function&lt; R(Args...)&gt;::expectation::to_bool</definition>
+        <argsstring>() const</argsstring>
+        <name>to_bool</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Convert the expectation to a boolean value either true of false depending on whether the expectations match the actual call.</para><para>The first argument passed to the predicate function is the actual call arguments and the second is the expectation.</para><para><simplesect kind="return"><para>True if the expectation matches the call, otherwise false </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/giit/data/clones/stub-5d6b38/src/stub/function.hpp" line="121" column="1" bodyfile="/tmp/giit/data/clones/stub-5d6b38/src/stub/function.hpp" bodystart="121" bodyend="139"/>
+      </memberdef>
+      <memberdef kind="function" id="structstub_1_1function_3_01_r_07_args_8_8_8_08_4_1_1expectation_1acae2e237b671ee8643683a60a5952901" prot="public" static="no" const="yes" explicit="yes" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>stub::function&lt; R(Args...)&gt;::expectation::operator bool</definition>
+        <argsstring>() const</argsstring>
+        <name>operator bool</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Use the to_bool member function when casting this expectation to a boolean value.</para><para><simplesect kind="return"><para>True if the expectation matches the function, otherwise false </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/giit/data/clones/stub-5d6b38/src/stub/function.hpp" line="146" column="1" bodyfile="/tmp/giit/data/clones/stub-5d6b38/src/stub/function.hpp" bodystart="146" bodyend="149"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>Represent a expectation of how the function object has been invoked. Using the API it is possible to setup how we expect the function object looks like. The expectation converts to bool allowing the user to detect whether the expectation was correct. </para>    </detaileddescription>
+    <location file="/tmp/giit/data/clones/stub-5d6b38/src/stub/function.hpp" line="76" column="1" bodyfile="/tmp/giit/data/clones/stub-5d6b38/src/stub/function.hpp" bodystart="75" bodyend="158"/>
+    <listofallmembers>
+      <member refid="structstub_1_1function_3_01_r_07_args_8_8_8_08_4_1_1expectation_1aaa32ac8121a8a6af356206ac8c144c28" prot="public" virt="non-virtual"><scope>stub::function&lt; R(Args...)&gt;::expectation</scope><name>expectation</name></member>
+      <member refid="structstub_1_1function_3_01_r_07_args_8_8_8_08_4_1_1expectation_1a3f9d8c8fc7fe2ead575e0d12a089836d" prot="private" virt="non-virtual"><scope>stub::function&lt; R(Args...)&gt;::expectation</scope><name>m_calls</name></member>
+      <member refid="structstub_1_1function_3_01_r_07_args_8_8_8_08_4_1_1expectation_1a7f775da1abda2cc5045b4025004a1fd9" prot="private" virt="non-virtual"><scope>stub::function&lt; R(Args...)&gt;::expectation</scope><name>m_function</name></member>
+      <member refid="structstub_1_1function_3_01_r_07_args_8_8_8_08_4_1_1expectation_1acae2e237b671ee8643683a60a5952901" prot="public" virt="non-virtual"><scope>stub::function&lt; R(Args...)&gt;::expectation</scope><name>operator bool</name></member>
+      <member refid="structstub_1_1function_3_01_r_07_args_8_8_8_08_4_1_1expectation_1a24b47c097885ef09d50947ae0f71ef34" prot="public" virt="non-virtual"><scope>stub::function&lt; R(Args...)&gt;::expectation</scope><name>to_bool</name></member>
+      <member refid="structstub_1_1function_3_01_r_07_args_8_8_8_08_4_1_1expectation_1aa4df36df083c489e7a6d4250267dc388" prot="public" virt="non-virtual"><scope>stub::function&lt; R(Args...)&gt;::expectation</scope><name>with</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

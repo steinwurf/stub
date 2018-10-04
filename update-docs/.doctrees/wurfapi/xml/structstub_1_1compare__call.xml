@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.13">
+  <compounddef id="structstub_1_1compare__call" kind="struct" language="C++" prot="public">
+    <compoundname>stub::compare_call</compoundname>
+    <includes refid="compare__call_8hpp" local="no">compare_call.hpp</includes>
+    <innerclass refid="structstub_1_1compare__call_1_1implementation" prot="private">stub::compare_call::implementation</innerclass>
+    <innerclass refid="structstub_1_1compare__call_1_1interface" prot="private">stub::compare_call::interface</innerclass>
+    <templateparamlist>
+      <param>
+        <type>class...</type>
+        <declname>Args</declname>
+        <defname>Args</defname>
+      </param>
+    </templateparamlist>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="structstub_1_1compare__call_1acb9226d32cf03f42b2a6478b918936fa" prot="private" static="no" mutable="no">
+        <type>std::unique_ptr&lt; interface &gt;</type>
+        <definition>std::unique_ptr&lt;interface&gt; stub::compare_call&lt; Args &gt;::m_implementation</definition>
+        <argsstring></argsstring>
+        <name>m_implementation</name>
+        <briefdescription>
+<para>Stores the type-erased expectation. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/giit/data/clones/stub-5d6b38/src/stub/compare_call.hpp" line="114" column="1" bodyfile="/tmp/giit/data/clones/stub-5d6b38/src/stub/compare_call.hpp" bodystart="114" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="structstub_1_1compare__call_1afec521b887985a33fb62444c6c8e8f56" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>class...</type>
+            <declname>WithArgs</declname>
+            <defname>WithArgs</defname>
+          </param>
+        </templateparamlist>
+        <type></type>
+        <definition>stub::compare_call&lt; Args &gt;::compare_call</definition>
+        <argsstring>(WithArgs &amp;&amp;... expected)</argsstring>
+        <name>compare_call</name>
+        <param>
+          <type>WithArgs &amp;&amp;...</type>
+          <declname>expected</declname>
+        </param>
+        <briefdescription>
+<para>Construct a new call comparison. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/giit/data/clones/stub-5d6b38/src/stub/compare_call.hpp" line="67" column="1" bodyfile="/tmp/giit/data/clones/stub-5d6b38/src/stub/compare_call.hpp" bodystart="67" bodyend="74"/>
+      </memberdef>
+      <memberdef kind="function" id="structstub_1_1compare__call_1a07d2bc6dd9637b95c19ec363e55861e4" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool stub::compare_call&lt; Args &gt;::compare</definition>
+        <argsstring>(const arguments&lt; Args... &gt; &amp;actual) const</argsstring>
+        <name>compare</name>
+        <param>
+          <type>const arguments&lt; Args... &gt; &amp;</type>
+          <declname>actual</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>Compare the values of the passed tuple with those of the expectation. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/giit/data/clones/stub-5d6b38/src/stub/compare_call.hpp" line="78" column="1" bodyfile="/tmp/giit/data/clones/stub-5d6b38/src/stub/compare_call.hpp" bodystart="78" bodyend="82"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>This stores a tuple of types that is to, at some point, be compared with a different tuple of arguments.</para><para>The basic usage is as follows:</para><para>auto expectation = std::make_tuple(5, true, 4.0); compare_call&lt;int, bool, double&gt; expect(expectation);</para><para>auto actual = std::make_tuple(4, true, 4.0);</para><para>// Now compare our expectation with the actual values bool result = expect.compare(actual); assert(result == false);</para><para>The <ref refid="structstub_1_1compare__call_1a07d2bc6dd9637b95c19ec363e55861e4" kindref="member">compare_call::compare</ref>(...) function uses compare_arguments(...) to compare the elements of the two tuples element-wise using compare_argument(...). In the case above the two tuples contain the same types. So every thing is pretty straight-forward.</para><para>However, in some cases we want to customize the comparison of two element. This could be that we simply don&apos;t care about a specific value or we want to use a user-define comparison function.</para><para>To support this use-case we allow special values to be used in the comparison tuple. The two tuples can therefore have different types, making the implementation a bit more involved and the reason for the type-erausre implemented in this class.</para><para>Lets see how this would work in practice.</para><para>// Notice how we can pass ignore() as the second argument to our // expectation tuple. auto expectation = std::make_tuple(5, ignore(), 4.0); compare_call&lt;int, bool, double&gt; expect(expectation);</para><para>auto actual = std::make_tuple(5, true, 4.0);</para><para>// Now compare our expectation with the actual values bool result = expect.compare(actual); assert(result == true);</para><para>The reason this works when comparing the two tuples element-wise is that the compare_argument(...) function has an overload that accepts ignore as the second argument. By specializing compare_argument(...) we can extend support for more special values to support custom behaviour. </para>    </detaileddescription>
+    <location file="/tmp/giit/data/clones/stub-5d6b38/src/stub/compare_call.hpp" line="64" column="1" bodyfile="/tmp/giit/data/clones/stub-5d6b38/src/stub/compare_call.hpp" bodystart="63" bodyend="115"/>
+    <listofallmembers>
+      <member refid="structstub_1_1compare__call_1a07d2bc6dd9637b95c19ec363e55861e4" prot="public" virt="non-virtual"><scope>stub::compare_call</scope><name>compare</name></member>
+      <member refid="structstub_1_1compare__call_1afec521b887985a33fb62444c6c8e8f56" prot="public" virt="non-virtual"><scope>stub::compare_call</scope><name>compare_call</name></member>
+      <member refid="structstub_1_1compare__call_1acb9226d32cf03f42b2a6478b918936fa" prot="private" virt="non-virtual"><scope>stub::compare_call</scope><name>m_implementation</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>
