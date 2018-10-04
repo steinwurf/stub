@@ -59,6 +59,6 @@ def docs(ctx):
             venv.run('giit clean .', cwd=ctx.path.abspath())
             venv.run('giit sphinx .', cwd=ctx.path.abspath())
             venv.run('giit landing_page .', cwd=ctx.path.abspath())
-            if ctx.options.publish_docs:
-                venv.run('giit gh_pages .', cwd=ctx.path.abspath())
+            #if ctx.options.publish_docs:
+            #    venv.run('giit gh_pages .', cwd=ctx.path.abspath())
 
