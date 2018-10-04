@@ -1,42 +1,25 @@
 {
     "sphinx": {
-        "type": "python",
-        "scripts": [
-            "sphinx-build -b html . ${output_path}"
-        ],
-        "requirements": "${source_path}/docs/requirements.txt",
         "cwd": "${source_path}/docs",
-        "tag_semver_filter": ">6.2.0",
-        "branches": [
-            "origin/master"
-        ],
-        "scope": [
-            "tag",
-            "branch",
-            "workingtree"
-        ],
-        "variables": {
-            "branch:origin/master:output_path": "${build_path}/docs/latest",
-            "branch:output_path": "${build_path}/sphinx/${name}",
-            "tag:output_path": "${build_path}/docs/${name}",
-            "workingtree:output_path": "${build_path}/workingtree/sphinx"
-        }
+        "branches.regex.filters": ["origin/master"],
+        "branches.source_branch": true,
+        "tags.semver.filters": [">6.2.0"],
+        "requirements": "${source_path}/docs/requirements.txt",
+        "scripts": [
+            "sphinx-build -b html . ${build_path}/docs/${name} -D release=${name}"
+        ]
     },
     "landing_page": {
-        "type": "python",
-        "scripts": [
-            "python generate.py --docspath=${build_path}/docs --outpath=${output_path}"
-        ],
-        "requirements": "${source_path}/landing_page/requirements.txt",
-        "branches": [
-            "origin/master"
-        ],
         "cwd": "${source_path}/landing_page",
+        "branches.regex.filters": ["origin/master"],
         "variables": {
             "branch:origin/master:output_path": "${build_path}",
             "branch:output_path": "${build_path}/landing_page/${name}",
-            "workingtree:output_path": "${build_path}/workingtree/landing_page"
         }
+        "requirements": "${source_path}/landing_page/requirements.txt",
+        "scripts": [
+            "python generate.py --docspath=${build_path}/docs --outpath=${output_path}"
+        ]
     },
     "gh_pages": {
         "type": "push",
