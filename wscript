@@ -15,15 +15,6 @@ class DocsContext(BuildContext):
 
 
 def options(opt):
-<<<<<<< HEAD
-    opt.add_option(
-        '--publish_docs', default=False, action='store_true',
-        help='Publish the documentation.')
-
-    opt.add_option(
-        '--all_docs', default=False, action='store_true',
-        help='Build all documentation.')
-=======
 
     group = opt.add_option_group("Documentation")
 
@@ -35,7 +26,6 @@ def options(opt):
     group.add_option(
         '--publish_docs', default=False, action='store_true',
         help='Publish the documentation.')
->>>>>>> master
 
 
 def build(bld):
@@ -56,7 +46,6 @@ def build(bld):
 
 
 def docs(ctx):
-<<<<<<< HEAD
     """ Build and push the documentation see giit.json for details. """
     with ctx.create_virtualenv() as venv:
 
@@ -76,21 +65,3 @@ def docs(ctx):
         if ctx.options.publish_docs:
 
             venv.run('giit gh_pages .', cwd=ctx.path.abspath())
-=======
-
-    with ctx.create_virtualenv(cwd=ctx.bldnode.abspath()) as venv:
-        if not ctx.options.all_docs:
-            venv.run('python -m pip install -r docs/requirements.txt',
-                     cwd=ctx.path.abspath())
-            venv.run('sphinx-build -b html -d build/doctrees docs build/html',
-                     cwd=ctx.path.abspath())
-        else:
-            giit = 'git+https://github.com/steinwurf/giit.git@cffca2e4'
-            venv.pip_install(packages=[giit])
-            venv.run('giit clean .', cwd=ctx.path.abspath())
-            venv.run('giit sphinx .', cwd=ctx.path.abspath())
-            venv.run('giit landing_page .', cwd=ctx.path.abspath())
-            #if ctx.options.publish_docs:
-            #    venv.run('giit gh_pages .', cwd=ctx.path.abspath())
-
->>>>>>> master
