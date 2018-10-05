@@ -95,11 +95,12 @@
 $(document).ready(function() {
   const this_version = '';
   const version_json_location = './versjon.json';
+  const path_to_root = './';
 
   function addVersion(name, url) {
     const a = $('<a></a>');
     a.text(name);
-    a.attr('href', url);
+    a.attr('href', path_to_root + url);
     const dd = $('<dd></dd>').append(a);
     let final = dd;
     if (name === this_version)
