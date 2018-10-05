@@ -25,7 +25,7 @@
     <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="struct expectation" href="api/expectation.html" />
+    <link rel="next" title="API" href="api.html" />
   
    
 
@@ -37,7 +37,7 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="api/expectation.html" title="struct expectation"
+          <a href="api.html" title="API"
              accesskey="N">next</a> |</li>
         <li class="nav-item nav-item-0"><a href="#">Stub  documentation</a> &#187;</li> 
       </ul>
@@ -58,9 +58,13 @@
     
     
       <ul>
-<li class="toctree-l1"><a class="reference internal" href="api/expectation.html">struct expectation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api/function.html">class function&lt; R(Args…)&gt;</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api/return_handler.html">class return_handler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html#function-calls">Function Calls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html#function-return-values">Function return values</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html#using-stub-with-template-arguments">Using stub with template arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html#unit-testing">Unit testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html#license">License</a></li>
 </ul>
 
     
@@ -126,32 +130,87 @@ $(document).ready(function() {
             
   <div class="section" id="welcome-to-stub-s-documentation">
 <h1>Welcome to Stub’s documentation!<a class="headerlink" href="#welcome-to-stub-s-documentation" title="Permalink to this headline">¶</a></h1>
-<p>Below you can find the API documentation:</p>
+<a class="reference external image-reference" href="http://buildbot.steinwurf.dk/stats?projects=stub"><img alt="http://buildbot.steinwurf.dk/svgstatus?project=stub" src="http://buildbot.steinwurf.dk/svgstatus?project=stub" /></a>
+<p>stub is a simple C++ library which is meant to provide simple helper
+functions to ease sometimes tedious testing tasks.</p>
+<p>stub is especially helpful when testing template functions which
+takes hard-to-construct objects as parameters.
+With stub the task of making such tests short and self-contained, becomes much
+simpler. See this example of how <code class="docutils literal notranslate"><span class="pre">function_to_test</span></code> is tested:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#include &lt;stub/function.hpp&gt;</span>
+<span class="c1">#include &lt;cassert&gt;</span>
+
+<span class="o">//</span> <span class="n">Function</span> <span class="n">to</span> <span class="n">test</span>
+<span class="n">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
+<span class="n">void</span> <span class="n">function_to_test</span><span class="p">(</span><span class="n">T</span><span class="o">&amp;</span> <span class="n">t</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">some_function</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">some_check</span><span class="p">())</span>
+    <span class="p">{</span>
+        <span class="n">t</span><span class="o">.</span><span class="n">do_something_else</span><span class="p">(</span><span class="n">false</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="o">//</span> <span class="n">Dummy</span> <span class="nb">object</span> <span class="n">to</span> <span class="n">test</span> <span class="n">function</span> <span class="k">with</span>
+<span class="n">struct</span> <span class="n">dummy</span>
+<span class="p">{</span>
+    <span class="n">stub</span><span class="p">::</span><span class="n">function</span><span class="o">&lt;</span><span class="n">void</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">some_function</span><span class="p">;</span>
+    <span class="n">stub</span><span class="p">::</span><span class="n">function</span><span class="o">&lt;</span><span class="nb">bool</span><span class="p">()</span><span class="o">&gt;</span> <span class="n">some_check</span><span class="p">;</span>
+    <span class="n">stub</span><span class="p">::</span><span class="n">function</span><span class="o">&lt;</span><span class="n">void</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">do_something_else</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="n">void</span> <span class="n">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="o">//</span> <span class="n">Construct</span> <span class="nb">object</span>
+    <span class="n">dummy</span> <span class="n">obj</span><span class="p">;</span>
+
+    <span class="o">//</span> <span class="n">Setup</span> <span class="k">return</span> <span class="n">value</span>
+    <span class="n">obj</span><span class="o">.</span><span class="n">some_check</span><span class="o">.</span><span class="n">set_return</span><span class="p">(</span><span class="n">true</span><span class="p">);</span>
+
+    <span class="o">//</span> <span class="n">Run</span> <span class="n">function</span>
+    <span class="n">function_to_test</span><span class="p">(</span><span class="n">obj</span><span class="p">);</span>
+
+    <span class="o">//</span> <span class="n">Check</span> <span class="n">calls</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">some_function</span><span class="o">.</span><span class="n">expect_calls</span><span class="p">()</span><span class="o">.</span><span class="k">with</span><span class="p">(</span><span class="mi">4</span><span class="p">));</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">some_check</span><span class="o">.</span><span class="n">calls</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">do_something_else</span><span class="o">.</span><span class="n">expect_calls</span><span class="p">()</span><span class="o">.</span><span class="k">with</span><span class="p">(</span><span class="n">false</span><span class="p">));</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="api/expectation.html">struct expectation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api/expectation.html#member-functions-public">Member functions (public)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/expectation.html#description">Description</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/expectation.html#member-function-description">Member Function Description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/expectation.html">struct expectation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/function.html">class function&lt; R(Args…)&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/return_handler.html">class return_handler</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="api/function.html">class function&lt; R(Args…)&gt;</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api/function.html#brief-description">Brief description</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/function.html#member-types-public">Member types (public)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/function.html#member-functions-public">Member functions (public)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/function.html#description">Description</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/function.html#member-function-description">Member Function Description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#header-only">Header-only</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="api/return_handler.html">class return_handler</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api/return_handler.html#brief-description">Brief description</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/return_handler.html#member-types-public">Member types (public)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/return_handler.html#member-functions-public">Member functions (public)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/return_handler.html#description">Description</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/return_handler.html#member-function-description">Member Function Description</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/return_handler.html#type-description">Type Description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html#function-calls">Function Calls</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#check-a-set-of-function-calls">Check a set of function calls</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#functions-taking-no-arguments">Functions taking no arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#check-the-number-of-function-calls">Check the number of function calls</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#clear-the-state-of-the-function-object">Clear the state of the function object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#clear-only-the-function-calls-state">Clear only the function calls state</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#get-the-arguments-of-a-specific-function-call">Get the arguments of a specific function call</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#ignore-specific-arguments-of-a-function-call">Ignore specific arguments of a function call</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#check-if-specific-arguments-are-values-other-than-null">Check if specific arguments are values other than null</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#comparing-custom-arguments">Comparing custom arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#building-an-expectation">Building an Expectation</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html#function-return-values">Function return values</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html#using-stub-with-template-arguments">Using stub with template arguments</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#member-function">Member function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#static-member-function">Static member function</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html#unit-testing">Unit testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html#license">License</a></li>
 </ul>
 </div>
 </div>
@@ -162,7 +221,7 @@ $(document).ready(function() {
   <div class="footer-relations">
     
       <div class="pull-right">
-        <a class="btn btn-default" href="api/expectation.html" title="next chapter (use the right arrow)">struct expectation</a>
+        <a class="btn btn-default" href="api.html" title="next chapter (use the right arrow)">API</a>
       </div>
     </div>
     <div class="clearer"></div>
@@ -177,7 +236,7 @@ $(document).ready(function() {
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="api/expectation.html" title="struct expectation"
+          <a href="api.html" title="API"
              >next</a> |</li>
         <li class="nav-item nav-item-0"><a href="#">Stub  documentation</a> &#187;</li> 
       </ul>

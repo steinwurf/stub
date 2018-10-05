@@ -1,0 +1,678 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <!-- Licensed under the Apache 2.0 License -->
+  <link rel="stylesheet" type="text/css" href="_static/fonts/open-sans/stylesheet.css" />
+  <!-- Licensed under the SIL Open Font License -->
+  <link rel="stylesheet" type="text/css" href="_static/fonts/source-serif-pro/source-serif-pro.css" />
+  <link rel="stylesheet" type="text/css" href="_static/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="_static/css/bootstrap-theme.min.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+    <title>Usage &#8212; Stub  documentation</title>
+    <link rel="stylesheet" href="_static/guzzle.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="class return_handler" href="api/return_handler.html" />
+  
+   
+
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="api/return_handler.html" title="class return_handler"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Stub  documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="container-wrapper">
+
+      <div id="mobile-toggle">
+        <a href="#"><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span></a>
+      </div>
+  <div id="left-column">
+    <div class="sphinxsidebar"><a href="
+    index.html" class="text-logo">Stub</a>
+<div class="sidebar-block">
+  <div class="sidebar-wrapper">
+    <h2>Table Of Contents</h2>
+  </div>
+  <div class="sidebar-toc">
+    
+    
+      <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#header-only">Header-only</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#function-calls">Function Calls</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#check-a-set-of-function-calls">Check a set of function calls</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#functions-taking-no-arguments">Functions taking no arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#check-the-number-of-function-calls">Check the number of function calls</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#clear-the-state-of-the-function-object">Clear the state of the function object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#clear-only-the-function-calls-state">Clear only the function calls state</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#get-the-arguments-of-a-specific-function-call">Get the arguments of a specific function call</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ignore-specific-arguments-of-a-function-call">Ignore specific arguments of a function call</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#check-if-specific-arguments-are-values-other-than-null">Check if specific arguments are values other than null</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#comparing-custom-arguments">Comparing custom arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#building-an-expectation">Building an Expectation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#function-return-values">Function return values</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#using-stub-with-template-arguments">Using stub with template arguments</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#member-function">Member function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#static-member-function">Static member function</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#unit-testing">Unit testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#license">License</a></li>
+</ul>
+
+    
+  </div>
+</div>
+<div class="sidebar-block">
+  <div class="sidebar-wrapper">
+    <div id="main-search">
+      <form class="form-inline" action="search.html" method="GET" role="form">
+        <div class="input-group">
+          <input name="q" type="text" class="form-control" placeholder="Search...">
+        </div>
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div>
+<div class="sidebar-block">
+  <div class="sidebar-wrapper">
+    <h2>Versions</h2>
+    <div class="sidebar-versions">
+      <dl id="versions"></dl>
+    </div>
+  </div>
+</div>
+<script>
+$(document).ready(function() {
+  const this_version = '';
+  const version_json_location = './versjon.json';
+
+  function addVersion(name, url) {
+    const a = $('<a></a>');
+    a.text(name);
+    a.attr('href', url);
+    const dd = $('<dd></dd>').append(a);
+    let final = dd;
+    if (name === this_version)
+    {
+      final = $('<strong></strong>').append(dd);
+    }
+    $('#versions').append(final);
+  }
+  $.getJSON(version_json_location, {}).done((versions) => {
+    versions.forEach(version => addVersion(version['name'], version['url']));
+  });
+});
+</script>
+      
+    </div>
+  </div>
+        <div id="right-column">
+          
+          <div role="navigation" aria-label="breadcrumbs navigation">
+            <ol class="breadcrumb">
+              <li><a href="index.html">Docs</a></li>
+              
+              <li>Usage</li>
+            </ol>
+          </div>
+          
+          <div class="document clearer body">
+            
+  <div class="section" id="usage">
+<h1>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">stub::function</span></code> object act like a “sink” for function calls
+i.e. we can define a function object to accept any type of function
+call and it will simply store the arguments for later inspection.</p>
+<p>The typical use-case for the function object is when testing that
+some code invokes a specific set of functions with a specific
+set of arguments.</p>
+<div class="section" id="header-only">
+<h2>Header-only<a class="headerlink" href="#header-only" title="Permalink to this headline">¶</a></h2>
+<p>The library itself is header-only so essentially to use it you just
+have to clone the repository and setup the right include paths in the
+project where you would like to use it.</p>
+<p>The library uses c++11 features such as variadic templates, so you
+need a relatively recent compiler to use it.</p>
+</div>
+</div>
+<div class="section" id="function-calls">
+<h1>Function Calls<a class="headerlink" href="#function-calls" title="Permalink to this headline">¶</a></h1>
+<p>One of the useful features of the function stub is the possibility to
+check the parameters of the “simulated” function calls:</p>
+<div class="section" id="check-a-set-of-function-calls">
+<h2>Check a set of function calls<a class="headerlink" href="#check-a-set-of-function-calls" title="Permalink to this headline">¶</a></h2>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#include &lt;stub/function.hpp&gt;</span>
+
+<span class="n">stub</span><span class="p">::</span><span class="n">function</span><span class="o">&lt;</span><span class="n">void</span><span class="p">(</span><span class="n">uint32_t</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">some_function</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The above function takes an <code class="docutils literal notranslate"><span class="pre">uint32_t</span></code> and returns nothing, lets see how to
+invoke it:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">some_function</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+<span class="n">some_function</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Now we may check how the function was invoked. Using the
+<code class="docutils literal notranslate"><span class="pre">expect_calls()</span></code> function we can create an expectation with will be
+checked against the actual call and convert to either <code class="docutils literal notranslate"><span class="pre">true</span></code> if the
+expectation matches or <code class="docutils literal notranslate"><span class="pre">false</span></code> if not.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Expectation</span> <span class="n">matches</span> <span class="n">how</span> <span class="n">we</span> <span class="n">called</span> <span class="n">the</span> <span class="n">function</span>
+<span class="nb">bool</span> <span class="n">works</span> <span class="o">=</span> <span class="n">some_function</span><span class="o">.</span><span class="n">expect_calls</span><span class="p">()</span>
+    <span class="o">.</span><span class="k">with</span><span class="p">(</span><span class="mi">3</span><span class="n">U</span><span class="p">)</span>
+    <span class="o">.</span><span class="k">with</span><span class="p">(</span><span class="mi">4</span><span class="n">U</span><span class="p">);</span>
+
+<span class="k">assert</span><span class="p">(</span><span class="n">works</span> <span class="o">==</span> <span class="n">true</span><span class="p">);</span>
+
+<span class="o">//</span> <span class="n">Not</span> <span class="n">the</span> <span class="n">right</span> <span class="n">call</span> <span class="n">order</span>
+<span class="n">works</span> <span class="o">=</span> <span class="n">some_function</span><span class="o">.</span><span class="n">expect_calls</span><span class="p">()</span>
+    <span class="o">.</span><span class="k">with</span><span class="p">(</span><span class="mi">4</span><span class="n">U</span><span class="p">)</span>
+    <span class="o">.</span><span class="k">with</span><span class="p">(</span><span class="mi">3</span><span class="n">U</span><span class="p">);</span>
+
+<span class="k">assert</span><span class="p">(</span><span class="n">works</span> <span class="o">==</span> <span class="n">false</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="functions-taking-no-arguments">
+<h2>Functions taking no arguments<a class="headerlink" href="#functions-taking-no-arguments" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">with(...)</span></code> function takes exactly the same number and type of
+arguments as the <code class="docutils literal notranslate"><span class="pre">stub::function</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stub</span><span class="p">::</span><span class="n">function</span><span class="o">&lt;</span><span class="n">void</span><span class="p">()</span><span class="o">&gt;</span> <span class="n">function</span><span class="p">;</span>
+<span class="n">function</span><span class="p">();</span>
+<span class="n">function</span><span class="p">();</span>
+
+<span class="o">//</span> <span class="n">Is</span> <span class="n">matched</span> <span class="n">by</span><span class="p">:</span>
+<span class="nb">bool</span> <span class="n">works</span> <span class="o">=</span> <span class="n">function</span><span class="o">.</span><span class="n">expect_calls</span><span class="p">()</span>
+    <span class="o">.</span><span class="k">with</span><span class="p">()</span>
+    <span class="o">.</span><span class="k">with</span><span class="p">();</span>
+
+<span class="k">assert</span><span class="p">(</span><span class="n">works</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="check-the-number-of-function-calls">
+<h2>Check the number of function calls<a class="headerlink" href="#check-the-number-of-function-calls" title="Permalink to this headline">¶</a></h2>
+<p>It is also possible to directly check the number of function calls
+made.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stub</span><span class="p">::</span><span class="n">function</span><span class="o">&lt;</span><span class="n">void</span><span class="p">(</span><span class="n">uint32_t</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">some_function</span><span class="p">;</span>
+
+<span class="n">some_function</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+<span class="n">some_function</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+
+<span class="o">//</span> <span class="n">Return</span> <span class="n">how</span> <span class="n">many</span> <span class="n">calls</span> <span class="n">where</span> <span class="n">made</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">some_function</span><span class="o">.</span><span class="n">calls</span><span class="p">()</span> <span class="o">==</span> <span class="mi">2</span><span class="p">);</span>
+
+<span class="o">//</span> <span class="n">Return</span> <span class="n">true</span> <span class="k">if</span> <span class="n">no</span> <span class="n">calls</span> <span class="n">were</span> <span class="n">made</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">some_function</span><span class="o">.</span><span class="n">calls</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="clear-the-state-of-the-function-object">
+<h2>Clear the state of the function object<a class="headerlink" href="#clear-the-state-of-the-function-object" title="Permalink to this headline">¶</a></h2>
+<p>Somethings we need to reset things to its initial state:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stub</span><span class="p">::</span><span class="n">function</span><span class="o">&lt;</span><span class="n">uint32_t</span><span class="p">(</span><span class="n">uint32_t</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">some_function</span><span class="p">;</span>
+<span class="n">some_function</span><span class="o">.</span><span class="n">set_return</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+
+<span class="n">uint32_t</span> <span class="n">a</span> <span class="o">=</span> <span class="n">some_function</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+<span class="n">uint32_t</span> <span class="n">b</span> <span class="o">=</span> <span class="n">some_function</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+
+<span class="k">assert</span><span class="p">(</span><span class="n">a</span> <span class="o">==</span> <span class="mi">5</span><span class="p">);</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">b</span> <span class="o">==</span> <span class="mi">5</span><span class="p">);</span>
+
+<span class="o">//</span> <span class="n">Return</span> <span class="n">how</span> <span class="n">many</span> <span class="n">calls</span> <span class="n">where</span> <span class="n">made</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">some_function</span><span class="o">.</span><span class="n">calls</span><span class="p">()</span> <span class="o">==</span> <span class="mi">2</span><span class="p">);</span>
+
+<span class="n">some_function</span><span class="o">.</span><span class="n">clear</span><span class="p">();</span>
+
+<span class="o">//</span> <span class="n">Return</span> <span class="n">true</span> <span class="k">if</span> <span class="n">no</span> <span class="n">calls</span> <span class="n">were</span> <span class="n">made</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">some_function</span><span class="o">.</span><span class="n">calls</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">);</span>
+
+<span class="o">//</span> <span class="n">Before</span> <span class="n">we</span> <span class="n">can</span> <span class="n">use</span> <span class="n">some_function</span> <span class="n">again</span> <span class="n">we</span> <span class="n">have</span> <span class="n">to</span> <span class="nb">set</span> <span class="n">a</span> <span class="n">new</span> <span class="k">return</span> <span class="n">value</span>
+<span class="n">some_function</span><span class="o">.</span><span class="n">set_return</span><span class="p">(</span><span class="mi">6</span><span class="p">);</span>
+<span class="n">uint32_t</span> <span class="n">c</span> <span class="o">=</span> <span class="n">some_function</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+
+<span class="k">assert</span><span class="p">(</span><span class="n">c</span> <span class="o">==</span> <span class="mi">6</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="clear-only-the-function-calls-state">
+<h2>Clear only the function calls state<a class="headerlink" href="#clear-only-the-function-calls-state" title="Permalink to this headline">¶</a></h2>
+<p>It is also possible to just clear the recorded function calls. Using <code class="docutils literal notranslate"><span class="pre">clear()</span></code>
+will also remove any specified return handler:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stub</span><span class="p">::</span><span class="n">function</span><span class="o">&lt;</span><span class="n">uint32_t</span><span class="p">(</span><span class="n">uint32_t</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">some_function</span><span class="p">;</span>
+<span class="n">some_function</span><span class="o">.</span><span class="n">set_return</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+
+<span class="n">uint32_t</span> <span class="n">a</span> <span class="o">=</span> <span class="n">some_function</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+<span class="n">uint32_t</span> <span class="n">b</span> <span class="o">=</span> <span class="n">some_function</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+
+<span class="k">assert</span><span class="p">(</span><span class="n">a</span> <span class="o">==</span> <span class="mi">5</span><span class="p">);</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">b</span> <span class="o">==</span> <span class="mi">5</span><span class="p">);</span>
+
+<span class="o">//</span> <span class="n">Return</span> <span class="n">how</span> <span class="n">many</span> <span class="n">calls</span> <span class="n">where</span> <span class="n">made</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">some_function</span><span class="o">.</span><span class="n">calls</span><span class="p">()</span> <span class="o">==</span> <span class="mi">2</span><span class="p">);</span>
+
+<span class="n">some_function</span><span class="o">.</span><span class="n">clear_calls</span><span class="p">();</span>
+
+<span class="o">//</span> <span class="n">Return</span> <span class="n">true</span> <span class="k">if</span> <span class="n">no</span> <span class="n">calls</span> <span class="n">were</span> <span class="n">made</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">some_function</span><span class="o">.</span><span class="n">calls</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">);</span>
+
+<span class="o">//</span> <span class="n">We</span> <span class="n">can</span> <span class="k">continue</span> <span class="n">to</span> <span class="n">call</span> <span class="n">the</span> <span class="n">function</span>
+<span class="n">uint32_t</span> <span class="n">c</span> <span class="o">=</span> <span class="n">some_function</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+
+<span class="k">assert</span><span class="p">(</span><span class="n">c</span> <span class="o">==</span> <span class="mi">5</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="get-the-arguments-of-a-specific-function-call">
+<h2>Get the arguments of a specific function call<a class="headerlink" href="#get-the-arguments-of-a-specific-function-call" title="Permalink to this headline">¶</a></h2>
+<p>If you are interested in manually inspecting the arguments passed to a
+function call this can be done using the <code class="docutils literal notranslate"><span class="pre">call_arguments(uint32_t)</span></code>
+function.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stub</span><span class="p">::</span><span class="n">function</span><span class="o">&lt;</span><span class="n">void</span><span class="p">(</span><span class="n">uint32_t</span><span class="p">,</span><span class="n">uint32_t</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">function</span><span class="p">;</span>
+
+<span class="n">function</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">);</span>
+<span class="n">function</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">);</span>
+<span class="n">function</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Internally the arguments are stored in a <code class="docutils literal notranslate"><span class="pre">std::tuple</span></code> so in this
+case it would be <code class="docutils literal notranslate"><span class="pre">std::tuple&lt;uint32_t,uint32_t&gt;</span></code>. Lets compare the
+arguments of the second call:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">auto</span> <span class="n">a</span> <span class="o">=</span> <span class="n">function</span><span class="o">.</span><span class="n">call_arguments</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="n">auto</span> <span class="n">b</span> <span class="o">=</span> <span class="n">std</span><span class="p">::</span><span class="n">make_tuple</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">);</span>
+
+<span class="k">assert</span><span class="p">(</span><span class="n">a</span> <span class="o">==</span> <span class="n">b</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Note:</strong> You should use the “unqualified and decayed types” of the function
+arguments. This means that if you have a function
+<code class="docutils literal notranslate"><span class="pre">stub::function&lt;void(const</span> <span class="pre">uint32_t&amp;&gt;</span></code> then the stub library will store
+the argument passed in an <code class="docutils literal notranslate"><span class="pre">uint32_t</span></code> instead of a <code class="docutils literal notranslate"><span class="pre">const</span>
+<span class="pre">uint32_t&amp;</span></code>. So our comparison should use <code class="docutils literal notranslate"><span class="pre">std::tuple&lt;uint32_t&gt;</span></code>. If you use
+<code class="docutils literal notranslate"><span class="pre">std::make_tuple(...)</span></code> to build the your expectation this should happen
+automatically (so you don’t have to worry about it).</p>
+<p>You can find more information about unqualified types <a class="reference external" href="http://stackoverflow.com/questions/17295169">here</a> and <a class="reference external" href="http://bit.ly/1Markab">here</a>.</p>
+</div>
+<div class="section" id="ignore-specific-arguments-of-a-function-call">
+<h2>Ignore specific arguments of a function call<a class="headerlink" href="#ignore-specific-arguments-of-a-function-call" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes it is useful to ignore specific arguments to a function call. They may
+be internally computed or just in general not interesting when testing for
+correctness.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stub</span><span class="p">::</span><span class="n">function</span><span class="o">&lt;</span><span class="n">void</span><span class="p">(</span><span class="n">uint32_t</span><span class="p">,</span><span class="n">uint32_t</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">function</span><span class="p">;</span>
+
+<span class="n">function</span><span class="p">(</span><span class="mi">3</span><span class="n">U</span><span class="p">,</span><span class="mi">4</span><span class="n">U</span><span class="p">);</span>
+<span class="n">function</span><span class="p">(</span><span class="mi">4</span><span class="n">U</span><span class="p">,</span><span class="mi">3</span><span class="n">U</span><span class="p">);</span>
+
+<span class="o">//</span> <span class="n">Is</span> <span class="n">matched</span> <span class="n">by</span><span class="p">:</span>
+<span class="nb">bool</span> <span class="n">works</span> <span class="o">=</span> <span class="n">function</span><span class="o">.</span><span class="n">expect_calls</span><span class="p">()</span>
+    <span class="o">.</span><span class="k">with</span><span class="p">(</span><span class="n">stub</span><span class="p">::</span><span class="n">ignore</span><span class="p">(),</span> <span class="mi">4</span><span class="n">U</span><span class="p">)</span>
+    <span class="o">.</span><span class="k">with</span><span class="p">(</span><span class="mi">4</span><span class="n">U</span><span class="p">,</span> <span class="n">stub</span><span class="p">::</span><span class="n">ignore</span><span class="p">())</span>
+    <span class="o">.</span><span class="n">to_bool</span><span class="p">();</span>
+
+<span class="k">assert</span><span class="p">(</span><span class="n">works</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="check-if-specific-arguments-are-values-other-than-null">
+<h2>Check if specific arguments are values other than null<a class="headerlink" href="#check-if-specific-arguments-are-values-other-than-null" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes it is useful to check if specific arguments to a function call are
+not null.
+If a pointer given to a function is internally computed it can be impossible or
+complex to know what the correct value is. There for not_nullptr can be used
+when that is the only value not allowed.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stub</span><span class="p">::</span><span class="n">function</span><span class="o">&lt;</span><span class="n">void</span><span class="p">(</span><span class="n">uint8_t</span><span class="o">*</span><span class="p">,</span> <span class="n">uint32_t</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">function</span><span class="p">;</span>
+
+<span class="n">std</span><span class="p">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">uint8_t</span><span class="o">&gt;</span> <span class="n">buffer</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="n">function</span><span class="p">(</span><span class="n">buffer</span><span class="o">.</span><span class="n">data</span><span class="p">(),</span> <span class="n">buffer</span><span class="o">.</span><span class="n">size</span><span class="p">());</span>
+
+<span class="o">//</span> <span class="n">Is</span> <span class="n">matched</span> <span class="n">by</span><span class="p">:</span>
+<span class="nb">bool</span> <span class="n">works</span> <span class="o">=</span> <span class="n">function</span><span class="o">.</span><span class="n">expect_calls</span><span class="p">()</span>
+    <span class="o">.</span><span class="k">with</span><span class="p">(</span><span class="n">stub</span><span class="p">::</span><span class="n">not_nullptr</span><span class="p">(),</span> <span class="mi">1</span><span class="n">U</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">to_bool</span><span class="p">();</span>
+
+<span class="k">assert</span><span class="p">(</span><span class="n">works</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="comparing-custom-arguments">
+<h2>Comparing custom arguments<a class="headerlink" href="#comparing-custom-arguments" title="Permalink to this headline">¶</a></h2>
+<p>The default behavior for the <code class="docutils literal notranslate"><span class="pre">expect_calls()</span></code> function is to
+compare arguments passed though the <code class="docutils literal notranslate"><span class="pre">with(...)</span></code> function to the
+actual arguments using <code class="docutils literal notranslate"><span class="pre">operator==(...)</span></code>. However,
+sometimes we want to make custom comparisons or to compare objects
+that do not provide <code class="docutils literal notranslate"><span class="pre">operator==(...)</span></code>. In those cases we can provide
+a custom comparison function.</p>
+<p>Lets say we have a custom object:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">struct</span> <span class="n">cup</span>
+<span class="p">{</span>
+    <span class="n">double</span> <span class="n">m_volume</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>And a function with takes those objects as arguments:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stub</span><span class="p">::</span><span class="n">function</span><span class="o">&lt;</span><span class="n">void</span><span class="p">(</span><span class="n">const</span> <span class="n">cup</span><span class="o">&amp;</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">function</span><span class="p">;</span>
+
+<span class="n">function</span><span class="p">(</span><span class="n">cup</span><span class="p">{</span><span class="mf">2.3</span><span class="p">});</span>
+<span class="n">function</span><span class="p">(</span><span class="n">cup</span><span class="p">{</span><span class="mf">4.5</span><span class="p">});</span>
+
+<span class="k">assert</span><span class="p">(</span><span class="n">function</span><span class="o">.</span><span class="n">expect_calls</span><span class="p">()</span>
+    <span class="o">.</span><span class="k">with</span><span class="p">(</span><span class="n">stub</span><span class="p">::</span><span class="n">make_compare</span><span class="p">([](</span><span class="n">auto</span><span class="o">&amp;</span> <span class="n">c</span><span class="p">){</span><span class="k">return</span> <span class="n">c</span><span class="o">.</span><span class="n">m_volume</span> <span class="o">==</span> <span class="mf">2.3</span><span class="p">;}))</span>
+    <span class="o">.</span><span class="k">with</span><span class="p">(</span><span class="n">stub</span><span class="p">::</span><span class="n">make_compare</span><span class="p">([](</span><span class="n">auto</span><span class="o">&amp;</span> <span class="n">c</span><span class="p">){</span><span class="k">return</span> <span class="n">c</span><span class="o">.</span><span class="n">m_volume</span> <span class="o">==</span> <span class="mf">4.5</span><span class="p">;}))</span>
+    <span class="o">.</span><span class="n">to_bool</span><span class="p">());</span>
+</pre></div>
+</div>
+<p>In this case we are using a c++14 lambda function as comparison
+function.</p>
+<p>As another example use a custom comparison for objects that do have
+<code class="docutils literal notranslate"><span class="pre">operator==(...)</span></code> but where we have custom equality criteria.</p>
+<p>In this case we consider two <code class="docutils literal notranslate"><span class="pre">std::pair&lt;uint32_t,uint32_t&gt;</span></code> objects
+equal if their second element is equal. To do this with the stub
+library we need to provide a custom comparison function.</p>
+<dl class="docutils">
+<dt>::</dt>
+<dd><p class="first">using element = std::pair&lt;uint32_t, uint32_t&gt;;</p>
+<p>auto expect = [](uint32_t expected, const element&amp; actual) -&gt; bool
+{ return expected == actual.second; };</p>
+<p>stub::function&lt;void(const element&amp;)&gt; function;
+function(element(2,3));
+function(element(20,3));</p>
+<p>using namespace std::placeholders;
+// We have called the function more than once
+assert(false == function.expect_calls()</p>
+<blockquote>
+<div>.with(stub::make_compare(std::bind(expect, 3, _1))).to_bool());</div></blockquote>
+<p>// Works since we only match the second value of the pair
+assert(true == function.expect_calls()</p>
+<blockquote>
+<div>.with(stub::make_compare(std::bind(expect, 3, _1)))
+.with(stub::make_compare(std::bind(expect, 3, _1))).to_bool());</div></blockquote>
+<p>// Without the custom comparison it fails
+assert(false == function.expect_calls()</p>
+<blockquote class="last">
+<div>.with(element(1,3))
+.with(element(2,3)).to_bool());</div></blockquote>
+</dd>
+</dl>
+</div>
+<div class="section" id="building-an-expectation">
+<h2>Building an Expectation<a class="headerlink" href="#building-an-expectation" title="Permalink to this headline">¶</a></h2>
+<p>If we have many function calls it can be tedious to setup an expectation
+inline:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stub</span><span class="p">::</span><span class="n">function</span><span class="o">&lt;</span><span class="n">void</span><span class="p">(</span><span class="n">uint32_t</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">some_function</span><span class="p">;</span>
+
+<span class="o">//</span> <span class="n">Call</span> <span class="n">the</span> <span class="n">function</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">uint32_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">some_function</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="o">//</span> <span class="n">Check</span> <span class="n">the</span> <span class="n">expectation</span><span class="o">.</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">some_function</span><span class="o">.</span><span class="n">expect_calls</span><span class="p">()</span>
+    <span class="o">.</span><span class="k">with</span><span class="p">(</span><span class="mi">0</span><span class="n">U</span><span class="p">)</span>
+    <span class="o">.</span><span class="k">with</span><span class="p">(</span><span class="mi">1</span><span class="n">U</span>
+    <span class="o">.</span><span class="k">with</span><span class="p">(</span><span class="mi">2</span><span class="n">U</span><span class="p">)</span>
+    <span class="o">.</span><span class="k">with</span><span class="p">(</span><span class="mi">3</span><span class="n">U</span><span class="p">)</span>
+    <span class="o">.</span><span class="k">with</span><span class="p">(</span><span class="mi">4</span><span class="n">U</span><span class="p">)</span>
+    <span class="o">.</span><span class="k">with</span><span class="p">(</span><span class="mi">5</span><span class="n">U</span><span class="p">)</span>
+    <span class="o">.</span><span class="k">with</span><span class="p">(</span><span class="mi">6</span><span class="n">U</span><span class="p">)</span>
+    <span class="o">.</span><span class="k">with</span><span class="p">(</span><span class="mi">7</span><span class="n">U</span><span class="p">)</span>
+    <span class="o">.</span><span class="k">with</span><span class="p">(</span><span class="mi">8</span><span class="n">U</span><span class="p">)</span>
+    <span class="o">.</span><span class="k">with</span><span class="p">(</span><span class="mi">9</span><span class="n">U</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>Instead an expectation can be built by storing it as a variable and calling the
+<code class="docutils literal notranslate"><span class="pre">with</span></code> member function:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stub</span><span class="p">::</span><span class="n">function</span><span class="o">&lt;</span><span class="n">void</span><span class="p">(</span><span class="n">uint32_t</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">some_function</span><span class="p">;</span>
+
+<span class="n">auto</span> <span class="n">some_function_expectation</span> <span class="o">=</span> <span class="n">some_function</span><span class="o">.</span><span class="n">expect_calls</span><span class="p">();</span>
+
+<span class="o">//</span> <span class="n">Call</span> <span class="n">the</span> <span class="n">function</span> <span class="ow">and</span> <span class="n">setup</span> <span class="n">expectation</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">uint32_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">some_function</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+    <span class="n">some_function_expectation</span><span class="o">.</span><span class="k">with</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="o">//</span> <span class="n">Check</span> <span class="n">the</span> <span class="n">expectation</span><span class="o">.</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">some_function_expectation</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="function-return-values">
+<h1>Function return values<a class="headerlink" href="#function-return-values" title="Permalink to this headline">¶</a></h1>
+<p>We can also define a <code class="docutils literal notranslate"><span class="pre">stub::function</span></code> which returns a value:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stub</span><span class="p">::</span><span class="n">function</span><span class="o">&lt;</span><span class="nb">bool</span><span class="p">(</span><span class="n">uint32_t</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">some_function</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Here we have to specify what return value we expect:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">some_function</span><span class="o">.</span><span class="n">set_return</span><span class="p">(</span><span class="n">true</span><span class="p">);</span>
+
+<span class="nb">bool</span> <span class="n">a</span> <span class="o">=</span> <span class="n">some_function</span><span class="p">(</span><span class="mi">23</span><span class="p">);</span>
+<span class="nb">bool</span> <span class="n">b</span> <span class="o">=</span> <span class="n">some_function</span><span class="p">(</span><span class="mi">13</span><span class="p">);</span>
+
+<span class="k">assert</span><span class="p">(</span><span class="n">a</span> <span class="o">==</span> <span class="n">true</span><span class="p">);</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">b</span> <span class="o">==</span> <span class="n">true</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Or alternatively we can set multiple return values:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stub</span><span class="p">::</span><span class="n">function</span><span class="o">&lt;</span><span class="n">uint32_t</span><span class="p">()</span><span class="o">&gt;</span> <span class="n">some_function</span><span class="p">;</span>
+
+<span class="n">some_function</span><span class="o">.</span><span class="n">set_return</span><span class="p">(</span><span class="mi">4</span><span class="n">U</span><span class="p">,</span><span class="mi">3</span><span class="n">U</span><span class="p">);</span>
+
+<span class="n">uint32_t</span> <span class="n">a</span> <span class="o">=</span> <span class="n">some_function</span><span class="p">();</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">a</span> <span class="o">==</span> <span class="mi">4</span><span class="n">U</span><span class="p">);</span>
+
+<span class="n">uint32_t</span> <span class="n">b</span> <span class="o">=</span> <span class="n">some_function</span><span class="p">();</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">b</span> <span class="o">==</span> <span class="mi">3</span><span class="n">U</span><span class="p">);</span>
+
+<span class="n">uint32_t</span> <span class="n">c</span> <span class="o">=</span> <span class="n">some_function</span><span class="p">();</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">c</span> <span class="o">==</span> <span class="mi">4</span><span class="n">U</span><span class="p">);</span>
+
+<span class="n">uint32_t</span> <span class="n">d</span> <span class="o">=</span> <span class="n">some_function</span><span class="p">();</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">d</span> <span class="o">!=</span> <span class="mi">4</span><span class="n">U</span><span class="p">);</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">d</span> <span class="o">==</span> <span class="mi">3</span><span class="n">U</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The default behavior is to repeat the specified return values i.e.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stub</span><span class="p">::</span><span class="n">function</span><span class="o">&lt;</span><span class="n">uint32_t</span><span class="p">()</span><span class="o">&gt;</span> <span class="n">some_function</span><span class="p">;</span>
+<span class="n">some_function</span><span class="o">.</span><span class="n">set_return</span><span class="p">(</span><span class="mi">3</span><span class="n">U</span><span class="p">);</span>
+
+<span class="n">uint32_t</span> <span class="n">a</span> <span class="o">=</span> <span class="n">some_function</span><span class="p">();</span>
+<span class="n">uint32_t</span> <span class="n">b</span> <span class="o">=</span> <span class="n">some_function</span><span class="p">();</span>
+<span class="n">uint32_t</span> <span class="n">c</span> <span class="o">=</span> <span class="n">some_function</span><span class="p">();</span>
+
+<span class="k">assert</span><span class="p">(</span><span class="n">a</span> <span class="o">==</span> <span class="mi">3</span><span class="n">U</span> <span class="o">&amp;&amp;</span> <span class="n">b</span> <span class="o">==</span> <span class="mi">3</span><span class="n">U</span> <span class="o">&amp;&amp;</span> <span class="n">c</span> <span class="o">==</span> <span class="mi">3</span><span class="n">U</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>This behavior can be change by calling <code class="docutils literal notranslate"><span class="pre">no_repeat()</span></code> in which case
+the return_handler can only be invoked once per return value
+specified:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stub</span><span class="p">::</span><span class="n">function</span><span class="o">&lt;</span><span class="n">uint32_t</span><span class="p">()</span><span class="o">&gt;</span> <span class="n">some_function</span><span class="p">;</span>
+<span class="n">some_function</span><span class="o">.</span><span class="n">set_return</span><span class="p">(</span><span class="mi">1</span><span class="n">U</span><span class="p">)</span><span class="o">.</span><span class="n">no_repeat</span><span class="p">();</span>
+
+<span class="n">uint32_t</span> <span class="n">a</span> <span class="o">=</span> <span class="n">some_function</span><span class="p">();</span>
+<span class="o">//</span> <span class="n">uint32_t</span> <span class="n">b</span> <span class="o">=</span> <span class="n">some_function</span><span class="p">();</span> <span class="o">//</span> <span class="o">&lt;----</span> <span class="n">Will</span> <span class="n">crash</span>
+
+<span class="n">some_function</span><span class="o">.</span><span class="n">set_return</span><span class="p">(</span><span class="mi">1</span><span class="n">U</span><span class="p">,</span><span class="mi">2</span><span class="n">U</span><span class="p">,</span><span class="mi">3</span><span class="n">U</span><span class="p">)</span><span class="o">.</span><span class="n">no_repeat</span><span class="p">();</span>
+
+<span class="n">uint32_t</span> <span class="n">e</span> <span class="o">=</span> <span class="n">some_function</span><span class="p">();</span>
+<span class="n">uint32_t</span> <span class="n">f</span> <span class="o">=</span> <span class="n">some_function</span><span class="p">();</span>
+<span class="n">uint32_t</span> <span class="n">g</span> <span class="o">=</span> <span class="n">some_function</span><span class="p">();</span>
+<span class="o">//</span> <span class="n">uint32_t</span> <span class="n">h</span> <span class="o">=</span> <span class="n">some_function</span><span class="p">();</span> <span class="o">//</span> <span class="o">&lt;----</span> <span class="n">Will</span> <span class="n">crash</span>
+
+<span class="k">assert</span><span class="p">(</span><span class="n">a</span> <span class="o">==</span> <span class="mi">1</span><span class="n">U</span> <span class="o">&amp;&amp;</span> <span class="n">e</span> <span class="o">==</span> <span class="mi">1</span><span class="n">U</span> <span class="o">&amp;&amp;</span> <span class="n">f</span> <span class="o">==</span> <span class="mi">2</span><span class="n">U</span> <span class="o">&amp;&amp;</span> <span class="n">g</span> <span class="o">==</span> <span class="mi">3</span><span class="n">U</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>In addition to the functionality shown in this example the
+<code class="docutils literal notranslate"><span class="pre">stub::function</span></code> object provides a couple of extra functions for
+checking the current state. See the src/stub/function.hpp header for more
+information.</p>
+<p>For more information on the options for return values see the
+src/stub/return_handler.hpp</p>
+</div>
+<div class="section" id="using-stub-with-template-arguments">
+<h1>Using stub with template arguments<a class="headerlink" href="#using-stub-with-template-arguments" title="Permalink to this headline">¶</a></h1>
+<p>One place where stub works well is when testing policy classes or template code.</p>
+<div class="section" id="member-function">
+<h2>Member function<a class="headerlink" href="#member-function" title="Permalink to this headline">¶</a></h2>
+<p>As a small example, say we have the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">struct</span> <span class="n">paper</span>
+<span class="p">{</span>
+    <span class="o">//</span> <span class="n">Call</span> <span class="n">the</span> <span class="nb">print</span> <span class="n">function</span> <span class="n">on</span> <span class="n">the</span> <span class="n">printer</span> <span class="nb">object</span>
+    <span class="n">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">Printer</span><span class="o">&gt;</span>
+    <span class="n">void</span> <span class="nb">print</span><span class="p">(</span><span class="n">Printer</span><span class="o">&amp;</span> <span class="n">printer</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">printer</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;Hello world&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>Lets define a <code class="docutils literal notranslate"><span class="pre">Printer</span></code> object that we can use to test the behaviour of a
+<cite>paper</cite> object:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Test</span> <span class="n">stub</span> <span class="n">printer</span> <span class="nb">object</span>
+<span class="n">struct</span> <span class="n">printer</span>
+<span class="p">{</span>
+    <span class="n">stub</span><span class="p">::</span><span class="n">function</span><span class="o">&lt;</span><span class="n">void</span><span class="p">(</span><span class="n">std</span><span class="p">::</span><span class="n">string</span><span class="p">)</span><span class="o">&gt;</span> <span class="nb">print</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>Our unit test code could now look something along the lines of:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">printer</span> <span class="n">printer</span><span class="p">;</span>
+<span class="n">paper</span> <span class="n">hello</span><span class="p">;</span>
+
+<span class="n">hello</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">printer</span><span class="p">);</span>
+
+<span class="k">assert</span><span class="p">(</span><span class="n">printer</span><span class="o">.</span><span class="n">print</span><span class="o">.</span><span class="n">expect_calls</span><span class="p">()</span>
+    <span class="o">.</span><span class="k">with</span><span class="p">(</span><span class="s2">&quot;Hello world&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">to_bool</span><span class="p">());</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="static-member-function">
+<h2>Static member function<a class="headerlink" href="#static-member-function" title="Permalink to this headline">¶</a></h2>
+<p>If our <code class="docutils literal notranslate"><span class="pre">paper</span></code> class was invoking a static method on the the <code class="docutils literal notranslate"><span class="pre">Printer</span></code> type
+then our test code could look as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">struct</span> <span class="n">static_paper</span>
+<span class="p">{</span>
+    <span class="o">//</span> <span class="n">Call</span> <span class="n">the</span> <span class="n">static</span> <span class="nb">print</span> <span class="n">function</span> <span class="n">on</span> <span class="n">the</span> <span class="n">Printer</span> <span class="nb">type</span>
+    <span class="n">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">Printer</span><span class="o">&gt;</span>
+    <span class="n">void</span> <span class="nb">print</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">Printer</span><span class="p">::</span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello world&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>Define our static printer object:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">struct</span> <span class="n">static_printer</span>
+<span class="p">{</span>
+    <span class="n">static</span> <span class="n">stub</span><span class="p">::</span><span class="n">function</span><span class="o">&lt;</span><span class="n">void</span><span class="p">(</span><span class="n">std</span><span class="p">::</span><span class="n">string</span><span class="p">)</span><span class="o">&gt;</span> <span class="nb">print</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="o">//</span> <span class="n">Definition</span> <span class="n">of</span> <span class="n">the</span> <span class="n">static</span> <span class="n">stub</span>
+<span class="n">stub</span><span class="p">::</span><span class="n">function</span><span class="o">&lt;</span><span class="n">void</span><span class="p">(</span><span class="n">std</span><span class="p">::</span><span class="n">string</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">static_printer</span><span class="p">::</span><span class="nb">print</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The unit test code:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">static_paper</span> <span class="n">hello</span><span class="p">;</span>
+
+<span class="n">hello</span><span class="o">.</span><span class="n">print</span><span class="o">&lt;</span><span class="n">static_printer</span><span class="o">&gt;</span><span class="p">();</span>
+
+<span class="k">assert</span><span class="p">(</span><span class="n">static_printer</span><span class="p">::</span><span class="nb">print</span><span class="o">.</span><span class="n">expect_calls</span><span class="p">()</span>
+    <span class="o">.</span><span class="k">with</span><span class="p">(</span><span class="s2">&quot;Hello world&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">to_bool</span><span class="p">());</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="unit-testing">
+<h1>Unit testing<a class="headerlink" href="#unit-testing" title="Permalink to this headline">¶</a></h1>
+<p>The unit tests for the stub library are located in the <code class="docutils literal notranslate"><span class="pre">test/src</span></code> folder.</p>
+<p>We use the Google Unit Testing Framework (gtest) to drive the unit
+tests. To build the tests run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">waf</span> <span class="n">configure</span>
+<span class="n">python</span> <span class="n">waf</span>
+</pre></div>
+</div>
+<p>Depending on the platform you should see a test binary called
+<code class="docutils literal notranslate"><span class="pre">stub_tests</span></code> in (extension also depends on operating system
+e.g. <code class="docutils literal notranslate"><span class="pre">.exe</span></code> for windows):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">build</span><span class="o">/</span><span class="n">platform</span><span class="o">/</span><span class="n">test</span><span class="o">/</span>
+</pre></div>
+</div>
+<p>Where <code class="docutils literal notranslate"><span class="pre">platform</span></code> is typically is either linux, win32 or darwin
+depending on your operating system.</p>
+</div>
+<div class="section" id="license">
+<h1>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h1>
+<p>The stub library is released under the BSD license see the LICENSE.rst file</p>
+</div>
+
+
+          </div>
+            
+  <div class="footer-relations">
+    
+      <div class="pull-left">
+        <a class="btn btn-default" href="api/return_handler.html" title="previous chapter (use the left arrow)">class return_handler</a>
+      </div>
+    
+    </div>
+    <div class="clearer"></div>
+  
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="api/return_handler.html" title="class return_handler"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Stub  documentation</a> &#187;</li> 
+      </ul>
+    </div>
+<script type="text/javascript">
+  $("#mobile-toggle a").click(function () {
+    $("#left-column").toggle();
+  });
+</script>
+<script type="text/javascript" src="_static/js/bootstrap.js"></script>
+  <div class="footer">
+    &copy; Copyright 2018, contact@steinwurf.com. Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div>
+  </body>
+</html>
