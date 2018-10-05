@@ -21,14 +21,26 @@
         ],
         "branches.source_branch": true
     },
-    "gh_pages": {
-        "branches.source_branch": true,
-        "scripts": [
-            "ghp-import --no-jekyll -m 'giit push' --push --force ${build_path}/docs"
-        ],
-        "pip_packages": [
-            "ghp-import"
-        ],
-        "cwd": "${source_path}"
-    }
+    "gh_pages": [
+        {
+            "branches.source_branch": true,
+            "scripts": [
+                "ghp_index --project_name stub --github_url=https://github.com/steinwurf/stub --docspath ${build_path}/docs --outpath ${build_path}/docs"
+            ],
+            "pip_packages": [
+                "git+https://github.com/steinwurf/ghp-index.git@0f19d9d"
+            ],
+            "cwd": "${source_path}"
+        },
+        {
+            "branches.source_branch": true,
+            "scripts": [
+                "ghp-import --no-jekyll -m 'giit push' --push --force ${build_path}/docs"
+            ],
+            "pip_packages": [
+                "ghp-import"
+            ],
+            "cwd": "${source_path}"
+        }
+    ]
 }
