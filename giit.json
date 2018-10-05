@@ -23,6 +23,22 @@
     },
     "gh_pages": [
         {
+            "branches.regex.filters": [
+                "origin/master"
+            ],
+            "scripts": [
+                "versjon master$$ \\d+\\.\\d+\\.\\d+$$ ../{path} ${build_path}/docs/${name}/versjon.json"
+            ],
+            "branches.source_branch": true,
+            "tags.semver.filters": [
+                ">6.2.0"
+            ],
+            "pip_packages": [
+                "git+https://github.com/steinwurf/versjon.git@92ea498"
+            ],
+            "cwd": "${build_path}/docs"
+        },
+        {
             "branches.source_branch": true,
             "scripts": [
                 "ghp_index --project_name stub --github_url=https://github.com/steinwurf/stub --docspath ${build_path}/docs --outpath ${build_path}/docs"
