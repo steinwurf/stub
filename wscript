@@ -46,19 +46,22 @@ def build(bld):
 
 
 def docs(ctx):
+    """ Build and push the documentation see giit.json for details. """
+    with ctx.create_virtualenv() as venv:
 
-    with ctx.create_virtualenv(cwd=ctx.bldnode.abspath()) as venv:
-        if not ctx.options.all_docs:
-            venv.run('python -m pip install -r docs/requirements.txt',
-                     cwd=ctx.path.abspath())
-            venv.run('sphinx-build -b html -d build/doctrees docs build/html',
-                     cwd=ctx.path.abspath())
-        else:
-            giit = 'git+https://github.com/steinwurf/giit.git@cffca2e4'
-            venv.pip_install(packages=[giit])
-            venv.run('giit clean .', cwd=ctx.path.abspath())
+        giit = 'git+https://github.com/steinwurf/giit.git@cffca2e'
+
+        venv.run('pip install {}'.format(giit))
+
+        venv.run('giit clean .', cwd=ctx.path.abspath())
+
+        if ctx.options.all_docs or ctx.options.publish_docs:
+
             venv.run('giit sphinx .', cwd=ctx.path.abspath())
-            venv.run('giit landing_page .', cwd=ctx.path.abspath())
-            #if ctx.options.publish_docs:
-            #    venv.run('giit gh_pages .', cwd=ctx.path.abspath())
 
+        else:
+            venv.run('giit local-sphinx .', cwd=ctx.path.abspath())
+
+        if ctx.options.publish_docs:
+
+            venv.run('giit gh_pages .', cwd=ctx.path.abspath())

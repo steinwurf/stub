@@ -5,18 +5,19 @@
 
 #pragma once
 
-#include <tuple>
 #include <functional>
 #include <ostream>
+#include <tuple>
 
-#include "return_handler.hpp"
-#include "print_arguments.hpp"
 #include "compare_call.hpp"
+#include "print_arguments.hpp"
+#include "return_handler.hpp"
 
 namespace stub
 {
 /// Default function
-template<typename T> class function;
+template <typename T>
+class function;
 
 /// @brief The function object act like a "sink" for function calls
 ///        i.e. we can define a function object to accept any type of
@@ -62,11 +63,10 @@ template<typename T> class function;
 /// For more information on the options for return values see the
 /// return_handler.hpp
 ///
-template<typename R, typename... Args>
+template <typename R, typename... Args>
 class function<R(Args...)>
 {
 public:
-
     /// Represent a expectation of how the function object has been
     /// invoked. Using the API it is possible to setup how we
     /// expect the function object looks like. The expectation
@@ -74,13 +74,16 @@ public:
     /// expectation was correct.
     struct expectation
     {
+        // clang-format off
         /// @param the_function The function we configuring an expectation for
         ///
         /// @param predicate The function object used to compare the
         ///        call arguments
         expectation(const function& the_function) :
             m_function(the_function)
-        { }
+        {
+        }
+        // clang-format on
 
         /// Calling with(...) will add a set of arguments we
         /// expect to see. with(...) can be called multiple times
@@ -101,7 +104,7 @@ public:
         ///
         /// @return The expectation itself, which allows chaining
         ///         function calls
-        template<class... WithArgs>
+        template <class... WithArgs>
         expectation& with(WithArgs&&... args)
         {
             m_calls.emplace_back(std::forward<WithArgs>(args)...);
@@ -149,7 +152,6 @@ public:
         }
 
     private:
-
         /// The function we will check the expectation against
         const function& m_function;
 
@@ -169,8 +171,8 @@ public:
         return m_return_handler();
     }
 
-    /// @copydoc return_handler::set_return(const T&)
-    template<class... Returns>
+    /// @copydoc return_handler<R>::set_return()
+    template <class... Returns>
     return_handler<R>& set_return(Returns&&... return_value)
     {
         return m_return_handler.set_return(
@@ -180,7 +182,7 @@ public:
     /// @return The number of times the call operator has been invoked
     uint32_t calls() const
     {
-        return (uint32_t) m_calls.size();
+        return (uint32_t)m_calls.size();
     }
 
     /// @return True if no calls have been made otherwise false
@@ -248,7 +250,6 @@ public:
     }
 
 private:
-
     /// The return_handler manages the return values generated
     return_handler<R> m_return_handler;
 
@@ -266,11 +267,11 @@ private:
 /// @param function The function object we want to print
 ///
 /// @return The ostream operator.
-template<class T>
+template <class T>
 inline std::ostream& operator<<(std::ostream& out, const function<T>& function)
 {
     function.print(out);
     return out;
 }
 
-}
+} // namespace stub

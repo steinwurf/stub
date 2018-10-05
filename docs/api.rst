@@ -1,7 +1,9 @@
-
 API
 ===
 
-.. wurfapi:: class_synopsis.rst
-  :selector: stub::function< R(Args...)>
+.. toctree::
+   :maxdepth: 2
+   :glob:
+
+   api/*
 
