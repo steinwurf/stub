@@ -74,13 +74,16 @@ public:
     /// expectation was correct.
     struct expectation
     {
+        // clang-format off
         /// @param the_function The function we configuring an expectation for
         ///
         /// @param predicate The function object used to compare the
         ///        call arguments
-        expectation(const function& the_function) : m_function(the_function)
+        expectation(const function& the_function) :
+            m_function(the_function)
         {
         }
+        // clang-format on
 
         /// Calling with(...) will add a set of arguments we
         /// expect to see. with(...) can be called multiple times
