@@ -1,11 +1,9 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
   
   <!-- Licensed under the Apache 2.0 License -->
   <link rel="stylesheet" type="text/css" href="../_static/fonts/open-sans/stylesheet.css" />
@@ -22,7 +20,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Usage" href="../usage.html" />
@@ -198,8 +196,7 @@ $(document).ready(function() {
 <blockquote>
 <div><p>The call operator which will generate a return value.</p>
 <dl class="docutils">
-<dt>Returns:</dt>
-<dd>The generated return value</dd>
+<dt>Returns:</dt><dd>The generated return value</dd>
 </dl>
 </div></blockquote>
 <hr class="docutils" />
@@ -207,18 +204,15 @@ $(document).ready(function() {
 <blockquote>
 <div><p>Initializes the <a class="reference internal" href="#stub-return-handler"><span class="std std-ref">return_handler</span></a> with the return values to use. Calling this function will also reset the <a class="reference internal" href="#stub-return-handler"><span class="std std-ref">return_handler</span></a> state. So any previously specified returns values will be removed etc.</p>
 <dl class="docutils">
-<dt>Parameter <code class="docutils literal notranslate"><span class="pre">values</span></code>:</dt>
-<dd>The list of return values to use</dd>
-<dt>Returns:</dt>
-<dd>Reference to the return handler, this allows the caller to perform additional customization to the return handler such as turn on or off repeat.</dd>
+<dt>Parameter <code class="docutils literal notranslate"><span class="pre">values</span></code>:</dt><dd>The list of return values to use</dd>
+<dt>Returns:</dt><dd>Reference to the return handler, this allows the caller to perform additional customization to the return handler such as turn on or off repeat.</dd>
 </dl>
 </div></blockquote>
 </div>
 <div class="section" id="type-description">
 <h2>Type Description<a class="headerlink" href="#type-description" title="Permalink to this headline">¶</a></h2>
 <dl class="docutils" id="stub-return-handler-return-type">
-<dt>using <strong>return_type</strong> = typename unqualified_type&lt; R &gt;::type</dt>
-<dd>Get the unqualified version of return type.</dd>
+<dt>using <strong>return_type</strong> = typename unqualified_type&lt; R &gt;::type</dt><dd>Get the unqualified version of return type.</dd>
 </dl>
 </div>
 </div>

@@ -1,11 +1,9 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
   
   <!-- Licensed under the Apache 2.0 License -->
   <link rel="stylesheet" type="text/css" href="../_static/fonts/open-sans/stylesheet.css" />
@@ -22,7 +20,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="class function&lt; R(Args…)&gt;" href="function.html" />
@@ -174,8 +172,7 @@ $(document).ready(function() {
 <div><p><strong>expectation</strong> (<span class="xref std std-ref">const function &amp;</span> the_function)</p>
 <blockquote>
 <div><dl class="docutils">
-<dt>Parameter <code class="docutils literal notranslate"><span class="pre">the_function</span></code>:</dt>
-<dd>The function we configuring an expectation for</dd>
+<dt>Parameter <code class="docutils literal notranslate"><span class="pre">the_function</span></code>:</dt><dd>The function we configuring an expectation for</dd>
 </dl>
 </div></blockquote>
 </div></blockquote>
@@ -185,8 +182,7 @@ $(document).ready(function() {
 <blockquote>
 <div><p>Use the to_bool member function when casting this expectation to a boolean value.</p>
 <dl class="docutils">
-<dt>Returns:</dt>
-<dd>True if the expectation matches the function, otherwise false</dd>
+<dt>Returns:</dt><dd>True if the expectation matches the function, otherwise false</dd>
 </dl>
 </div></blockquote>
 </div></blockquote>
@@ -195,8 +191,7 @@ $(document).ready(function() {
 <blockquote>
 <div><p>Convert the expectation to a boolean value either true of false depending on whether the expectations match the actual call. The first argument passed to the predicate function is the actual call arguments and the second is the expectation.</p>
 <dl class="docutils">
-<dt>Returns:</dt>
-<dd>True if the expectation matches the call, otherwise false</dd>
+<dt>Returns:</dt><dd>True if the expectation matches the call, otherwise false</dd>
 </dl>
 </div></blockquote>
 <hr class="docutils" />
@@ -212,10 +207,8 @@ $(document).ready(function() {
 </pre></div>
 </div>
 <dl class="docutils">
-<dt>Parameter <code class="docutils literal notranslate"><span class="pre">args</span></code>:</dt>
-<dd>The arguments for a function call</dd>
-<dt>Returns:</dt>
-<dd>The expectation itself, which allows chaining function calls</dd>
+<dt>Parameter <code class="docutils literal notranslate"><span class="pre">args</span></code>:</dt><dd>The arguments for a function call</dd>
+<dt>Returns:</dt><dd>The expectation itself, which allows chaining function calls</dd>
 </dl>
 </div></blockquote>
 </div>
