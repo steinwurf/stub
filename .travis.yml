@@ -1,6 +1,16 @@
 language: bash
 matrix:
   include:
+    - name: Linux Ubuntu 18 - Docs
+      os: linux
+      dist: bionic
+      script:
+        - if [ "$TRAVIS_BRANCH" == "master" ];
+          then
+            python waf docs --all_docs --publish_docs;
+          else
+            python waf docs --all_docs;
+          fi
     - name: Linux Ubuntu 16 - g++ 5
       os: linux
       dist: xenial

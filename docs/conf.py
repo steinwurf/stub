@@ -11,14 +11,21 @@ extensions = ['wurfapi']
 
 # Wurfdocs options - relative to your docs dir
 wurfapi = {
-    'source_paths': ['../src'],
-    'recursive': True,
-    'parser': {'type': 'doxygen', 'download': True,
-               'warnings_as_error': False}
+    'source_paths': [
+        '../src/stub/function.hpp',
+        '../src/stub/return_handler.hpp',
+    ],
+    'recursive': False,
+    'include_paths': ['../src'],
+    'parser': {
+        'type': 'doxygen',
+        'download': True,
+        'warnings_as_error': False
+    }
 }
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['_templates']
+templates_path = []
 
 # The suffix(es) of source filenames.
 # You can specify multiple suffix as a list of string:

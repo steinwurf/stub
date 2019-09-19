@@ -9,11 +9,6 @@ APPNAME = 'stub'
 VERSION = '6.2.0'
 
 
-class DocsContext(BuildContext):
-    cmd = 'docs'
-    fun = 'docs'
-
-
 def options(opt):
 
     group = opt.add_option_group("Documentation")
@@ -45,23 +40,27 @@ def build(bld):
         bld.recurse('test')
 
 
+class DocsContext(BuildContext):
+    cmd = 'docs'
+    fun = 'docs'
+
+
 def docs(ctx):
-    """ Build and push the documentation see giit.json for details. """
+    """ Build the documentation in a virtualenv """
+
     with ctx.create_virtualenv() as venv:
 
-        giit = 'git+https://github.com/steinwurf/giit.git@cffca2e'
-
-        venv.run('pip install {}'.format(giit))
-
-        venv.run('giit clean .', cwd=ctx.path.abspath())
-
-        if ctx.options.all_docs or ctx.options.publish_docs:
-
+        if not ctx.options.all_docs:
+            venv.run('python -m pip install -r docs/requirements.txt',
+                     cwd=ctx.path.abspath())
+            venv.run('sphinx-build -v -E -a -D release={} -b html '
+                     '-d build/doctrees docs build/html'.format(VERSION),
+                     cwd=ctx.path.abspath())
+        else:
+            giit = 'git+https://github.com/steinwurf/giit.git@cffca2e'
+            venv.run('pip install {}'.format(giit))
+            venv.run('giit clean .', cwd=ctx.path.abspath())
             venv.run('giit sphinx .', cwd=ctx.path.abspath())
 
-        else:
-            venv.run('giit local-sphinx .', cwd=ctx.path.abspath())
-
-        if ctx.options.publish_docs:
-
-            venv.run('giit gh_pages .', cwd=ctx.path.abspath())
+            if ctx.options.publish_docs:
+                venv.run('giit gh_pages .', cwd=ctx.path.abspath())
