@@ -1,6 +1,11 @@
 language: bash
 matrix:
   include:
+    - name: Linux Ubuntu 18 - Docs
+      os: linux
+      dist: bionic
+      script:
+        - python waf docs --all_docs
     - name: Linux Ubuntu 16 - g++ 5
       os: linux
       dist: xenial
