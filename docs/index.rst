@@ -1,9 +1,8 @@
 Welcome to Stub's documentation!
 ================================
 
-
-.. image:: http://buildbot.steinwurf.dk/svgstatus?project=stub
-    :target: http://buildbot.steinwurf.dk/stats?projects=stub
+.. image:: https://travis-ci.org/steinwurf/stub.svg?branch=master
+    :target: https://travis-ci.org/steinwurf/stub
 
 stub is a simple C++ library which is meant to provide simple helper
 functions to ease sometimes tedious testing tasks.
@@ -61,4 +60,3 @@ simpler. See this example of how ``function_to_test`` is tested:
 
    api
    usage
-
