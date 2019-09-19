@@ -1,6 +1,6 @@
-
 Usage
 -----
+
 The ``stub::function`` object act like a "sink" for function calls
 i.e. we can define a function object to accept any type of function
 call and it will simply store the arguments for later inspection.
@@ -67,7 +67,7 @@ expectation matches or ``false`` if not.
 
 
 Functions taking no arguments
-............................
+.............................
 
 The ``with(...)`` function takes exactly the same number and type of
 arguments as the ``stub::function``.
@@ -546,4 +546,5 @@ depending on your operating system.
 
 License
 -------
+
 The stub library is released under the BSD license see the LICENSE.rst file
