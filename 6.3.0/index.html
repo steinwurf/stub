@@ -1,0 +1,253 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+  
+  <!-- Licensed under the Apache 2.0 License -->
+  <link rel="stylesheet" type="text/css" href="_static/fonts/open-sans/stylesheet.css" />
+  <!-- Licensed under the SIL Open Font License -->
+  <link rel="stylesheet" type="text/css" href="_static/fonts/source-serif-pro/source-serif-pro.css" />
+  <link rel="stylesheet" type="text/css" href="_static/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="_static/css/bootstrap-theme.min.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+    <title>Welcome to Stub’s documentation! &#8212; Stub  documentation</title>
+    <link rel="stylesheet" href="_static/guzzle.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="API" href="api.html" />
+  
+   
+
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="api.html" title="API"
+             accesskey="N">next</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">Stub  documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="container-wrapper">
+
+      <div id="mobile-toggle">
+        <a href="#"><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span></a>
+      </div>
+  <div id="left-column">
+    <div class="sphinxsidebar"><a href="
+    #" class="text-logo">Stub</a>
+<div class="sidebar-block">
+  <div class="sidebar-wrapper">
+    <h2>Table Of Contents</h2>
+  </div>
+  <div class="sidebar-toc">
+    
+    
+      <ul>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html#function-calls">Function Calls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html#function-return-values">Function return values</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html#using-stub-with-template-arguments">Using stub with template arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html#unit-testing">Unit testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html#license">License</a></li>
+</ul>
+
+    
+  </div>
+</div>
+<div class="sidebar-block">
+  <div class="sidebar-wrapper">
+    <div id="main-search">
+      <form class="form-inline" action="search.html" method="GET" role="form">
+        <div class="input-group">
+          <input name="q" type="text" class="form-control" placeholder="Search...">
+        </div>
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div>
+<div class="sidebar-block">
+  <div class="sidebar-wrapper">
+    <h2>Versions</h2>
+    <div class="sidebar-versions">
+      <dl id="versions"></dl>
+    </div>
+  </div>
+</div>
+<script>
+$(document).ready(function() {
+  const this_version = '';
+  const version_json_location = './versjon.json';
+  const path_to_root = './';
+
+  function addVersion(name, url) {
+    const a = $('<a></a>');
+    a.text(name);
+    a.attr('href', path_to_root + url);
+    const dd = $('<dd></dd>').append(a);
+    let final = dd;
+    if (name === this_version)
+    {
+      final = $('<strong></strong>').append(dd);
+    }
+    $('#versions').append(final);
+  }
+  $.getJSON(version_json_location, {}).done((versions) => {
+    versions.forEach(version => addVersion(version['name'], version['url']));
+  });
+});
+</script>
+      
+    </div>
+  </div>
+        <div id="right-column">
+          
+          <div role="navigation" aria-label="breadcrumbs navigation">
+            <ol class="breadcrumb">
+              <li><a href="#">Docs</a></li>
+              
+              <li>Welcome to Stub’s documentation!</li>
+            </ol>
+          </div>
+          
+          <div class="document clearer body">
+            
+  <div class="section" id="welcome-to-stub-s-documentation">
+<h1>Welcome to Stub’s documentation!<a class="headerlink" href="#welcome-to-stub-s-documentation" title="Permalink to this headline">¶</a></h1>
+<a class="reference external image-reference" href="https://travis-ci.org/steinwurf/stub"><img alt="https://travis-ci.org/steinwurf/stub.svg?branch=master" src="https://travis-ci.org/steinwurf/stub.svg?branch=master" /></a>
+<p>stub is a simple C++ library which is meant to provide simple helper
+functions to ease sometimes tedious testing tasks.</p>
+<p>stub is especially helpful when testing template functions which
+takes hard-to-construct objects as parameters.
+With stub the task of making such tests short and self-contained, becomes much
+simpler. See this example of how <code class="docutils literal notranslate"><span class="pre">function_to_test</span></code> is tested:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#include &lt;stub/function.hpp&gt;</span>
+<span class="c1">#include &lt;cassert&gt;</span>
+
+<span class="o">//</span> <span class="n">Function</span> <span class="n">to</span> <span class="n">test</span>
+<span class="n">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
+<span class="n">void</span> <span class="n">function_to_test</span><span class="p">(</span><span class="n">T</span><span class="o">&amp;</span> <span class="n">t</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">some_function</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">some_check</span><span class="p">())</span>
+    <span class="p">{</span>
+        <span class="n">t</span><span class="o">.</span><span class="n">do_something_else</span><span class="p">(</span><span class="n">false</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="o">//</span> <span class="n">Dummy</span> <span class="nb">object</span> <span class="n">to</span> <span class="n">test</span> <span class="n">function</span> <span class="k">with</span>
+<span class="n">struct</span> <span class="n">dummy</span>
+<span class="p">{</span>
+    <span class="n">stub</span><span class="p">::</span><span class="n">function</span><span class="o">&lt;</span><span class="n">void</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">some_function</span><span class="p">;</span>
+    <span class="n">stub</span><span class="p">::</span><span class="n">function</span><span class="o">&lt;</span><span class="nb">bool</span><span class="p">()</span><span class="o">&gt;</span> <span class="n">some_check</span><span class="p">;</span>
+    <span class="n">stub</span><span class="p">::</span><span class="n">function</span><span class="o">&lt;</span><span class="n">void</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">do_something_else</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="n">void</span> <span class="n">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="o">//</span> <span class="n">Construct</span> <span class="nb">object</span>
+    <span class="n">dummy</span> <span class="n">obj</span><span class="p">;</span>
+
+    <span class="o">//</span> <span class="n">Setup</span> <span class="k">return</span> <span class="n">value</span>
+    <span class="n">obj</span><span class="o">.</span><span class="n">some_check</span><span class="o">.</span><span class="n">set_return</span><span class="p">(</span><span class="n">true</span><span class="p">);</span>
+
+    <span class="o">//</span> <span class="n">Run</span> <span class="n">function</span>
+    <span class="n">function_to_test</span><span class="p">(</span><span class="n">obj</span><span class="p">);</span>
+
+    <span class="o">//</span> <span class="n">Check</span> <span class="n">calls</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">some_function</span><span class="o">.</span><span class="n">expect_calls</span><span class="p">()</span><span class="o">.</span><span class="k">with</span><span class="p">(</span><span class="mi">4</span><span class="p">));</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">some_check</span><span class="o">.</span><span class="n">calls</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">do_something_else</span><span class="o">.</span><span class="n">expect_calls</span><span class="p">()</span><span class="o">.</span><span class="k">with</span><span class="p">(</span><span class="n">false</span><span class="p">));</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/expectation.html">struct expectation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/function.html">class function&lt; R(Args…)&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/return_handler.html">class return_handler</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#header-only">Header-only</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html#function-calls">Function Calls</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#check-a-set-of-function-calls">Check a set of function calls</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#functions-taking-no-arguments">Functions taking no arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#check-the-number-of-function-calls">Check the number of function calls</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#clear-the-state-of-the-function-object">Clear the state of the function object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#clear-only-the-function-calls-state">Clear only the function calls state</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#get-the-arguments-of-a-specific-function-call">Get the arguments of a specific function call</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#ignore-specific-arguments-of-a-function-call">Ignore specific arguments of a function call</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#check-if-specific-arguments-are-values-other-than-null">Check if specific arguments are values other than null</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#comparing-custom-arguments">Comparing custom arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#building-an-expectation">Building an Expectation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html#function-return-values">Function return values</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html#using-stub-with-template-arguments">Using stub with template arguments</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#member-function">Member function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#static-member-function">Static member function</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html#unit-testing">Unit testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html#license">License</a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+            
+  <div class="footer-relations">
+    
+      <div class="pull-right">
+        <a class="btn btn-default" href="api.html" title="next chapter (use the right arrow)">API</a>
+      </div>
+    </div>
+    <div class="clearer"></div>
+  
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="api.html" title="API"
+             >next</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">Stub  documentation</a> &#187;</li> 
+      </ul>
+    </div>
+<script type="text/javascript">
+  $("#mobile-toggle a").click(function () {
+    $("#left-column").toggle();
+  });
+</script>
+<script type="text/javascript" src="_static/js/bootstrap.js"></script>
+  <div class="footer">
+    &copy; Copyright 2018, contact@steinwurf.com. Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div>
+  </body>
+</html>
