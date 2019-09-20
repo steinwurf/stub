@@ -27,14 +27,14 @@
                 "origin/master"
             ],
             "scripts": [
-                "versjon master$$ \\d+\\.\\d+\\.\\d+$$ ../{path} ${build_path}/docs/${name}/versjon.json"
+                "versjon master$$ \"\\d+\\.\\d+\\.\\d+$$\" ../{path} ${build_path}/docs/${name}/versjon.json"
             ],
             "branches.source_branch": true,
             "tags.semver.filters": [
                 ">6.2.0"
             ],
             "pip_packages": [
-                "git+https://github.com/steinwurf/versjon.git@92ea498"
+                "git+https://github.com/steinwurf/versjon.git@a49a7ee1"
             ],
             "cwd": "${build_path}/docs"
         },
