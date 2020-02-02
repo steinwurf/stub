@@ -19,7 +19,7 @@ cryptography==2.8         # via paramiko
 cssselect==1.1.0          # via pyquery
 docutils==0.16            # via sphinx
 fuzzywuzzy==0.17.0        # via sphobjinv
-git+https://github.com/steinwurf/giit@9f39c59
+git+https://github.com/steinwurf/giit@0600971
 git+https://github.com/steinwurf/guzzle_sphinx_theme@86a6581
 idna==2.8                 # via requests
 imagesize==1.2.0          # via sphinx
