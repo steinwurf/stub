@@ -58,8 +58,8 @@ def docs(ctx):
 
         venv.run('python -m pip install -r docs/requirements.txt')
 
-        #     venv.run('giit clean .', cwd=ctx.path.abspath())
-        #     venv.run('giit sphinx .', cwd=ctx.path.abspath())
+        venv.run('giit clean .', cwd=ctx.path.abspath())
+        venv.run('giit sphinx .', cwd=ctx.path.abspath())
 
         # if not ctx.options.all_docs:
         #     venv.run('python -m pip install -r docs/requirements.txt',
