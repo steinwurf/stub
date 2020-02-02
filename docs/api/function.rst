@@ -1,2 +1,2 @@
 .. wurfapi:: class_synopsis.rst
-  :selector: stub::function< R(Args...)>
+  :selector: stub::function<R(Args...)>
