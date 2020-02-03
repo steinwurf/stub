@@ -23,6 +23,7 @@ namespace stub
 ///
 /// Example:
 ///
+/// @code
 ///    return_handler<uint32_t> v;
 ///    v.set_return(4U);
 ///
@@ -35,9 +36,11 @@ namespace stub
 ///    uint32_t c = v();
 ///    assert(c != 3U);
 ///    assert(c == 4U);
+/// @endcode
 ///
 /// Or alternatively set multiple return values:
 ///
+/// @code
 ///    return_handler<uint32_t> v;
 ///    v.set_return({4U,3U});
 ///
@@ -53,6 +56,7 @@ namespace stub
 ///    uint32_t d = v();
 ///    assert(d != 4U);
 ///    assert(d == 3U);
+/// @endcode
 ///
 /// The default behavior is to repeat the specified return values i.e.:
 ///
@@ -83,19 +87,18 @@ namespace stub
 ///    uint32_t c = v();
 ///    uint32_t d = v(); // <---- Crash
 ///
-template<class R>
+template <class R>
 class return_handler
 {
 public:
-
     /// Get the unqualified version of return type.
     using return_type = typename unqualified_type<R>::type;
 
     /// Constructor
-    return_handler() :
-        m_repeat(true),
-        m_position(0)
-    { }
+    return_handler() : m_repeat(true),
+                       m_position(0)
+    {
+    }
 
     /// @todo remove this code. or consider a different way to handle this.
     /// Make the return_handler non-copyable
@@ -112,8 +115,8 @@ public:
     /// @return Reference to the return handler, this allows the
     /// caller to perform additional customization to the return
     /// handler such as turn on or off repeat.
-    template<class... Args>
-    return_handler& set_return(Args&&... values)
+    template <class... Args>
+    return_handler &set_return(Args &&... values)
     {
         m_repeat = true;
         m_position = 0;
@@ -154,24 +157,21 @@ public:
     }
 
 private:
-
     /// Overload that adds a return value
-    void add_return(const return_type& value)
+    void add_return(const return_type &value)
     {
         m_returns.push_back(value);
-
     }
 
     /// Add a number of return values
-    template<class... Args>
-    void add_return(const return_type& value, Args&&... more)
+    template <class... Args>
+    void add_return(const return_type &value, Args &&... more)
     {
         m_returns.push_back(value);
         add_return(std::forward<Args>(more)...);
     }
 
 private:
-
     /// Boolean value controlling whether we should repeat return
     /// values when reaching the end of the return value vector or
     /// assert. True means we repeat, false means we should assert.
@@ -191,13 +191,13 @@ private:
 /// value. We expect no calls to this return_handler the call
 /// operator is only there to allow the code to compile when
 /// e.g. the function class instantiates a return handler.
-template<>
+template <>
 class return_handler<void>
 {
 public:
-
     /// Empty call operator
     void operator()() const
-    { }
+    {
+    }
 };
-}
+} // namespace stub

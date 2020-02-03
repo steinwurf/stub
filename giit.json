@@ -1,62 +1,31 @@
 {
     "local-sphinx": {
         "scripts": [
-            "sphinx-build -b html . ${build_path}/workingtree -D release=${name}"
+            "sphinx-build -b html . ${build_path}/workingtree -D version=${name}"
         ],
         "requirements": "${source_path}/docs/requirements.txt",
         "cwd": "${source_path}/docs",
         "workingtree": true
     },
-    "sphinx": {
-        "scripts": [
-            "sphinx-build -b html . ${build_path}/docs/${name}"
-        ],
-        "requirements": "${source_path}/docs/requirements.txt",
-        "cwd": "${source_path}/docs",
-        "tags.semver.filters": [
-            ">6.2.0"
-        ],
-        "branches.regex.filters": [
-            "origin/master"
-        ],
-        "branches.source_branch": true
-    },
-    "gh_pages": [
+    "sphinx": [
         {
-            "branches.regex.filters": [
-                "origin/master"
-            ],
             "scripts": [
-                "versjon master$$ \"\\d+\\.\\d+\\.\\d+$$\" ../{path} ${build_path}/docs/${name}/versjon.json"
+                "sphinx-build -b html -D version=${name} . ${build_path}/${name}"
             ],
-            "branches.source_branch": true,
+            "requirements": "${source_path}/docs/requirements.txt",
+            "cwd": "${source_path}/docs",
             "tags.semver.filters": [
                 ">6.2.0"
             ],
-            "pip_packages": [
-                "git+https://github.com/steinwurf/versjon.git@a49a7ee1"
+            "branches.regex.filters": [
+                "origin/master"
             ],
-            "cwd": "${build_path}/docs"
+            "branches.source_branch": true
         },
         {
-            "branches.source_branch": true,
             "scripts": [
-                "ghp_index --project_name stub --github_url=https://github.com/steinwurf/stub --docspath ${build_path}/docs --outpath ${build_path}/docs"
-            ],
-            "pip_packages": [
-                "git+https://github.com/steinwurf/ghp-index.git@0f19d9d"
-            ],
-            "cwd": "${source_path}"
-        },
-        {
-            "branches.source_branch": true,
-            "scripts": [
-                "ghp-import --no-jekyll -m 'giit push' --push --force ${build_path}/docs"
-            ],
-            "pip_packages": [
-                "ghp-import"
-            ],
-            "cwd": "${source_path}"
+                "versjon --docs_path ${build_path}"
+            ]
         }
     ]
 }
