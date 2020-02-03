@@ -2,4 +2,4 @@ sphinx
 wurfapi
 versjon
 git+https://github.com/steinwurf/guzzle_sphinx_theme@86a6581
-git+https://github.com/steinwurf/giit@a288265
+/home/mvp/dev/steinwurf/giit/dist/giit-3.0.0-py2.py3-none-any.whl
