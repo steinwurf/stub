@@ -9,15 +9,6 @@ APPNAME = 'stub'
 VERSION = '6.3.0'
 
 
-def options(opt):
-
-    group = opt.add_option_group("Documentation")
-
-    group.add_option(
-        '--local_docs', default=False, action='store_true',
-        help='Publish the documentation.')
-
-
 def build(bld):
 
     bld.env.append_unique(
@@ -49,9 +40,5 @@ def docs(ctx):
         venv.run('python -m pip install -r docs/requirements.txt')
 
         venv.run('giit clean . --build_path build/docs', cwd=ctx.path.abspath())
-
-        if ctx.options.local_docs:
-            venv.run('giit local-sphinx . --build_path build/docs', cwd=ctx.path.abspath())
-        else:
-            venv.run('giit sphinx . --build_path build/docs', cwd=ctx.path.abspath())
+        venv.run('giit sphinx . --build_path build/docs', cwd=ctx.path.abspath())
 
