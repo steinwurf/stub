@@ -35,11 +35,6 @@ def build(bld):
         bld.recurse('test')
 
 
-class DocsContext(BuildContext):
-    cmd = 'docs'
-    fun = 'docs'
-
-
 def docs(ctx):
     """ Build the documentation in a virtualenv """
 
