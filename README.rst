@@ -19,7 +19,7 @@ functions to ease sometimes tedious testing tasks.
 API documentation
 -----------------
 
-* http://steinwurf.github.io/stub/
+* http://stub.steinwurf.com/stable
 
 
 License
