@@ -7,6 +7,7 @@ every change, see the Git log.
 Latest
 ------
 * Major: Updating how docs are built
+* Update waf build script
 
 6.3.0
 -----
