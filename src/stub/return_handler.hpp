@@ -95,8 +95,9 @@ public:
     using return_type = typename unqualified_type<R>::type;
 
     /// Constructor
-    return_handler() : m_repeat(true),
-                       m_position(0)
+    return_handler() :
+        m_repeat(true),
+        m_position(0)
     {
     }
 
@@ -116,7 +117,7 @@ public:
     /// caller to perform additional customization to the return
     /// handler such as turn on or off repeat.
     template <class... Args>
-    return_handler &set_return(Args &&... values)
+    return_handler& set_return(Args&&... values)
     {
         m_repeat = true;
         m_position = 0;
@@ -158,14 +159,14 @@ public:
 
 private:
     /// Overload that adds a return value
-    void add_return(const return_type &value)
+    void add_return(const return_type& value)
     {
         m_returns.push_back(value);
     }
 
     /// Add a number of return values
     template <class... Args>
-    void add_return(const return_type &value, Args &&... more)
+    void add_return(const return_type& value, Args&&... more)
     {
         m_returns.push_back(value);
         add_return(std::forward<Args>(more)...);
