@@ -1,5 +1,5 @@
 sphinx
 wurfapi
-git+https://github.com/steinwurf/versjon@6c32d533aa709ae2cf9cf920f08947998891c122
+git+https://github.com/steinwurf/versjon@c3d287429f51fbeb344bfb8e8496f429256c284e
 git+https://github.com/steinwurf/guzzle_sphinx_theme@86a6581
 giit
