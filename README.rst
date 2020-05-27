@@ -2,7 +2,7 @@
 Stub
 ====
 
-.. image:: ./stub.svg
+.. image:: ./docs/icon.svg
    :height: 200px
    :width: 200px
 
@@ -19,7 +19,7 @@ functions to ease sometimes tedious testing tasks.
 API documentation
 -----------------
 
-* http://stub.steinwurf.com/stable
+* https://stub.steinwurf.com/stable
 
 
 License
