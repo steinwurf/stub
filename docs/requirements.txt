@@ -15,12 +15,12 @@ chardet==3.0.4            # via requests
 click==7.1.2              # via giit, versjon
 colorama==0.4.3           # via giit, versjon
 contextlib2==0.6.0.post1  # via schema
-cryptography==2.9.2       # via paramiko
+cryptography==3.2         # via paramiko
 cssselect==1.1.0          # via pyquery
 docutils==0.16            # via sphinx
 fuzzywuzzy==0.18.0        # via sphobjinv
-giit==5.0.0               # via -r docs/requirements.in
-git+https://github.com/steinwurf/guzzle_sphinx_theme@53265a5ccd929ad63b7b0bff029c634be4977a43  # via -r docs/requirements.in
+giit==5.0.0               # via -r requirements.in
+git+https://github.com/steinwurf/guzzle_sphinx_theme@53265a5ccd929ad63b7b0bff029c634be4977a43  # via -r requirements.in
 idna==2.9                 # via requests
 imagesize==1.2.0          # via sphinx
 jinja2==2.11.2            # via sphinx
@@ -43,7 +43,7 @@ semantic-version==2.8.5   # via giit, versjon
 six==1.15.0               # via bcrypt, cryptography, giit, jsonschema, packaging, pynacl, pyrsistent, wurfapi
 snowballstemmer==2.0.0    # via sphinx
 soupsieve==2.0.1          # via beautifulsoup4
-sphinx==3.0.4             # via -r docs/requirements.in, guzzle-sphinx-theme, wurfapi
+sphinx==3.0.4             # via -r requirements.in, guzzle-sphinx-theme, wurfapi
 sphinxcontrib-applehelp==1.0.2  # via sphinx
 sphinxcontrib-devhelp==1.0.2  # via sphinx
 sphinxcontrib-htmlhelp==1.0.3  # via sphinx
@@ -52,8 +52,8 @@ sphinxcontrib-qthelp==1.0.3  # via sphinx
 sphinxcontrib-serializinghtml==1.1.4  # via sphinx
 sphobjinv==2.0.1          # via versjon
 urllib3==1.25.9           # via requests
-versjon==1.1.1            # via -r docs/requirements.in
-wurfapi==6.0.1            # via -r docs/requirements.in
+versjon==1.1.1            # via -r requirements.in
+wurfapi==6.0.1            # via -r requirements.in
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools
