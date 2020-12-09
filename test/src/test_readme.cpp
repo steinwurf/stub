@@ -19,6 +19,8 @@ void function_to_test(T& t)
         t.do_something_else(false);
     }
 }
+#undef assert
+#define assert(e) EXPECT_TRUE((bool)(e));
 
 struct dummy
 {
@@ -406,3 +408,5 @@ TEST(test_readme, using_static_stub_with_template_arguments)
            .with("Hello world")
            .to_bool());
 }
+
+#undef assert
