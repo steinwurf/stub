@@ -229,6 +229,7 @@ not null.
 If a pointer given to a function is internally computed it can be impossible or
 complex to know what the correct value is. There for not_nullptr can be used
 when that is the only value not allowed.
+
 ::
 
     stub::function<void(uint8_t*, uint32_t)> function;
@@ -287,6 +288,7 @@ equal if their second element is equal. To do this with the stub
 library we need to provide a custom comparison function.
 
 ::
+
     using element = std::pair<uint32_t, uint32_t>;
 
     auto expect = [](uint32_t expected, const element& actual) -> bool
