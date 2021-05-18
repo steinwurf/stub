@@ -21,7 +21,7 @@ TEST(test_print_argument, pointer)
 {
     std::stringstream stream;
 
-    uint8_t* v = (uint8_t*) 0xdeadbeef;
+    uint8_t* v = (uint8_t*)0xdeadbeef;
     stub::print_argument(stream, 5, v);
 
     EXPECT_EQ(stream.str(), "Arg 5: 0xdeadbeef\n");

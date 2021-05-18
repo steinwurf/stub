@@ -5,11 +5,11 @@
 
 #pragma once
 
-#include <memory>
 #include <cassert>
+#include <memory>
 
-#include "compare_arguments.hpp"
 #include "arguments.hpp"
+#include "compare_arguments.hpp"
 
 namespace stub
 {
@@ -59,17 +59,17 @@ namespace stub
 /// as the second argument. By specializing compare_argument(...) we can
 /// extend support for more special values to support custom behaviour.
 ///
-template<class... Args>
+template <class... Args>
 struct compare_call
 {
     /// Construct a new call comparison
-    template<class... WithArgs>
+    template <class... WithArgs>
     compare_call(WithArgs&&... expected)
     {
         assert(!m_implementation);
 
-        m_implementation = std::unique_ptr<interface>(
-            new implementation<WithArgs...>(
+        m_implementation =
+            std::unique_ptr<interface>(new implementation<WithArgs...>(
                 std::forward<WithArgs>(expected)...));
     }
 
@@ -82,22 +82,23 @@ struct compare_call
     }
 
 private:
-
     /// Interface used in the type erasure
     struct interface
     {
         virtual bool compare(const arguments<Args...>& value) const = 0;
         virtual ~interface()
-        { }
+        {
+        }
     };
 
     // Container for the expected values
-    template<class... WithArgs>
+    template <class... WithArgs>
     struct implementation : public interface
     {
         implementation(WithArgs&&... expected) :
             m_expected(std::forward<WithArgs>(expected)...)
-        { }
+        {
+        }
 
         bool compare(const arguments<Args...>& actual) const override
         {
@@ -109,7 +110,6 @@ private:
     };
 
 private:
-
     /// Stores the type-erased expectation
     std::unique_ptr<interface> m_implementation;
 };

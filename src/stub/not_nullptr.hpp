@@ -20,5 +20,7 @@ namespace stub
 ///    assert(fool.expect_calls()
 ///        .with(3U, stub::not_nullptr()));
 ///
-struct not_nullptr { };
+struct not_nullptr
+{
+};
 }

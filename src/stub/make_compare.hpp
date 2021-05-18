@@ -19,10 +19,10 @@ namespace stub
 ///
 ///    assert(compare(1U) == true);
 ///    assert(compare(2U) == false);
-template<class C>
+template <class C>
 compare<C> make_compare(C c)
 {
-    return compare<C> { c };
+    return compare<C>{c};
 }
 
 }

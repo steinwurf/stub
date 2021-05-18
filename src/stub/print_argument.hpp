@@ -5,15 +5,15 @@
 
 #pragma once
 
-#include <ostream>
-#include <iomanip>
 #include <cstdint>
+#include <iomanip>
+#include <ostream>
 
 namespace stub
 {
 /// Default printer - just use the std::ostream operator<< to output
 /// the values to the stream.
-template<class T>
+template <class T>
 inline void print_argument(std::ostream& out, uint32_t index, T value)
 {
     out << "Arg " << index << ": " << value << "\n";
@@ -30,7 +30,7 @@ inline void print_argument(std::ostream& out, uint32_t index, T value)
 /// pointers are not to strings but to actual binary data. In these
 /// cases trying to print the data as a zero-terminated string leads to
 /// all sorts of out-of-bounds memory access.
-template<class T>
+template <class T>
 inline void print_argument(std::ostream& out, uint32_t index, T* value)
 {
     // The easy approach i.e. just using the std::ostream overload for
@@ -39,7 +39,7 @@ inline void print_argument(std::ostream& out, uint32_t index, T* value)
     // to work a bit more to print the value of the pointer as hex but
     // using the code below we get the same string representation on
     // all tested platforms.
-    out << "Arg " << std::dec << std::noshowbase << index << ": "
-        << std::hex << std::showbase << (uintptr_t)value << "\n";
+    out << "Arg " << std::dec << std::noshowbase << index << ": " << std::hex
+        << std::showbase << (uintptr_t)value << "\n";
 }
 }

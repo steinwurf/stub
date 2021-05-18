@@ -19,20 +19,16 @@ namespace stub
 ///
 /// @return When the two tuples are empty they compare equal so we return
 ///         true
-template
-<
-    class Index = std::integral_constant<uint32_t, 0U>,
-    class... Args,
-    class... WithArgs,
-    class LastIndex = std::integral_constant<uint32_t, sizeof...(Args)>,
-    typename std::enable_if<
-        std::is_same<Index,LastIndex>::value, uint8_t>::type = 0
->
+template <class Index = std::integral_constant<uint32_t, 0U>, class... Args,
+          class... WithArgs,
+          class LastIndex = std::integral_constant<uint32_t, sizeof...(Args)>,
+          typename std::enable_if<std::is_same<Index, LastIndex>::value,
+                                  uint8_t>::type = 0>
 inline bool compare_arguments(const std::tuple<Args...>& actual,
                               const std::tuple<WithArgs...>& with)
 {
-    (void) actual;
-    (void) with;
+    (void)actual;
+    (void)with;
 
     return true;
 }
@@ -58,15 +54,11 @@ inline bool compare_arguments(const std::tuple<Args...>& actual,
 /// similar to here: http://stackoverflow.com/a/6894436 but this did
 /// not work on with Microsoft Visual Studio 2013 so it was implemented
 /// using the std::integral_constant technique instead.
-template
-<
-    class Index = std::integral_constant<uint32_t, 0U>,
-    class... Args,
-    class... WithArgs,
-    class LastIndex = std::integral_constant<uint32_t, sizeof...(Args)>,
-    typename std::enable_if<
-        !std::is_same<Index,LastIndex>::value, uint8_t>::type = 0
->
+template <class Index = std::integral_constant<uint32_t, 0U>, class... Args,
+          class... WithArgs,
+          class LastIndex = std::integral_constant<uint32_t, sizeof...(Args)>,
+          typename std::enable_if<!std::is_same<Index, LastIndex>::value,
+                                  uint8_t>::type = 0>
 inline bool compare_arguments(const std::tuple<Args...>& actual,
                               const std::tuple<WithArgs...>& with)
 {

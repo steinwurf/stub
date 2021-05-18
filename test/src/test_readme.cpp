@@ -9,7 +9,7 @@
 
 namespace
 {
-template<class T>
+template <class T>
 void function_to_test(T& t)
 {
     t.some_function(4);
@@ -53,21 +53,14 @@ TEST(test_readme, check_a_set_of_function_calls)
     some_function(4);
 
     // Expectation matches how we called the function
-    bool works = some_function.expect_calls()
-                 .with(3U)
-                 .with(4U)
-                 .to_bool();
+    bool works = some_function.expect_calls().with(3U).with(4U).to_bool();
 
     assert(works == true);
 
     // Not the right call order
-    works = some_function.expect_calls()
-            .with(4U)
-            .with(3U)
-            .to_bool();
+    works = some_function.expect_calls().with(4U).with(3U).to_bool();
 
     assert(works == false);
-
 }
 
 TEST(test_readme, function_taking_no_arguments)
@@ -77,14 +70,10 @@ TEST(test_readme, function_taking_no_arguments)
     function();
 
     // Is matched by:
-    bool works = function.expect_calls()
-                 .with()
-                 .with()
-                 .to_bool();
+    bool works = function.expect_calls().with().with().to_bool();
 
     assert(works);
 }
-
 
 TEST(test_readme, check_the_number_of_function_calls)
 {
@@ -153,30 +142,30 @@ TEST(test_readme, clear_only_the_function_calls_state)
 
 TEST(test_readme, get_the_arguments_of_a_specific_call)
 {
-    stub::function<void(uint32_t,uint32_t)> function;
+    stub::function<void(uint32_t, uint32_t)> function;
 
-    function(3U,4U);
-    function(4U,3U);
-    function(2U,6U);
+    function(3U, 4U);
+    function(4U, 3U);
+    function(2U, 6U);
 
     auto a = function.call_arguments(1);
-    auto b = std::make_tuple(4U,3U);
+    auto b = std::make_tuple(4U, 3U);
 
     assert(a == b);
 }
 
 TEST(test_readme, ignore_specific_arguments_of_a_function_call)
 {
-    stub::function<void(uint32_t,uint32_t)> function;
+    stub::function<void(uint32_t, uint32_t)> function;
 
-    function(3U,4U);
-    function(4U,3U);
+    function(3U, 4U);
+    function(4U, 3U);
 
     // Is matched by:
     bool works = function.expect_calls()
-                 .with(stub::ignore(), 4U)
-                 .with(4U, stub::ignore())
-                 .to_bool();
+                     .with(stub::ignore(), 4U)
+                     .with(4U, stub::ignore())
+                     .to_bool();
 
     assert(works);
 }
@@ -189,9 +178,8 @@ TEST(test_readme, ensure_specific_arguments_of_a_function_call_not_nullptr)
     function(buffer.data(), buffer.size());
 
     // Is matched by:
-    bool works = function.expect_calls()
-                 .with(stub::not_nullptr(), 1U)
-                 .to_bool();
+    bool works =
+        function.expect_calls().with(stub::not_nullptr(), 1U).to_bool();
 
     assert(works);
 }
@@ -203,7 +191,6 @@ struct cup
 };
 }
 
-
 TEST(test_readme, comparing_custom_arguments1)
 {
     stub::function<void(const cup&)> function;
@@ -211,37 +198,42 @@ TEST(test_readme, comparing_custom_arguments1)
     function(cup{2.3});
     function(cup{4.5});
 
-    assert(function.expect_calls()
-           .with(stub::make_compare([](auto& c) {return c.m_volume == 2.3;}))
-    .with(stub::make_compare([](auto& c) {return c.m_volume == 4.5;}))
-    .to_bool());
+    assert(
+        function.expect_calls()
+            .with(stub::make_compare([](auto& c) { return c.m_volume == 2.3; }))
+            .with(stub::make_compare([](auto& c) { return c.m_volume == 4.5; }))
+            .to_bool());
 }
 
 TEST(test_readme, comparing_custom_arguments2)
 {
     using element = std::pair<uint32_t, uint32_t>;
 
-    auto expect = [](uint32_t expected, const element& actual) -> bool
-    { return expected == actual.second; };
+    auto expect = [](uint32_t expected, const element& actual) -> bool {
+        return expected == actual.second;
+    };
 
     stub::function<void(const element&)> function;
-    function(element(2,3));
-    function(element(20,3));
+    function(element(2, 3));
+    function(element(20, 3));
 
     using namespace std::placeholders;
     // We have called the function more than once
     assert(false == function.expect_calls()
-           .with(stub::make_compare(std::bind(expect, 3, _1))).to_bool());
+                        .with(stub::make_compare(std::bind(expect, 3, _1)))
+                        .to_bool());
 
     // Works since we only match the second value of the pair
     assert(true == function.expect_calls()
-           .with(stub::make_compare(std::bind(expect, 3, _1)))
-           .with(stub::make_compare(std::bind(expect, 3, _1))).to_bool());
+                       .with(stub::make_compare(std::bind(expect, 3, _1)))
+                       .with(stub::make_compare(std::bind(expect, 3, _1)))
+                       .to_bool());
 
     // Without the custom comparison it fails
     assert(false == function.expect_calls()
-           .with(element(1,3))
-           .with(element(2,3)).to_bool());
+                        .with(element(1, 3))
+                        .with(element(2, 3))
+                        .to_bool());
 }
 
 TEST(test_readme, building_an_expectation)
@@ -257,16 +249,16 @@ TEST(test_readme, building_an_expectation)
 
         // Check the expectation.
         assert(some_function.expect_calls()
-               .with(0U)
-               .with(1U)
-               .with(2U)
-               .with(3U)
-               .with(4U)
-               .with(5U)
-               .with(6U)
-               .with(7U)
-               .with(8U)
-               .with(9U));
+                   .with(0U)
+                   .with(1U)
+                   .with(2U)
+                   .with(3U)
+                   .with(4U)
+                   .with(5U)
+                   .with(6U)
+                   .with(7U)
+                   .with(8U)
+                   .with(9U));
     }
 
     {
@@ -303,7 +295,7 @@ TEST(test_readme, function_return_values)
     {
         stub::function<uint32_t()> some_function;
 
-        some_function.set_return(4U,3U);
+        some_function.set_return(4U, 3U);
 
         uint32_t a = some_function();
         assert(a == 4U);
@@ -330,7 +322,6 @@ TEST(test_readme, function_return_values)
         assert(a == 3U && b == 3U && c == 3U);
     }
 
-
     {
         stub::function<uint32_t()> some_function;
         some_function.set_return(1U).no_repeat();
@@ -338,7 +329,7 @@ TEST(test_readme, function_return_values)
         uint32_t a = some_function();
         // uint32_t b = some_function(); // <---- Will crash
 
-        some_function.set_return(1U,2U,3U).no_repeat();
+        some_function.set_return(1U, 2U, 3U).no_repeat();
 
         uint32_t e = some_function();
         uint32_t f = some_function();
@@ -354,7 +345,7 @@ namespace
 struct paper
 {
     // Call the print function on the printer object
-    template<class Printer>
+    template <class Printer>
     void print(Printer& printer)
     {
         printer.print("Hello world");
@@ -375,16 +366,14 @@ TEST(test_readme, using_stub_with_template_arguments)
 
     hello.print(printer);
 
-    assert(printer.print.expect_calls()
-           .with("Hello world")
-           .to_bool());
+    assert(printer.print.expect_calls().with("Hello world").to_bool());
 }
 namespace
 {
 struct static_paper
 {
     // Call the static print function on the Printer type
-    template<class Printer>
+    template <class Printer>
     void print()
     {
         Printer::print("Hello world");
@@ -404,9 +393,7 @@ TEST(test_readme, using_static_stub_with_template_arguments)
 
     hello.print<static_printer>();
 
-    assert(static_printer::print.expect_calls()
-           .with("Hello world")
-           .to_bool());
+    assert(static_printer::print.expect_calls().with("Hello world").to_bool());
 }
 
 #undef assert

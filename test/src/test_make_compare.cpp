@@ -9,8 +9,8 @@
 
 TEST(test_make_compare, basic)
 {
-    auto compare = stub::make_compare([](uint32_t v) -> bool
-    { return v == 1U; });
+    auto compare =
+        stub::make_compare([](uint32_t v) -> bool { return v == 1U; });
 
     EXPECT_TRUE(compare(1U));
     EXPECT_FALSE(compare(2U));

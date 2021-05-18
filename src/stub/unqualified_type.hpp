@@ -5,8 +5,8 @@
 
 #pragma once
 
-#include <cstdint>
 #include <cassert>
+#include <cstdint>
 #include <vector>
 
 namespace stub
@@ -21,8 +21,7 @@ namespace stub
 /// http://stackoverflow.com/questions/17295169
 /// http://flamingdangerzone.com/cxx11/2013/02/25/even-more-traits.html
 ///
-template<typename T>
+template <typename T>
 using unqualified_type =
-    std::remove_cv<
-    typename std::remove_reference<T>::type>;
+    std::remove_cv<typename std::remove_reference<T>::type>;
 }

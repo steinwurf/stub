@@ -5,8 +5,8 @@
 
 #pragma once
 
-#include <cstdint>
 #include <cassert>
+#include <cstdint>
 #include <vector>
 
 #include "unqualified_type.hpp"
@@ -95,9 +95,7 @@ public:
     using return_type = typename unqualified_type<R>::type;
 
     /// Constructor
-    return_handler() :
-        m_repeat(true),
-        m_position(0)
+    return_handler() : m_repeat(true), m_position(0)
     {
     }
 
