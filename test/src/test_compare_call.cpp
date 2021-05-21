@@ -29,7 +29,6 @@ TEST(test_compare_call, argument_types)
     EXPECT_TRUE(expect.compare(t2));
 }
 
-
 TEST(test_compare_call, store_in_vector)
 {
     using expect = stub::compare_call<int, bool, double>;

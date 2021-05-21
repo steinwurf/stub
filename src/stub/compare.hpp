@@ -22,11 +22,11 @@ namespace stub
 ///    assert(compare(1U) == true);
 ///    assert(compare(2U) == false);
 ///
-template<class Compare>
+template <class Compare>
 struct compare
 {
     /// Call operator which calls the compare function with the passed value
-    template<class Value>
+    template <class Value>
     bool operator()(Value v)
     {
         return m_compare(v);

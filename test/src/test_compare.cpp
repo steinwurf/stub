@@ -17,7 +17,7 @@ bool test(uint32_t v)
 
 TEST(test_compare, basic)
 {
-    stub::compare<bool(*)(uint32_t)> compare = { test };
+    stub::compare<bool (*)(uint32_t)> compare = {test};
     EXPECT_TRUE(compare(1U));
     EXPECT_FALSE(compare(2U));
 }

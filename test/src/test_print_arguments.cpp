@@ -15,7 +15,6 @@ TEST(test_print_arguments, empty_arguments)
     stub::print_arguments(stream, t);
 
     EXPECT_EQ(stream.str(), std::string(""));
-
 }
 
 TEST(test_print_arguments, non_empty_arguments)
@@ -32,8 +31,9 @@ namespace stub_testing
 {
 struct my_type
 {
-    my_type() :
-        m_string("okok"), m_value(42U) {}
+    my_type() : m_string("okok"), m_value(42U)
+    {
+    }
 
     std::string m_string;
     uint32_t m_value;
@@ -70,6 +70,6 @@ TEST(test_print_arguments, pointers)
     stub::print_arguments(stream, t);
 
     EXPECT_EQ(stream.str(), "Arg 0: 0xdead1111\nArg 1: 0xdead2222\n"
-              "Arg 2: 0xdead3333\nArg 3: 0xdead4444\n"
-              "Arg 4: 0xdead5555\n");
+                            "Arg 2: 0xdead3333\nArg 3: 0xdead4444\n"
+                            "Arg 4: 0xdead5555\n");
 }

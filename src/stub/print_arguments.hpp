@@ -15,18 +15,14 @@ namespace stub
 /// Specialization chosen for empty tuples or when Index reaches the
 /// sizeof the tuple (i.e. the number of values in the tuple), see
 /// description below.
-template
-<
-    class Index = std::integral_constant<uint32_t, 0U>,
-    class... Args,
-    class LastIndex = std::integral_constant<uint32_t, sizeof...(Args)>,
-    typename std::enable_if<
-        std::is_same<Index,LastIndex>::value, uint8_t>::type = 0
->
+template <class Index = std::integral_constant<uint32_t, 0U>, class... Args,
+          class LastIndex = std::integral_constant<uint32_t, sizeof...(Args)>,
+          typename std::enable_if<std::is_same<Index, LastIndex>::value,
+                                  uint8_t>::type = 0>
 inline void print_arguments(std::ostream& out, const std::tuple<Args...>& t)
 {
-    (void) out;
-    (void) t;
+    (void)out;
+    (void)t;
 }
 
 /// Prints the content of a tuple to the specified std::ostream.
@@ -50,19 +46,14 @@ inline void print_arguments(std::ostream& out, const std::tuple<Args...>& t)
 /// similar to here: http://stackoverflow.com/a/6894436 but this did
 /// not work on with Microsoft Visual Studio 2013 so it was implemented
 /// using the std::integral_constant technique instead.
-template
-<
-    class Index = std::integral_constant<uint32_t, 0U>,
-    class... Args,
-    class LastIndex = std::integral_constant<uint32_t, sizeof...(Args)>,
-    typename std::enable_if<
-        !std::is_same<Index,LastIndex>::value, uint8_t>::type = 0
->
+template <class Index = std::integral_constant<uint32_t, 0U>, class... Args,
+          class LastIndex = std::integral_constant<uint32_t, sizeof...(Args)>,
+          typename std::enable_if<!std::is_same<Index, LastIndex>::value,
+                                  uint8_t>::type = 0>
 inline void print_arguments(std::ostream& out, const std::tuple<Args...>& t)
 {
     print_argument(out, Index::value, std::get<Index::value>(t));
 
-    print_arguments<
-        std::integral_constant<uint32_t, Index::value + 1>>(out, t);
+    print_arguments<std::integral_constant<uint32_t, Index::value + 1>>(out, t);
 }
 }

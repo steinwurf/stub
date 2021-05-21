@@ -19,5 +19,7 @@ namespace stub
 ///    assert(fool.expect_calls()
 ///        .with(3U, stub::ignore()));
 ///
-struct ignore { };
+struct ignore
+{
+};
 }

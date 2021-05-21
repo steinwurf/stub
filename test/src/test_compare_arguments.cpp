@@ -19,7 +19,6 @@ TEST(test_compare_arguments, basic)
     EXPECT_FALSE(stub::compare_arguments(t1, t3));
 }
 
-
 TEST(test_compare_arguments, ignore)
 {
     auto t1 = std::make_tuple(5, true, false);
@@ -31,7 +30,6 @@ TEST(test_compare_arguments, ignore)
 
     EXPECT_FALSE(stub::compare_arguments(t1, t3));
 }
-
 
 TEST(test_compare_arguments, compare)
 {
@@ -46,7 +44,6 @@ TEST(test_compare_arguments, compare)
 
     EXPECT_FALSE(stub::compare_arguments(t0, t3));
 }
-
 
 TEST(test_compare_arguments, string)
 {
