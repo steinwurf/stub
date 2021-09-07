@@ -12,12 +12,15 @@ namespace stub
 ///
 /// Example:
 ///
-///    stub::function<void(uint32_t, bool)> foo;
+/// .. code-block:: c++
+///    :linenos:
 ///
-///    foo(3U, true);
+///        stub::function<void(uint32_t, bool)> foo;
 ///
-///    assert(fool.expect_calls()
-///        .with(3U, stub::ignore()));
+///        foo(3U, true);
+///
+///        assert(fool.expect_calls().with(3U, stub::ignore()));
+///
 ///
 struct ignore
 {

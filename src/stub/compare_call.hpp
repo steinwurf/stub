@@ -18,14 +18,22 @@ namespace stub
 ///
 /// The basic usage is as follows:
 ///
-///    auto expectation = std::make_tuple(5, true, 4.0);
-///    compare_call<int, bool, double> expect(expectation);
+/// .. code-block:: c++
+///    :linenos:
 ///
-///    auto actual = std::make_tuple(4, true, 4.0);
+///        auto expectation = std::make_tuple(5, true, 4.0);
+///        compare_call<int, bool, double> expect(expectation);
+///        auto actual = std::make_tuple(4, true, 4.0);
 ///
-///    // Now compare our expectation with the actual values
-///    bool result = expect.compare(actual);
-///    assert(result == false);
+///
+/// Now compare our expectation with the actual values:
+///
+/// .. code-block:: c++
+///    :linenos:
+///
+///        bool result = expect.compare(actual);
+///        assert(result == false);
+///
 ///
 /// The compare_call::compare(...) function uses compare_arguments(...)
 /// to compare the elements of the two tuples element-wise using
@@ -43,16 +51,25 @@ namespace stub
 ///
 /// Lets see how this would work in practice.
 ///
-///    // Notice how we can pass ignore() as the second argument to our
-///    // expectation tuple.
-///    auto expectation = std::make_tuple(5, ignore(), 4.0);
-///    compare_call<int, bool, double> expect(expectation);
+/// Notice how we can pass ignore() as the second argument to our
+/// expectation tuple:
 ///
-///    auto actual = std::make_tuple(5, true, 4.0);
+/// .. code-block:: c++
+///    :linenos:
 ///
-///    // Now compare our expectation with the actual values
-///    bool result = expect.compare(actual);
-///    assert(result == true);
+///        auto expectation = std::make_tuple(5, ignore(), 4.0);
+///        compare_call<int, bool, double> expect(expectation);
+///        auto actual = std::make_tuple(5, true, 4.0);
+///
+///
+/// Now compare our expectation with the actual values:
+///
+/// .. code-block:: c++
+///    :linenos:
+///
+///        bool result = expect.compare(actual);
+///        assert(result == true);
+///
 ///
 /// The reason this works when comparing the two tuples element-wise is that
 /// the compare_argument(...) function has an overload that accepts ignore

@@ -12,13 +12,16 @@ namespace stub
 ///
 /// Example:
 ///
-///    stub::function<void(uint32_t, uint8_t*)> foo;
+/// .. code-block:: c++
+///    :linenos:
 ///
-///    std::vector<uint8_t> buffer(10);
-///    foo(3U, buffer.data());
+///        stub::function<void(uint32_t, uint8_t*)> foo;
 ///
-///    assert(fool.expect_calls()
-///        .with(3U, stub::not_nullptr()));
+///        std::vector<uint8_t> buffer(10);
+///        foo(3U, buffer.data());
+///
+///        assert(fool.expect_calls().with(3U, stub::not_nullptr()));
+///
 ///
 struct not_nullptr
 {

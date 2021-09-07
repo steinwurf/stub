@@ -12,15 +12,19 @@ namespace stub
 ///
 /// Example:
 ///
-///    bool test(uint32_t v)
-///    {
-///        return v == 1U;
-///    }
+/// .. code-block:: c++
+///    :linenos:
 ///
-///    stub::compare<bool(*)(uint32_t)> compare = { test };
+///        bool test(uint32_t v)
+///        {
+///            return v == 1U;
+///        }
 ///
-///    assert(compare(1U) == true);
-///    assert(compare(2U) == false);
+///        stub::compare<bool(*)(uint32_t)> compare = { test };
+///
+///        assert(compare(1U) == true);
+///        assert(compare(2U) == false);
+///
 ///
 template <class Compare>
 struct compare
