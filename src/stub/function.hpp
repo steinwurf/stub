@@ -19,6 +19,7 @@ namespace stub
 template <typename T>
 class function;
 
+///
 /// @brief The function object act like a "sink" for function calls
 ///        i.e. we can define a function object to accept any type of
 ///        function call and it will simply store the arguments
@@ -30,35 +31,55 @@ class function;
 ///
 /// Example:
 ///
-///    stub::function<void(uint32_t)> some_function;
+/// .. code-block:: c++
+///    :linenos:
+///
+///        stub::function<void(uint32_t)> some_function;
+///
 ///
 /// The above function takes an uint32_t and returns nothing, lets
 /// invoke it:
 ///
-///     some_function(3);
-///     some_function(4);
+/// .. code-block:: c++
+///    :linenos:
+///
+///        some_function(3);
+///        some_function(4);
+///
 ///
 /// Now we may check how the function was called:
 ///
-///     bool called_once = some_function.expect_calls().with(3U);
-///     assert(called_once == false);
+/// .. code-block:: c++
+///    :linenos:
 ///
-///     bool called_with = some_function.expect_calls().with(4U);
-///     assert(called_with == true);
+///        bool called_once = some_function.expect_calls().with(3U);
+///        assert(called_once == false);
+///
+///        bool called_with = some_function.expect_calls().with(4U);
+///        assert(called_with == true);
+///
 ///
 /// We can also define a function which returns a value:
 ///
-///     stub::function<bool(uint32_t)> another_function;
+/// .. code-block:: c++
+///    :linenos:
+///
+///        stub::function<bool(uint32_t)> another_function;
+///
 ///
 /// Here we have to specify what return value we expect:
 ///
-///     another_function.set_return(true);
+/// .. code-block:: c++
+///    :linenos:
 ///
-///     bool a = another_function(23);
-///     bool b = another_function(13);
+///        another_function.set_return(true);
 ///
-///     assert(a == true);
-///     assert(b == true);
+///        bool a = another_function(23);
+///        bool b = another_function(13);
+///
+///        assert(a == true);
+///        assert(b == true);
+///
 ///
 /// For more information on the options for return values see the
 /// return_handler.hpp
@@ -76,9 +97,6 @@ public:
     {
         // clang-format off
         /// @param the_function The function we configuring an expectation for
-        ///
-        /// @param predicate The function object used to compare the
-        ///        call arguments
         expectation(const function& the_function) :
             m_function(the_function)
         {
@@ -92,12 +110,14 @@ public:
         ///
         /// As an example:
         ///
-        ///     stub::function<void(uint32_t,uint32_t)> function;
-        ///     function(3,1);
-        ///     function(4,2);
+        /// .. code-block:: c++
+        ///    :linenos:
         ///
-        ///     assert(function.expect_calls()
-        ///                .with(3,1).with(4,2));
+        ///        stub::function<void(uint32_t,uint32_t)> function;
+        ///        function(3,1);
+        ///        function(4,2);
+        ///
+        ///        assert(function.expect_calls().with(3,1).with(4,2));
         ///
         ///
         /// @param args The arguments for a function call
@@ -171,7 +191,16 @@ public:
         return m_return_handler();
     }
 
-    /// @copydoc return_handler<R>::set_return()
+    /// Initializes the return_handler with the return values to
+    /// use. Calling this function will also reset the
+    /// return_handler state. So any previously specified returns
+    /// values will be removed etc.
+    ///
+    /// @param return_value The list of return values to use
+    ///
+    /// @return Reference to the return handler, this allows the
+    /// caller to perform additional customization to the return
+    /// handler such as turn on or off repeat.
     template <class... Returns>
     return_handler<R>& set_return(Returns&&... return_value)
     {
@@ -226,13 +255,16 @@ public:
     ///
     /// Example (using the output operator):
     ///
-    ///    stub::function<void(uint32_t)> my_func;
+    /// .. code-block:: c++
+    ///    :linenos:
     ///
-    ///    my_func(4U);
-    ///    my_func(5U);
+    ///        stub::function<void(uint32_t)> my_func;
     ///
-    ///    // Print the current status of the function object,
-    ///    std::cout << my_func << std::endl;
+    ///        my_func(4U);
+    ///        my_func(5U);
+    ///
+    ///        // Print the current status of the function object,
+    ///        std::cout << my_func << std::endl;
     ///
     /// @param out The ostream where the stub::function status should be
     void print(std::ostream& out) const

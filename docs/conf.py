@@ -6,121 +6,115 @@
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinx.ext.autodoc',
-    'sphinx.ext.doctest',
-    'sphinx.ext.intersphinx',
-    'sphinx.ext.todo',
-    'sphinx.ext.coverage',
-    'sphinx.ext.mathjax',
-    'sphinx.ext.ifconfig',
-    'guzzle_sphinx_theme',
-    'wurfapi',
+    "sphinx.ext.autodoc",
+    "sphinx.ext.doctest",
+    "sphinx.ext.intersphinx",
+    "sphinx.ext.todo",
+    "sphinx.ext.coverage",
+    "sphinx.ext.mathjax",
+    "sphinx.ext.ifconfig",
+    "guzzle_sphinx_theme",
+    "wurfapi",
 ]
 
 # wurfapi options - relative to your docs dir
 wurfapi = {
-    'source_paths': [
-        '../src/stub/function.hpp',
-        '../src/stub/return_handler.hpp',
+    "source_paths": [
+        # API
+        "../src/stub/compare_call.hpp",
+        "../src/stub/compare.hpp",
+        "../src/stub/function.hpp",
+        "../src/stub/ignore.hpp",
+        # "../src/stub/make_compare.hpp",
+        "../src/stub/not_nullptr.hpp",
+        # "../src/stub/print_argument.hpp",
+        # "../src/stub/print_arguments.hpp",
+        "../src/stub/return_handler.hpp",
+        # "../src/stub/unqualified_type.hpp",
     ],
-    'recursive': False,
-    'include_paths': ['../src'],
-    'parser': {
-        'type': 'doxygen',
-        'download': True,
-        'warnings_as_error': False
-    }
+    "recursive": False,
+    "user_templates": "rst_templates",
+    "include_paths": ["../src"],
+    "parser": {
+        "type": "doxygen",
+        "download": True,
+        "warnings_as_error": True,
+        "patch_api": [
+            {
+                "selector": "stub",
+                "key": "inline",
+                "value": True,
+            }
+        ],
+        "collapse_inline_namespaces": ["stub"],
+    },
 }
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = []
 
-# The suffix(es) of source filenames.
-# You can specify multiple suffix as a list of string:
-#
-# source_suffix = ['.rst', '.md']
-source_suffix = '.rst'
+# The suffix(es) of source filenames
+source_suffix = ".rst"
 
 # The master toctree document.
-master_doc = 'index'
+master_doc = "index"
 
 # General information about the project.
-project = u'Stub'
-copyright = u'2018, contact@steinwurf.com'
-author = u'contact@steinwurf.com'
+project = u"Stub"
+copyright = u"2014, Steinwurf"
+author = u"Steinwurf"
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
 # built documents.
 #
 # The short X.Y version.
-version = u''
+version = u""
 # The full version, including alpha/beta/rc tags.
-release = u''
+release = u""
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This patterns also effect to html_static_path and html_extra_path
-exclude_patterns = []
+exclude_patterns = ["rst_templates"]
 
 # The name of the Pygments (syntax highlighting) style to use.
-pygments_style = 'sphinx'
-
-# If true, `todo` and `todoList` produce output, else they produce nothing.
-todo_include_todos = False
+pygments_style = "sphinx"
 
 # -- Options for HTML output ----------------------------------------------
 
 try:
     import guzzle_sphinx_theme
-    html_theme = 'guzzle_sphinx_theme'
+
+    html_theme = "guzzle_sphinx_theme"
     html_theme_path = guzzle_sphinx_theme.html_theme_path()
 except ImportError:
-    print("Unable to import the used theme.\n"
-          "Please install requirements.txt before building")
+    print(
+        "Unable to import the used theme.\n"
+        "Please install requirements.txt before building"
+    )
     pass
 
 html_sidebars = {
-    '**': [
-        'logo.html', 'logo-text.html', 'globaltoc.html', 'searchbox.html'
-    ]
+    "**": ["logo.html", "logo-text.html", "globaltoc.html", "searchbox.html"]
 }
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
 
-html_theme_options = {
-    "h1_background_color": "ece0d9",
-    "sidebar_hover_color": "917C6F",
-    "logo_text_background_color": "483E37",
-    "link_color": "706055",
-    "link_hover_color": "917C6F",
-    "code_color": "ab3416",
-    "target_highlight_color": "ece0d9",
-    "highlighted_color": "ffd3b5",
-    "search_form_focus_color": "917C6F",
-    "forkme_ribbon_color": "483E37",
-    "forkme_repository": {
-        "provider": "GitHub",
-        "url": "https://github.com/steinwurf/stub"
-    }
-}
-
-# The name of an image file (relative to this directory) to place at the top
-# of the sidebar.
-html_logo = 'icon.svg'
+# html_theme_options = {}
 
 # The name of an image file (relative to this directory) to use as a favicon of
 # the docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
 # pixels large.
-#
-# html_favicon = None
+
+# html_logo = ""
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-# html_static_path = ['static']
+html_static_path = []
 
 # Add any extra paths that contain custom files (such as robots.txt or
 # .htaccess) here, relative to this directory. These files are copied
@@ -133,4 +127,3 @@ html_copy_source = False
 
 # If true, links to the reST sources are added to the pages.
 html_show_sourcelink = False
-

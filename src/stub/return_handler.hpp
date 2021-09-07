@@ -23,69 +23,80 @@ namespace stub
 ///
 /// Example:
 ///
-/// @code
-///    return_handler<uint32_t> v;
-///    v.set_return(4U);
+/// .. code-block:: c++
+///    :linenos:
 ///
-///    uint32_t a = v();
-///    assert(a == 4U);
+///        return_handler<uint32_t> v;
+///        v.set_return(4U);
 ///
-///    uint32_t b = v();
-///    assert(b == 4U);
+///        uint32_t a = v();
+///        assert(a == 4U);
 ///
-///    uint32_t c = v();
-///    assert(c != 3U);
-///    assert(c == 4U);
-/// @endcode
+///        uint32_t b = v();
+///        assert(b == 4U);
+///
+///        uint32_t c = v();
+///        assert(c != 3U);
+///        assert(c == 4U);
+///
 ///
 /// Or alternatively set multiple return values:
 ///
-/// @code
-///    return_handler<uint32_t> v;
-///    v.set_return({4U,3U});
+/// .. code-block:: c++
+///    :linenos:
 ///
-///    uint32_t a = v();
-///    assert(a == 4U);
+///        return_handler<uint32_t> v;
+///        v.set_return({4U,3U});
 ///
-///    uint32_t b = v();
-///    assert(b == 3U);
+///        uint32_t a = v();
+///        assert(a == 4U);
 ///
-///    uint32_t c = v();
-///    assert(c == 4U);
+///        uint32_t b = v();
+///        assert(b == 3U);
 ///
-///    uint32_t d = v();
-///    assert(d != 4U);
-///    assert(d == 3U);
-/// @endcode
+///        uint32_t c = v();
+///        assert(c == 4U);
+///
+///        uint32_t d = v();
+///        assert(d != 4U);
+///        assert(d == 3U);
+///
 ///
 /// The default behavior is to repeat the specified return values i.e.:
 ///
-///    return_handler<uint32_t> v;
-///    v.set_return(3U);
+/// .. code-block:: c++
+///    :linenos:
 ///
-///    uint32_t a = v();
-///    uint32_t b = v();
-///    uint32_t c = v();
+///        return_handler<uint32_t> v;
+///        v.set_return(3U);
 ///
-///    assert(a == 3U && b == 3U && c == 3U);
+///        uint32_t a = v();
+///        uint32_t b = v();
+///        uint32_t c = v();
+///
+///        assert(a == 3U && b == 3U && c == 3U);
 ///
 /// This behavior can be change by calling no_repeat() in which
 /// case the return_handler can only be invoked once per return
 /// value specified:
 ///
-///    return_handler<uint32_t> v;
-///    v.set_return(1U).no_repeat();
+/// .. code-block:: c++
+///    :linenos:
 ///
-///    uint32_t a = v();
-///    uint32_t b = v(); // <---- Crash
+///        return_handler<uint32_t> v;
+///        v.set_return(1U).no_repeat();
 ///
-///    return_handler<uint32_t> v;
-///    v.set_return({1U,2U,3U}).no_repeat();
+///        uint32_t a = v();
+///        uint32_t b = v(); // <---- Crash
 ///
-///    uint32_t a = v();
-///    uint32_t b = v();
-///    uint32_t c = v();
-///    uint32_t d = v(); // <---- Crash
+///        return_handler<uint32_t> v;
+///        v.set_return({1U,2U,3U}).no_repeat();
+///
+///        uint32_t a = v();
+///        uint32_t b = v();
+///        uint32_t c = v();
+///        uint32_t d = v(); // <---- Crash
+///
 ///
 template <class R>
 class return_handler
