@@ -6,6 +6,7 @@ every change, see the Git log.
 
 Latest
 ------
+* Minor: Added CMake support.
 * Minor: Updated waf.
 
 6.4.0
