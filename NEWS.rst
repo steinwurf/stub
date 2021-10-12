@@ -6,6 +6,10 @@ every change, see the Git log.
 
 Latest
 ------
+* tbd
+
+6.5.0
+-----
 * Minor: Added CMake support.
 * Minor: Updated waf.
 
