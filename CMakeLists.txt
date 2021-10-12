@@ -18,7 +18,7 @@ endif()
 
 # Define library
 add_library(stub INTERFACE)
-target_compile_features(stub INTERFACE cxx_std_11)
+target_compile_features(stub INTERFACE cxx_std_14)
 target_include_directories(stub INTERFACE src/)
 add_library(steinwurf::stub ALIAS stub)
 
