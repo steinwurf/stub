@@ -1,13 +1,12 @@
-name: Build
+name: C++ make-specs
 on: [push, pull_request]
 jobs:
-  # Builds performed in docker
   docker_builds:
     strategy:
       fail-fast: false
       matrix:
         config:
-          - container: conanio/gcc5
+          - container: conanio/gcc54
             cxx_mkspec: --cxx_mkspec=cxx_gxx54_x64
             name: GCC 5.4
           - container: conanio/gcc9
@@ -84,52 +83,3 @@ jobs:
           ${{ env.python }} waf
       - name: Test
         run: ${{ env.python }} waf --run_tests
-  clang-format:
-    name: ClangFormat
-    runs-on: [self-hosted, docker]
-    container:
-      image: fifty2technology/clang-format
-      options: --user 0:0
-    steps:
-      - name: Checkout source code
-        uses: actions/checkout@v2
-      - name: Run Clang-format
-        run: clang-format --help
-      - name: Run Clang-format
-        run: clang-format -version
-      - name: Run Clang-format
-        run: find ./ -iname *.hpp -o -iname *.cpp -o -iname *.c -o -iname *.h | xargs clang-format --dry-run --Werror
-  # Valgrind Check
-  valgrind:
-    name: Valgrind
-    runs-on: [self-hosted, valgrind]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Configure
-        env:
-          GIT_SSH_COMMAND: "${{ runner.os != 'Linux' && 'ssh' || 'ssh -i /home/buildbot/.ssh/id_ed25519 -o IdentitiesOnly=yes' }}"
-        run: python3 waf configure --git_protocol=git@
-      - name: Build
-        run: |
-          echo "::add-matcher::.github/gcc-problem-matcher.json"
-          python3 waf
-      - name: Valgrind Test
-        run: python3 waf --run_tests --run_cmd="valgrind %s"
-  # NDEBUG compilation
-  ndebug:
-    name: No Assertions
-    runs-on: [self-hosted, linux]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Configure
-        env:
-          GIT_SSH_COMMAND: "${{ runner.os != 'Linux' && 'ssh' || 'ssh -i /home/buildbot/.ssh/id_ed25519 -o IdentitiesOnly=yes' }}"
-        run: python3 waf configure --cxx_nodebug --git_protocol=git@
-      - name: Build
-        run: |
-          echo "::add-matcher::.github/gcc-problem-matcher.json"
-          python3 waf
-      - name: Valgrind Test
-        run: python3 waf --run_tests
