@@ -237,9 +237,8 @@ TEST(test_function, expect_predicate_custom_type)
     function(cup{2.3});
     function(cup{4.5});
 
-    auto compare = [](double expected, const cup& c) -> bool {
-        return c.m_volume == expected;
-    };
+    auto compare = [](double expected, const cup& c) -> bool
+    { return c.m_volume == expected; };
 
     EXPECT_TRUE(function.expect_calls()
                     .with(stub::make_compare(
@@ -255,9 +254,8 @@ TEST(test_function, expect_predicate_pair)
 {
     using element = std::pair<uint32_t, uint32_t>;
 
-    auto expect = [](uint32_t expected, const element& actual) -> bool {
-        return expected == actual.second;
-    };
+    auto expect = [](uint32_t expected, const element& actual) -> bool
+    { return expected == actual.second; };
 
     auto expect_3 =
         stub::make_compare(std::bind(expect, 3, std::placeholders::_1));
@@ -314,7 +312,8 @@ TEST(test_function, expect_predicate_pair)
 // how we document it.
 TEST(test_function, predicate_argument_order)
 {
-    auto compare = [](uint32_t value) -> bool {
+    auto compare = [](uint32_t value) -> bool
+    {
         if (value != 5U)
             return false;
 
