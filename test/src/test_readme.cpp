@@ -209,9 +209,8 @@ TEST(test_readme, comparing_custom_arguments2)
 {
     using element = std::pair<uint32_t, uint32_t>;
 
-    auto expect = [](uint32_t expected, const element& actual) -> bool {
-        return expected == actual.second;
-    };
+    auto expect = [](uint32_t expected, const element& actual) -> bool
+    { return expected == actual.second; };
 
     stub::function<void(const element&)> function;
     function(element(2, 3));
