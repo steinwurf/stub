@@ -2,10 +2,6 @@
 Stub
 ====
 
-.. image:: ./docs/icon.svg
-   :height: 200px
-   :width: 200px
-
 |Linux make-specs| |Windows make-specs| |MacOS make-specs| |Linux CMake| |Windows CMake| |MacOS CMake| |Valgrind| |No Assertions| |Clang Format| |Cppcheck|
 
 .. |Linux make-specs| image:: https://github.com/steinwurf/abacus/actions/workflows/linux_mkspecs.yml/badge.svg
@@ -37,6 +33,11 @@ Stub
 
 .. |Cppcheck| image:: https://github.com/steinwurf/abacus/actions/workflows/cppcheck.yml/badge.svg
    :target: https://github.com/steinwurf/abacus/actions/workflows/cppcheck.yml
+   
+.. image:: ./docs/icon.svg
+   :height: 200px
+   :width: 200px
+
 
 Overview
 ========
