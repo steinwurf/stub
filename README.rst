@@ -2,7 +2,7 @@
 Stub
 ====
 
-|Linux make-specs| |Windows make-specs| |MacOS make-specs| |Linux CMake| |Windows CMake| |MacOS CMake| |Valgrind| |No Assertions| |Clang Format| |Cppcheck|
+|Linux make-specs| |Windows make-specs| |MacOS make-specs| |Linux CMake| |Windows CMake| |MacOS CMake| |Raspberry Pi| |Valgrind| |No Assertions| |Clang Format| |Cppcheck|
 
 .. |Linux make-specs| image:: https://github.com/steinwurf/stub/actions/workflows/linux_mkspecs.yml/badge.svg
    :target: https://github.com/steinwurf/stub/actions/workflows/linux_mkspecs.yml
@@ -21,6 +21,9 @@ Stub
    
 .. |MacOS CMake| image:: https://github.com/steinwurf/stub/actions/workflows/macos_cmake.yml/badge.svg
    :target: https://github.com/steinwurf/stub/actions/workflows/macos_cmake.yml
+   
+.. |Raspberry Pi| image:: https://github.com/steinwurf/stub/actions/workflows/raspberry_pi.yml/badge.svg
+   :target: https://github.com/steinwurf/stub/actions/workflows/raspberry_pi.yml
 
 .. |Clang Format| image:: https://github.com/steinwurf/stub/actions/workflows/clang-format.yml/badge.svg
    :target: https://github.com/steinwurf/stub/actions/workflows/clang-format.yml
