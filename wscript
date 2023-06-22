@@ -9,16 +9,14 @@ APPNAME = "stub"
 VERSION = "6.5.0"
 
 
+def configure(conf):
+    conf.set_cxx_std(11)
+
+
 def build(bld):
-
-    bld.env.append_unique(
-        "DEFINES_STEINWURF_VERSION", 'STEINWURF_STUB_VERSION="{}"'.format(VERSION)
-    )
-
     bld(name="stub_includes", includes="./src", export_includes="./src")
 
     if bld.is_toplevel():
-
         # Only build tests when executed from the top-level wscript,
         # i.e. not when included as a dependency
         bld.recurse("test")
@@ -28,7 +26,6 @@ def docs(ctx):
     """Build the documentation in a virtualenv"""
 
     with ctx.create_virtualenv() as venv:
-
         # To update the requirements.txt just delete it - a fresh one
         # will be generated from test/requirements.in
         if not os.path.isfile("docs/requirements.txt"):
