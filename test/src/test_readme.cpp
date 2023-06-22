@@ -200,8 +200,8 @@ TEST(test_readme, comparing_custom_arguments1)
 
     assert(
         function.expect_calls()
-            .with(stub::make_compare([](auto& c) { return c.m_volume == 2.3; }))
-            .with(stub::make_compare([](auto& c) { return c.m_volume == 4.5; }))
+            .with(stub::make_compare([](cup& c) { return c.m_volume == 2.3; }))
+            .with(stub::make_compare([](cup& c) { return c.m_volume == 4.5; }))
             .to_bool());
 }
 
