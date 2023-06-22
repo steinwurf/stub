@@ -6,7 +6,7 @@ import os
 from waflib.Build import BuildContext
 
 APPNAME = "stub"
-VERSION = "6.5.0"
+VERSION = "7.0.0"
 
 
 def configure(conf):
