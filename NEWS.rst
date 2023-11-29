@@ -6,6 +6,10 @@ every change, see the Git log.
 
 Latest
 ------
+* tbd
+
+7.1.0
+-----
 * Minor: Added the check function to allow a user to check if a function has
   been called with specific arguments. If not the check function will throw an
   exception.
