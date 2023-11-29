@@ -11,26 +11,12 @@
 #include <tuple>
 
 #include "compare_call.hpp"
+#include "expect_calls.hpp"
 #include "print_arguments.hpp"
 #include "return_handler.hpp"
 
 namespace stub
 {
-
-struct expect_calls : public std::exception
-{
-    expect_calls(const std::string& message) : m_message(message)
-    {
-    }
-
-    const char* what() const throw()
-    {
-        return m_message.c_str();
-    }
-
-private:
-    std::string m_message;
-};
 
 /// Default function
 template <typename T>
