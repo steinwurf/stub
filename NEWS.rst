@@ -6,7 +6,11 @@ every change, see the Git log.
 
 Latest
 ------
-* tbd
+* Minor: Added the check function to allow a user to check if a function has
+  been called with specific arguments. If not the check function will throw an
+  exception.
+* Minor: Added the side_effect function to allow a user to specify a function
+  that will be called when a function is called.
 
 7.0.0
 -----
