@@ -7,7 +7,7 @@
 
 #include <cassert>
 #include <cstdint>
-#include <vector>
+#include <deque>
 
 #include "unqualified_type.hpp"
 
@@ -160,7 +160,7 @@ public:
 
         assert(m_position < m_returns.size());
 
-        R value = m_returns[m_position];
+        R value = m_returns.at(m_position);
         ++m_position;
 
         return value;
@@ -193,8 +193,13 @@ private:
     /// function and we need to increment m_positions once called.
     mutable uint32_t m_position;
 
-    /// Vector storing the return values to be used.
-    std::vector<return_type> m_returns;
+    /// Container storing the return values to be used.
+    /// We use a deque instead of a vector to avoid a specific issue with
+    /// vector<bool>. vector<bool> is a bitset-like container, not a container
+    /// of bools, which can cause unexpected behavior when used with certain STL
+    /// algorithms. deque<bool> does not have this special behavior and is safer
+    /// to use in this context.
+    std::deque<return_type> m_returns;
 };
 
 /// Specialization for the case of a void function i.e. no return
