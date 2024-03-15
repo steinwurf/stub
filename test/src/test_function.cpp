@@ -502,3 +502,11 @@ TEST(test_function, bind_member_variable_2)
 
     EXPECT_TRUE(d.member.expect_calls().with().to_bool());
 }
+
+TEST(test_function, boolean_return_value)
+{
+    stub::function<bool()> b;
+    b.set_return(true);
+    EXPECT_TRUE(b());
+    EXPECT_TRUE(b.expect_calls().with().to_bool());
+}
