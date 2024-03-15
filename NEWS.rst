@@ -6,6 +6,10 @@ every change, see the Git log.
 
 Latest
 ------
+* tbd
+
+7.1.1
+-----
 * Patch: Changed the container type for storing return values in `return_handler`
   from `std::vector` to `std::deque` to avoid a specific issue with `std::vector<bool>`.
   This change ensures safer and more predictable behavior when using STL algorithms.
