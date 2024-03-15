@@ -6,7 +6,7 @@ to ease sometimes tedious testing tasks.
 
 There are some examples of usage in the description of the different types.
 
-The Stub repository: https://github.com/steinwurf/stub
+The stub repository is availble here: https://github.com/steinwurf/stub
 
 If you have any questions or suggestions about this library, please contact
 us at our developer mailing list (hosted at Google Groups):
