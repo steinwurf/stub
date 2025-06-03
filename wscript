@@ -8,18 +8,25 @@ from waflib.Build import BuildContext
 APPNAME = "stub"
 VERSION = "7.1.1"
 
+def options(ctx):
+    ctx.load("cmake")
 
-def configure(conf):
-    conf.set_cxx_std(11)
+
+def configure(ctx):
+
+    ctx.load("cmake")
+
+    if ctx.is_toplevel():
+        ctx.cmake_configure()
 
 
-def build(bld):
-    bld(name="stub_includes", includes="./src", export_includes="./src")
+def build(ctx):
 
-    if bld.is_toplevel():
-        # Only build tests when executed from the top-level wscript,
-        # i.e. not when included as a dependency
-        bld.recurse("test")
+    ctx.load("cmake")
+
+    if ctx.is_toplevel():
+        ctx.cmake_build()
+
 
 
 def docs(ctx):
