@@ -13,7 +13,7 @@ if(NOT DEFINED STEINWURF_RESOLVE)
     message(FATAL_ERROR "Failed: ${STATUS}")
   endif()
   set(STEINWURF_RESOLVE "${CMAKE_CURRENT_SOURCE_DIR}/resolve_symlinks")
-  set(STEINWURF_TOP_NAME kodo)
+
 endif()
 
 # Define library
@@ -35,22 +35,17 @@ if(${CMAKE_PROJECT_NAME} STREQUAL ${PROJECT_NAME})
   # Setup testing
   enable_testing()
 
-  # For Windows: Prevent overriding the parent project's compiler/linker
-  # settings
-  set(gtest_force_shared_crt
-      ON
-      CACHE BOOL "" FORCE)
-
   # Google Test dependency
-  add_subdirectory("${STEINWURF_RESOLVE}/gtest-source" gtest EXCLUDE_FROM_ALL)
-
-  include(GoogleTest)
+  add_subdirectory("${STEINWURF_RESOLVE}/gtest" EXCLUDE_FROM_ALL)
 
   # Build test executable
-  file(GLOB_RECURSE stub_test_sources ./test/**.cpp)
+  file(GLOB_RECURSE stub_test_sources ./test/*.cpp)
+
+
   add_executable(stub_test ${stub_test_sources})
   target_link_libraries(stub_test stub)
-  target_link_libraries(stub_test gtest)
+  target_link_libraries(stub_test steinwurf::gtest)
 
-  gtest_discover_tests(stub_test stub_test)
+  add_test(NAME stub_test COMMAND stub_test)
+
 endif()

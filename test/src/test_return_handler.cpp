@@ -65,10 +65,11 @@ TEST(test_return_handler, api)
 
     // String
     {
-        stub::return_handler<const char*> r;
-        r.set_return("3U", "4U").no_repeat();
+        stub::return_handler<std::string_view> r;
+        r.set_return(std::string_view{"3U"}, std::string_view{"4U"})
+            .no_repeat();
 
-        EXPECT_EQ("3U", r());
-        EXPECT_EQ("4U", r());
+        EXPECT_EQ(std::string_view{"3U"}, r());
+        EXPECT_EQ(std::string_view{"4U"}, r());
     }
 }
