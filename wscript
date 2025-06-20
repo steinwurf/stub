@@ -6,7 +6,7 @@ import os
 from waflib.Build import BuildContext
 
 APPNAME = "stub"
-VERSION = "7.1.1"
+VERSION = "8.0.0"
 
 def options(ctx):
     ctx.load("cmake")
